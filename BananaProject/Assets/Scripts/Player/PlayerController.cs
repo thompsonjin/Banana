@@ -26,10 +26,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
     private int comboCount;
-    //Knockback forces
-    private Vector2 knockbackForce = new Vector2 (2.5f, 5);
-    private Vector2 uppercutForce = new Vector2 (10, 20);
-    private Vector2 kickForce = new Vector2 (10, 5);
+    [SerializeField] private float punchKnockback;
+    [SerializeField] private float uppercutKnockback;
+    [SerializeField] private float kickKnockback;
 
     
    void Update()
@@ -106,14 +105,24 @@ public class PlayerController : MonoBehaviour
 
       if(comboCount == 3)
       {
+         
+
          foreach(Collider2D col in hitRange())
          {
             RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.setHit(true);
+            e_Ai.setHit();
             e_Health.Damage(4);
+
+            //find the orientation of the hit enemy relative to the player
+            Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+            forceDir.Normalize();
+
+            //using 
+            Vector2 uppercutForce = new Vector2(-forceDir.x * uppercutKnockback, 20);
+
             e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
          }  
 
@@ -127,9 +136,16 @@ public class PlayerController : MonoBehaviour
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.setHit(true);
+            e_Ai.setHit();
             e_Health.Damage(2);
-            e_Rigid.AddForce(knockbackForce, ForceMode2D.Impulse);
+
+            //find the orientation of the hit enemy relative to the player
+            Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+            forceDir.Normalize();
+
+            Vector2 punchForce = new Vector2(-forceDir.x * punchKnockback, 5);
+
+            e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
          }    
       }      
    }
@@ -142,8 +158,15 @@ public class PlayerController : MonoBehaviour
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.setHit(true);
+            e_Ai.setHit();
             e_Health.Damage(6);
+
+            //find the orientation of the hit enemy relative to the player
+            Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+            forceDir.Normalize();
+
+            Vector2 kickForce = new Vector2(-forceDir.x * kickKnockback, 5);
+
             e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
          }  
    }
