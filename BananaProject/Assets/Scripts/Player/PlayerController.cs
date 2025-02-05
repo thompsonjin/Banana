@@ -37,7 +37,7 @@ public class PlayerController : MonoBehaviour
       horizontal = Input.GetAxisRaw("Horizontal");
 
       //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
-      if(isGrounded())
+      if(IsGrounded())
       {
        coyoteTimeCounter = coyoteTime;
       }
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
       rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
    }
 
-   private bool isGrounded()
+   private bool IsGrounded()
    {
       //Use groundCheck transform to check whether or not the player is touching the gorund
       return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
@@ -107,20 +107,20 @@ public class PlayerController : MonoBehaviour
       {
          
 
-         foreach(Collider2D col in hitRange())
+         foreach(Collider2D col in HitRange())
          {
             RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.setHit();
+            e_Ai.SetHit();
             e_Health.Damage(4);
 
             //find the orientation of the hit enemy relative to the player
             Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
             forceDir.Normalize();
 
-            //using 
+            //using given direction change values to appropriate force
             Vector2 uppercutForce = new Vector2(-forceDir.x * uppercutKnockback, 20);
 
             e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
@@ -130,19 +130,20 @@ public class PlayerController : MonoBehaviour
       }
       else
       {
-         foreach(Collider2D col in hitRange())
+         foreach(Collider2D col in HitRange())
          {
             RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.setHit();
+            e_Ai.SetHit();
             e_Health.Damage(2);
 
             //find the orientation of the hit enemy relative to the player
             Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
             forceDir.Normalize();
 
+            //using given direction change values to appropriate force
             Vector2 punchForce = new Vector2(-forceDir.x * punchKnockback, 5);
 
             e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
@@ -152,19 +153,20 @@ public class PlayerController : MonoBehaviour
 
    private void KickAttack()
    {
-      foreach(Collider2D col in hitRange())
+      foreach(Collider2D col in HitRange())
          {
             RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.setHit();
+            e_Ai.SetHit();
             e_Health.Damage(6);
 
             //find the orientation of the hit enemy relative to the player
             Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
             forceDir.Normalize();
 
+            //using given direction change values to appropriate force
             Vector2 kickForce = new Vector2(-forceDir.x * kickKnockback, 5);
 
             e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
@@ -172,7 +174,7 @@ public class PlayerController : MonoBehaviour
    }
 
    //Find all the enemies within the monkey's effective damage range
-   private Collider2D[] hitRange()
+   private Collider2D[] HitRange()
    {
       Collider2D[] enemiesHit =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 

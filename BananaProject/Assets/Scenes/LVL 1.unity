@@ -283,7 +283,7 @@ Transform:
   m_GameObject: {fileID: 511718230}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.533273, y: 2.5878553, z: -0.13511221}
+  m_LocalPosition: {x: -12.533273, y: 1.48, z: -0.13511221}
   m_LocalScale: {x: 6.6258407, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -765,7 +765,7 @@ Transform:
   m_GameObject: {fileID: 885994870}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 13.906727, y: 2.8778553, z: -0.13511221}
+  m_LocalPosition: {x: 13.906727, y: 1.7699999, z: -0.13511221}
   m_LocalScale: {x: 6.6258407, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -895,7 +895,7 @@ Transform:
   m_GameObject: {fileID: 1020569225}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3767271, y: 6.0278554, z: -0.13511221}
+  m_LocalPosition: {x: 0.3767271, y: 4.92, z: -0.13511221}
   m_LocalScale: {x: 6.6258407, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1031,6 +1031,67 @@ Transform:
   m_Children: []
   m_Father: {fileID: 264932262}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1568200106
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 14.79
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Name
+      value: Robo Monkey (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896823501176982874, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
 --- !u!1001 &4494610551791954568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1041,11 +1102,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.48
+      value: -11.56
       objectReference: {fileID: 0}
     - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4598
+      value: 3.4
       objectReference: {fileID: 0}
     - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1082,6 +1143,10 @@ PrefabInstance:
     - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_Name
       value: Robo Monkey
+      objectReference: {fileID: 0}
+    - target: {fileID: 5896823501176982874, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1165,3 +1230,4 @@ SceneRoots:
   - {fileID: 4698800578150094094}
   - {fileID: 264932262}
   - {fileID: 4494610551791954568}
+  - {fileID: 1568200106}
