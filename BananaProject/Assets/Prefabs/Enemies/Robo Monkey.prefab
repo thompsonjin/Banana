@@ -343,13 +343,13 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  speed: 3
+  patrolSpeed: 3
+  chaseSpeed: 6
   attackPoint: {fileID: 2534235966362684627}
   attackRange: 0.4
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
-  playerHitTimer: 2
 --- !u!1 &5316110571558589286
 GameObject:
   m_ObjectHideFlags: 0

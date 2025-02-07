@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,8 +11,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
 
     [Header("Health")]
-    [SerializeField] private float maxHealth;
-    private float health;
+    [SerializeField] private int maxHealth;
+    private int health;
+    //HEALTH UI
+    [SerializeField] private Image healthIcon;
+    [SerializeField] private Image usedHealthIcon;
+    [SerializeField] private Transform[] displayHealth = new Transform[3];
     
     [Header("Movement")]
     [SerializeField] private float speed;
@@ -30,6 +35,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
     private int comboCount;
+    //KNOCKBACK VALUES
     [SerializeField] private float punchKnockback;
     [SerializeField] private float uppercutKnockback;
     [SerializeField] private float kickKnockback;
@@ -38,6 +44,11 @@ public class PlayerController : MonoBehaviour
    void Awake()
    {
       health = maxHealth;
+
+      foreach(Transform t in displayHealth)
+      {
+         Instantiate(healthIcon, t);
+      }
    } 
 
    void Update()
@@ -91,6 +102,12 @@ public class PlayerController : MonoBehaviour
       if(Input.GetMouseButtonDown(1))
       {
          KickAttack();
+      }
+
+      //TEMPORARY HEAL BUTTON
+      if(Input.GetKeyDown(KeyCode.F))
+      {
+         GainHealth(1);
       }
 
       Flip();
@@ -212,26 +229,33 @@ public class PlayerController : MonoBehaviour
    
    //HEALTH FUNCTIONS
    public void TakeDamage()
-   {
-      health--;
+   {    
+      if(health > 0)
+      {
+         health--;
+         Debug.Log("DAMAGE");
 
-      if(health <= 0)
+         Destroy(displayHealth[health].GetChild(0).gameObject);
+         Instantiate(usedHealthIcon, displayHealth[health]);
+      }
+      else if(health <= 0)
       {
          Debug.Log("You Are Dead");
-      }
-      else
-      {
-         Debug.Log("DAMAGE");
       }
    }
 
    public void GainHealth(int h)
    {
-      health += h;
-
       if(health >= maxHealth)
       {
          health = maxHealth;
+      }
+      else
+      {
+         health += h;
+
+         Destroy(displayHealth[health - 1].GetChild(0).gameObject);
+         Instantiate(healthIcon, displayHealth[health - 1]);
       }
    }
 }

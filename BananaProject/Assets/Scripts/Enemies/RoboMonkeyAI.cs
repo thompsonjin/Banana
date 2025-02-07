@@ -13,7 +13,8 @@ public class RoboMonkeyAI : MonoBehaviour
     private PlayerController p_Con;
 
     [Header("Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] private float patrolSpeed;
+    [SerializeField] private float chaseSpeed;
     private Vector2 moveDir;
     private bool isFacingRight;
     private bool patrol;
@@ -111,10 +112,14 @@ public class RoboMonkeyAI : MonoBehaviour
    //MOVEMENT FUNCTIONS 
    private void FixedUpdate()
    {   
-      if(!hit && IsGrounded())
+      if(!hit && IsGrounded() && !patrol)
       {
-        rb.velocity = new Vector2(-moveDir.x * speed, rb.velocity.y);
-      }         
+        rb.velocity = new Vector2(-moveDir.x * chaseSpeed, rb.velocity.y);
+      }  
+      else if(!hit && IsGrounded() && patrol) 
+      {
+        rb.velocity = new Vector2(-moveDir.x * patrolSpeed, rb.velocity.y);
+      }      
    }
 
    public void SetHit()
