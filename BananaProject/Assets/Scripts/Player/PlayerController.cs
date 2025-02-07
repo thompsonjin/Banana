@@ -14,9 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxHealth;
     private int health;
     //HEALTH UI
-    [SerializeField] private Image healthIcon;
-    [SerializeField] private Image usedHealthIcon;
-    [SerializeField] private Transform[] displayHealth = new Transform[3];
+    [SerializeField] private Image[] displayHealth = new Image[3];
     
     [Header("Movement")]
     [SerializeField] private float speed;
@@ -39,16 +37,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float punchKnockback;
     [SerializeField] private float uppercutKnockback;
     [SerializeField] private float kickKnockback;
-
+    [SerializeField] private int maxBananas;
+    private int bananaCount;
+    //BANANA UI
+    [SerializeField] private Image[] displayBananas = new Image[5];
     
    void Awake()
    {
       health = maxHealth;
-
-      foreach(Transform t in displayHealth)
-      {
-         Instantiate(healthIcon, t);
-      }
+      bananaCount = maxBananas;
    } 
 
    void Update()
@@ -101,13 +98,23 @@ public class PlayerController : MonoBehaviour
       //Kick
       if(Input.GetMouseButtonDown(1))
       {
-         KickAttack();
+         if(bananaCount > 0)
+         {
+           KickAttack();
+           UseBanana(1);
+         }      
       }
 
       //TEMPORARY HEAL BUTTON
       if(Input.GetKeyDown(KeyCode.F))
       {
          GainHealth(1);
+      }
+
+      //TEMPORARY BANANA REGENERATION
+      if(Input.GetKeyDown(KeyCode.G))
+      {
+         GiveBanana(1);
       }
 
       Flip();
@@ -227,18 +234,24 @@ public class PlayerController : MonoBehaviour
    }
 
    
-   //HEALTH FUNCTIONS
+   //HEALTH MANAGMENT
    public void TakeDamage()
    {    
+      health--;
+
       if(health > 0)
-      {
-         health--;
+      {       
          Debug.Log("DAMAGE");
 
-         Destroy(displayHealth[health].GetChild(0).gameObject);
-         Instantiate(usedHealthIcon, displayHealth[health]);
+         displayHealth[health].enabled = false;
       }
-      else if(health <= 0)
+      else if(health == 0)
+      {
+         Debug.Log("You Are Dead");
+
+         displayHealth[health].enabled = false;
+      }
+      else
       {
          Debug.Log("You Are Dead");
       }
@@ -246,16 +259,34 @@ public class PlayerController : MonoBehaviour
 
    public void GainHealth(int h)
    {
+      health += h;
+
       if(health >= maxHealth)
       {
          health = maxHealth;
       }
+
+      displayHealth[health - 1].enabled = true;
+   }
+
+   //BANANA MANAGMENT
+   private void UseBanana(int b)
+   {
+      bananaCount -= b;
+      displayBananas[bananaCount].enabled = false;
+   }
+
+   public void GiveBanana(int b)
+   {
+      bananaCount += b;
+
+      if(bananaCount > maxBananas)
+      {
+         bananaCount = maxBananas;
+      }
       else
       {
-         health += h;
-
-         Destroy(displayHealth[health - 1].GetChild(0).gameObject);
-         Instantiate(healthIcon, displayHealth[health - 1]);
-      }
+         displayBananas[bananaCount -  1].enabled = true;
+      }    
    }
 }

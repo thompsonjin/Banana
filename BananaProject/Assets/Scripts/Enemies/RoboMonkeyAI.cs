@@ -30,7 +30,6 @@ public class RoboMonkeyAI : MonoBehaviour
     private bool hit;
     private float hitTimer;
 
-
     // Start is called before the first frame update
     void Awake()
     {
