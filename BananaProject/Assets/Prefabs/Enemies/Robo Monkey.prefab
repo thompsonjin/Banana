@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &391053170484596849
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2534235966362684627}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2534235966362684627
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391053170484596849}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.936, y: -0.053, z: -0.030505084}
+  m_LocalScale: {x: 1, y: 0.53856856, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4402670501952691263}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &826278509846221720
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,6 +184,7 @@ Transform:
   - {fileID: 2573768036974057904}
   - {fileID: 8885206833063862873}
   - {fileID: 2507777603039288749}
+  - {fileID: 2534235966362684627}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &432853167744565938
@@ -312,7 +344,12 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   speed: 3
-  hitTimer: 0.3
+  attackPoint: {fileID: 2534235966362684627}
+  attackRange: 0.4
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  playerHitTimer: 2
 --- !u!1 &5316110571558589286
 GameObject:
   m_ObjectHideFlags: 0

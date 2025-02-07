@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 307851999158270081}
   - component: {fileID: 3069054259231414762}
   - component: {fileID: 4332758852388198093}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -134,6 +134,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
+  maxHealth: 0
   speed: 15
   jumpPower: 25
   isFacingRight: 1
@@ -142,6 +143,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  punchKnockback: 0
+  uppercutKnockback: 0
+  kickKnockback: 0
 --- !u!61 &4332758852388198093
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -197,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1845000926006799965}
   - component: {fileID: 7265174669851137138}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Face
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +284,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 280152045252730823}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,7 +315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5519777832520509073}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}

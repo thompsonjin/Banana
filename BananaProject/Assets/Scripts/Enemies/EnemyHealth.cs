@@ -19,7 +19,7 @@ public class EnemyHealth : MonoBehaviour
 
         if(health <= 0)
         {
-            //print("Enemy has died");    
+            Destroy(this.gameObject);
         }
     }
 }

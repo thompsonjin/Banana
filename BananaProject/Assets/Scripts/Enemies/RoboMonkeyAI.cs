@@ -6,6 +6,7 @@ public class RoboMonkeyAI : MonoBehaviour
 {
     [Header("References")]
     private GameObject player;
+    private PlayerController p_Con;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform turnCheck;
@@ -20,19 +21,28 @@ public class RoboMonkeyAI : MonoBehaviour
 
     [Header("Combat")]
     private bool hit;
-    [SerializeField] private float hitTimer;
+    private float hitTimer;
+    [SerializeField] private Transform attackPoint;
+    [SerializeField] private float attackRange;
+    [SerializeField] private LayerMask playerLayer;
+    private bool inRange;
+    private const float PLAYER_HIT_TIME = 1;
+    [SerializeField] private float playerHitTimer;
 
 
     // Start is called before the first frame update
     void Awake()
     {
+      playerHitTimer = PLAYER_HIT_TIME;
       player = GameObject.Find("Player");
+      p_Con = player.GetComponent<PlayerController>();
       patrol = true;
     }
 
     // Update is called once per frame
     void Update()
     {
+      //if the player hasnt been spotted patrol the platform as normal
       if(patrol)
       {
         if(ShouldTurn())
@@ -53,11 +63,39 @@ public class RoboMonkeyAI : MonoBehaviour
       }
       else
       {
+        //otherwise track the players location
         moveDir = this.transform.position - player.transform.position;
         moveDir.Normalize();
+
+        //check if the player is in range to hit
+        if(HitRange())
+        {
+          inRange = true;
+        }
       }
       
+      //
+      if(inRange)
+      {
+        playerHitTimer -= Time.deltaTime;
+
+        if(playerHitTimer <= 0)
+        {
+          if(HitRange())
+          {
+            p_Con.TakeDamage();
+            playerHitTimer = PLAYER_HIT_TIME;
+          }
+          else
+          {
+            playerHitTimer = PLAYER_HIT_TIME;
+            inRange = false;
+          }
+        }
         
+      }
+
+      //track how long the enemy is stunned by the hit 
       if(hit)
       {
         hitTimer -= Time.deltaTime;
@@ -67,6 +105,9 @@ public class RoboMonkeyAI : MonoBehaviour
           hit = false;     
         }
       }
+
+      
+      
 
       Flip();
     }
@@ -110,5 +151,25 @@ public class RoboMonkeyAI : MonoBehaviour
    public void SetPatrol(bool b)
    {
      patrol = b;
+   }
+
+   private bool HitRange()
+   {
+      Collider2D playerHit =  Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
+
+      if(playerHit != null)
+      {
+        return true;
+      }
+      else
+      {
+        return false;
+      }       
+   }
+
+   void OnDrawGizmosSelected()
+   {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
    }
 }

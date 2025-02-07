@@ -8,6 +8,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+
+    [Header("Health")]
+    [SerializeField] private float maxHealth;
+    private float health;
     
     [Header("Movement")]
     [SerializeField] private float speed;
@@ -31,6 +35,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float kickKnockback;
 
     
+   void Awake()
+   {
+      health = maxHealth;
+   } 
+
    void Update()
    {
       //Get the players left and right input to calculate the force that needs to be applied
@@ -78,6 +87,7 @@ public class PlayerController : MonoBehaviour
          BasicAttack();
       }
 
+      //Kick
       if(Input.GetMouseButtonDown(1))
       {
          KickAttack();
@@ -86,6 +96,7 @@ public class PlayerController : MonoBehaviour
       Flip();
    }
 
+   //MOVEMENT FUNCTIONS
    private void FixedUpdate()
    {
       //apply the product of horizontal and speed to the players current velocity
@@ -98,6 +109,17 @@ public class PlayerController : MonoBehaviour
       return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
    }
 
+   private void Flip()
+   {
+        //Rotate the character along the y axis based on the last horizontal input of the player
+        if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        {
+            isFacingRight = !isFacingRight;
+            transform.Rotate(0f, 180f, 0f);
+        }
+   }
+
+   //COMBAT FUNCTIONS
    //deal damage and knockback on each attack with the damage doubled every three hits
    private void BasicAttack()
    {
@@ -121,7 +143,7 @@ public class PlayerController : MonoBehaviour
             forceDir.Normalize();
 
             //using given direction change values to appropriate force
-            Vector2 uppercutForce = new Vector2(-forceDir.x * uppercutKnockback, 20);
+            Vector2 uppercutForce = new Vector2(-forceDir.x * (uppercutKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 20);
 
             e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
          }  
@@ -144,7 +166,7 @@ public class PlayerController : MonoBehaviour
             forceDir.Normalize();
 
             //using given direction change values to appropriate force
-            Vector2 punchForce = new Vector2(-forceDir.x * punchKnockback, 5);
+            Vector2 punchForce = new Vector2(-forceDir.x * (punchKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
 
             e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
          }    
@@ -167,7 +189,7 @@ public class PlayerController : MonoBehaviour
             forceDir.Normalize();
 
             //using given direction change values to appropriate force
-            Vector2 kickForce = new Vector2(-forceDir.x * kickKnockback, 5);
+            Vector2 kickForce = new Vector2(-forceDir.x * (kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
 
             e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
          }  
@@ -187,13 +209,29 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
    }
 
-   private void Flip()
+   
+   //HEALTH FUNCTIONS
+   public void TakeDamage()
    {
-        //Rotate the character along the y axis based on the last horizontal input of the player
-        if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
-        {
-            isFacingRight = !isFacingRight;
-            transform.Rotate(0f, 180f, 0f);
-        }
+      health--;
+
+      if(health <= 0)
+      {
+         Debug.Log("You Are Dead");
+      }
+      else
+      {
+         Debug.Log("DAMAGE");
+      }
+   }
+
+   public void GainHealth(int h)
+   {
+      health += h;
+
+      if(health >= maxHealth)
+      {
+         health = maxHealth;
+      }
    }
 }
