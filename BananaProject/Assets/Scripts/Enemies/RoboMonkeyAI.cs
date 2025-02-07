@@ -5,29 +5,29 @@ using UnityEngine;
 public class RoboMonkeyAI : MonoBehaviour
 {
     [Header("References")]
-    private GameObject player;
-    private PlayerController p_Con;
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Transform turnCheck;
     [SerializeField] private LayerMask groundLayer;
+    private GameObject player;
+    private PlayerController p_Con;
 
     [Header("Movement")]
-    private Vector2 moveDir;
     [SerializeField] private float speed;
+    private Vector2 moveDir;
     private bool isFacingRight;
     private bool patrol;
     private bool turn;
 
     [Header("Combat")]
-    private bool hit;
-    private float hitTimer;
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask playerLayer;
     private bool inRange;
     private const float PLAYER_HIT_TIME = 1;
-    [SerializeField] private float playerHitTimer;
+    private float playerHitTimer;
+    private bool hit;
+    private float hitTimer;
 
 
     // Start is called before the first frame update
@@ -58,8 +58,6 @@ public class RoboMonkeyAI : MonoBehaviour
             moveDir = new Vector2(-1,0);
           }
         }
-
-
       }
       else
       {
@@ -74,7 +72,7 @@ public class RoboMonkeyAI : MonoBehaviour
         }
       }
       
-      //
+      //give a grace period then attempt to damage the player if they are still within range if not reset
       if(inRange)
       {
         playerHitTimer -= Time.deltaTime;
@@ -106,13 +104,12 @@ public class RoboMonkeyAI : MonoBehaviour
         }
       }
 
-      
-      
-
       Flip();
     }
 
-    private void FixedUpdate()
+
+   //MOVEMENT FUNCTIONS 
+   private void FixedUpdate()
    {   
       if(!hit && IsGrounded())
       {
@@ -152,7 +149,8 @@ public class RoboMonkeyAI : MonoBehaviour
    {
      patrol = b;
    }
-
+   
+   //COMBAT FUNCTIONS
    private bool HitRange()
    {
       Collider2D playerHit =  Physics2D.OverlapCircle(attackPoint.position, attackRange, playerLayer);
