@@ -17,7 +17,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Image[] displayHealth = new Image[3];
     
     [Header("Movement")]
-    [SerializeField] private float speed;
+    [SerializeField] private float normalSpeed;
+    private float currentSpeed;
+    [SerializeField] private float chargeSpeed;
     [SerializeField] private float jumpPower;
     private float horizontal;
     //Grace period where jump input is still registered after falling off a platform
@@ -33,6 +35,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
     private int comboCount;
+    //Kick
+    private float kickPower;
+    [SerializeField] private float kickPowerMax;
+    bool kickPowered;
+    //Charge
+    private float chargePower;
+    [SerializeField]private float chargePowerMax;
+    private float chargePowerTimer;
+    public Slider chargeBar;
+    //GROUND POUND
+    private bool groundPound;
     //KNOCKBACK VALUES
     [SerializeField] private float punchKnockback;
     [SerializeField] private float uppercutKnockback;
@@ -41,11 +54,15 @@ public class PlayerController : MonoBehaviour
     private int bananaCount;
     //BANANA UI
     [SerializeField] private Image[] displayBananas = new Image[5];
+    [SerializeField] private Slider powerSlider;
     
    void Awake()
    {
       health = maxHealth;
       bananaCount = maxBananas;
+      currentSpeed = normalSpeed;
+
+      chargePowerTimer = 0;
    } 
 
    void Update()
@@ -96,14 +113,69 @@ public class PlayerController : MonoBehaviour
       }
 
       //Kick
-      if(Input.GetMouseButtonDown(1))
+      if(Input.GetMouseButton(1) && IsGrounded())
       {
-         if(bananaCount > 0)
-         {
-           KickAttack();
-           UseBanana(1);
-         }      
+            if (bananaCount > 0)
+            {
+                kickPower += Time.deltaTime;
+                powerSlider.value = kickPower / kickPowerMax;
+
+                if (kickPower >= kickPowerMax)
+                {
+                    kickPower = kickPowerMax;
+                    kickPowered = true;
+                }
+            }
       }
+
+      if (Input.GetMouseButtonUp(1) && IsGrounded())
+      {
+            if (kickPowered)
+            {
+                KickAttack(true);
+                UseBanana(1);
+                kickPowered = false;
+                kickPower = 0;
+                powerSlider.value = 0;
+            }
+            else
+            {
+                KickAttack(false);
+                kickPowered = false;
+                kickPower = 0;
+                powerSlider.value = 0;
+            }         
+      }
+
+      //Ground Pound
+      if(Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded())
+      {
+            groundPound = true;
+      }
+
+      //Charge
+
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            if(bananaCount >= 3)
+            {
+                UseBanana(3);
+            }
+        }
+
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            ChargeAttack();      
+        }
+
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            chargePower = 0;
+            chargePowerTimer = 0;
+            currentSpeed = normalSpeed;
+            chargeBar.value = 0;
+        }
 
       //TEMPORARY HEAL BUTTON
       if(Input.GetKeyDown(KeyCode.F))
@@ -123,8 +195,21 @@ public class PlayerController : MonoBehaviour
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
    {
-      //apply the product of horizontal and speed to the players current velocity
-      rb.velocity = new Vector2(horizontal * speed, rb.velocity.y);
+        if(groundPound)
+        {
+            //apply a force directly down and lock horizontal movement
+            rb.velocity = new Vector2(rb.velocity.x, -50);
+            if(IsGrounded())
+            {
+                groundPound = false;
+            }
+        }
+        else
+        {
+            //apply the product of horizontal and speed to the players current velocity
+            rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
+        }
+      
    }
 
    private bool IsGrounded()
@@ -197,27 +282,90 @@ public class PlayerController : MonoBehaviour
       }      
    }
 
-   private void KickAttack()
+   private void KickAttack(bool c)
    {
-      foreach(Collider2D col in HitRange())
-         {
-            RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-            EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-            Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+        if (c)
+        {
+            foreach (Collider2D col in HitRange())
+            {
+                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.SetHit();
-            e_Health.Damage(6);
+                e_Ai.SetHit();
+                e_Health.Damage(6);
 
-            //find the orientation of the hit enemy relative to the player
-            Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-            forceDir.Normalize();
+                //find the orientation of the hit enemy relative to the player
+                Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                forceDir.Normalize();
 
-            //using given direction change values to appropriate force
-            Vector2 kickForce = new Vector2(-forceDir.x * (kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+                //using given direction change values to appropriate force
+                Vector2 kickForce = new Vector2(-forceDir.x * (kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
 
-            e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
-         }  
+                e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
+            }
+        }
+        else
+        {
+            foreach (Collider2D col in HitRange())
+            {
+                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+
+                e_Ai.SetHit();
+                e_Health.Damage(3);
+
+                //find the orientation of the hit enemy relative to the player
+                Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                forceDir.Normalize();
+
+                //using given direction change values to appropriate force
+                Vector2 kickForce = new Vector2(-forceDir.x * ((kickKnockback / 2) * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+
+                e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
+            }
+        }
+      
    }
+
+    public void ChargeAttack()
+    { //Hold to charge dash
+        if (chargePower < chargePowerMax)
+        {
+            currentSpeed = 0;
+            chargePower += Time.deltaTime;
+            chargePowerTimer += Time.deltaTime;
+            chargeBar.value = chargePowerTimer / chargePowerMax;
+        }
+        else
+        {
+            if (chargePower >= chargePowerMax)
+            {
+                //Activate when fully charged
+                currentSpeed = chargeSpeed;
+                chargePowerTimer -= Time.deltaTime;
+                chargeBar.value = chargePowerTimer / chargePowerMax;
+
+                if (chargePowerTimer <= 0)
+                {
+                    //if holding for longer than the allowed time use more banana shards to extend if no shards cancel ability
+                    if (chargePowerTimer <= -2)
+                    {
+                        if (bananaCount > 0)
+                        {
+                            UseBanana(1);
+                            chargePowerTimer = 0;
+                        }
+                        else
+                        {
+                            currentSpeed = normalSpeed;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
    //Find all the enemies within the monkey's effective damage range
    private Collider2D[] HitRange()
@@ -272,8 +420,12 @@ public class PlayerController : MonoBehaviour
    //BANANA MANAGMENT
    private void UseBanana(int b)
    {
-      bananaCount -= b;
-      displayBananas[bananaCount].enabled = false;
+        bananaCount -= b;
+
+        for (int i = 0; i < b; i++)
+        {
+            displayBananas[bananaCount + i].enabled = false;
+        }     
    }
 
    public void GiveBanana(int b)

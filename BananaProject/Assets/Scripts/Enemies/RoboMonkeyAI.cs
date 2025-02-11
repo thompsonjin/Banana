@@ -25,7 +25,7 @@ public class RoboMonkeyAI : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask playerLayer;
     private bool inRange;
-    private const float PLAYER_HIT_TIME = 1;
+    private const float PLAYER_HIT_TIME = .8f;
     private float playerHitTimer;
     private bool hit;
     private float hitTimer;
