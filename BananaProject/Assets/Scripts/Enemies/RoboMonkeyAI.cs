@@ -174,4 +174,12 @@ public class RoboMonkeyAI : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Wall")
+        {
+            turn = !turn;
+        }
+    }
 }

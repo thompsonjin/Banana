@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,7 +16,15 @@ public class PlayerController : MonoBehaviour
     private int health;
     //HEALTH UI
     [SerializeField] private Image[] displayHealth = new Image[3];
-    
+
+    [Header("Resources")]
+    //BANANA UI
+    [SerializeField] private Image[] displayBananas = new Image[5];
+    [SerializeField] private Slider chargeBar;
+    [SerializeField] private Slider powerSlider;
+    private float bananaRegenTimer;
+    [SerializeField] private float bananaRegen;
+
     [Header("Movement")]
     [SerializeField] private float normalSpeed;
     private float currentSpeed;
@@ -43,11 +52,12 @@ public class PlayerController : MonoBehaviour
     private float chargePower;
     [SerializeField]private float chargePowerMax;
     private float chargePowerTimer;
-    public Slider chargeBar;
-    public bool aura;
+    private bool aura;
     public SpriteRenderer sprite;
+    private bool canCharge;
     //GROUND POUND
     private bool groundPound;
+    private float recoverTime;
     //KNOCKBACK VALUES
     [SerializeField] private float punchKnockback;
     [SerializeField] private float uppercutKnockback;
@@ -55,9 +65,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float chargeKnockback;
     [SerializeField] private int maxBananas;
     private int bananaCount;
-    //BANANA UI
-    [SerializeField] private Image[] displayBananas = new Image[5];
-    [SerializeField] private Slider powerSlider;
+    
     
    void Awake()
    {
@@ -153,8 +161,12 @@ public class PlayerController : MonoBehaviour
       //Ground Pound
       if(Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded())
       {
-            groundPound = true;
-            SetAura(true);
+            if (bananaCount > 0)
+            {
+                groundPound = true;
+                SetAura(true);
+                UseBanana(1);
+            }      
       }
 
       //Charge
@@ -165,10 +177,11 @@ public class PlayerController : MonoBehaviour
             if(bananaCount >= 3)
             {
                 UseBanana(3);
+                canCharge = true;
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && canCharge)
         {
             ChargeAttack();      
         }
@@ -180,6 +193,7 @@ public class PlayerController : MonoBehaviour
             currentSpeed = normalSpeed;
             chargeBar.value = 0;
             SetAura(false);
+            canCharge = false;
         }
 
       //TEMPORARY HEAL BUTTON
@@ -188,11 +202,20 @@ public class PlayerController : MonoBehaviour
          GainHealth(1);
       }
 
-      //TEMPORARY BANANA REGENERATION
-      if(Input.GetKeyDown(KeyCode.G))
-      {
-         GiveBanana(1);
-      }
+        //BANANA REGENERATION
+        if (!canCharge)
+        {
+            bananaRegenTimer += Time.deltaTime;
+            if (bananaRegenTimer > bananaRegen)
+            {
+                if (bananaCount < maxBananas)
+                {
+                    GiveBanana(1);
+                }
+
+                bananaRegenTimer = 0;
+            }
+        }  
 
       Flip();
    }
@@ -206,8 +229,15 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, -50);
             if(IsGrounded())
             {
-                groundPound = false;
-                SetAura(false);
+                recoverTime += Time.deltaTime;
+                if(recoverTime > .5f)
+                {
+                    SetAura(false);
+                    recoverTime = 0;
+                    groundPound = false;
+                }
+                
+                
             }
         }
         else
@@ -242,52 +272,68 @@ public class PlayerController : MonoBehaviour
 
       if(comboCount == 3)
       {
-         if(HitRange() != null)
-         {
-             foreach (Collider2D col in HitRange())
-             {
-                 RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+        foreach (Collider2D col in HitRange())
+        {
+            if(HitRange() != null)
+            {
+                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-                 e_Ai.SetHit();
-                 e_Health.Damage(4);
-                 //find the orientation of the hit enemy relative to the player
-                 Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                 forceDir.Normalize();
+                
+                if (e_Ai != null)
+                {
+                    e_Ai.SetHit();
+                    e_Ai.SetPatrol(false);
+                    e_Health.Damage(4);
+                    //find the orientation of the hit enemy relative to the player
+                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                    forceDir.Normalize();
 
-                 //using given direction change values to appropriate force
-                 Vector2 uppercutForce = new Vector2(-forceDir.x * (uppercutKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 20);
+                    //using given direction change values to appropriate force
+                    Vector2 uppercutForce = new Vector2(-forceDir.x * (uppercutKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 20);
 
-                 e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
-             }
+                    e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
 
-             comboCount = 0;
-         }       
+                }
+
+            }       
+           
+        }
+
+        comboCount = 0;       
       }
       else
       {
-         if(HitRange() != null)
-         {
-             foreach (Collider2D col in HitRange())
-             {
-                 RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+        foreach (Collider2D col in HitRange())
+        {
+            if(HitRange() != null)
+            {
+                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-                 e_Ai.SetHit();
-                 e_Health.Damage(2);
+                if(e_Ai != null)
+                {
+                    e_Ai.SetHit();
+                    e_Ai.SetPatrol(false);
+                    e_Health.Damage(2);
 
-                 //find the orientation of the hit enemy relative to the player
-                 Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                 forceDir.Normalize();
+                    //find the orientation of the hit enemy relative to the player
+                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                    forceDir.Normalize();
 
-                 //using given direction change values to appropriate force
-                 Vector2 punchForce = new Vector2(-forceDir.x * (punchKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+                    //using given direction change values to appropriate force
+                    Vector2 punchForce = new Vector2(-forceDir.x * (punchKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
 
-                 e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
-             }
-         }    
+                    e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
+                }
+
+               
+            }    
+           
+        }
+        
       }      
    }
 
@@ -301,17 +347,23 @@ public class PlayerController : MonoBehaviour
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-                e_Ai.SetHit();
-                e_Health.Damage(6);
+                if(e_Ai != null)
+                {
+                    
+                    e_Ai.SetHit();
+                    e_Ai.SetPatrol(false);
+                    e_Health.Damage(6);
 
-                //find the orientation of the hit enemy relative to the player
-                Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                forceDir.Normalize();
+                    //find the orientation of the hit enemy relative to the player
+                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                    forceDir.Normalize();
 
-                //using given direction change values to appropriate force
-                Vector2 kickForce = new Vector2(-forceDir.x * (kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+                    //using given direction change values to appropriate force
+                    Vector2 kickForce = new Vector2(-forceDir.x * (kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
 
-                e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
+                    e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
+                }
+
             }
         }
         else
@@ -322,21 +374,24 @@ public class PlayerController : MonoBehaviour
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-                e_Ai.SetHit();
-                e_Health.Damage(3);
+                if(e_Ai != null)
+                {
+                    e_Ai.SetHit();
+                    e_Ai.SetPatrol(false);
+                    e_Health.Damage(3);
 
-                //find the orientation of the hit enemy relative to the player
-                Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                forceDir.Normalize();
+                    //find the orientation of the hit enemy relative to the player
+                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                    forceDir.Normalize();
 
-                //using given direction change values to appropriate force
-                Vector2 kickForce = new Vector2(-forceDir.x * ((kickKnockback / 2) * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+                    //using given direction change values to appropriate force
+                    Vector2 kickForce = new Vector2(-forceDir.x * ((kickKnockback / 2) * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
 
-                e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
+                    e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
+                }              
             }
-        }
-      
-   }
+        }      
+    }
 
     public void ChargeAttack()
     { //Hold to charge dash
@@ -360,7 +415,7 @@ public class PlayerController : MonoBehaviour
                 if (chargePowerTimer <= 0)
                 {
                     //if holding for longer than the allowed time use more banana shards to extend if no shards cancel ability
-                    if (chargePowerTimer <= -2)
+                    if (chargePowerTimer <= -1)
                     {
                         if (bananaCount > 0)
                         {
@@ -415,14 +470,23 @@ public class PlayerController : MonoBehaviour
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
             e_Ai.SetHit();
-            e_Health.Damage(2);
-
+            e_Ai.SetPatrol(false);
+            if (groundPound)
+            {
+                e_Health.Damage(5);
+            }
+            else
+            {
+                e_Health.Damage(4);
+                recoverTime = 0;
+            }
+            
             //find the orientation of the hit enemy relative to the player
             Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
             forceDir.Normalize();
 
             //using given direction change values to appropriate force
-            Vector2 chargeForce = new Vector2(-forceDir.x * ((chargeKnockback / 2) * (Mathf.Abs(rb.velocity.x / 10) + 1)), 10);
+            Vector2 chargeForce = new Vector2(-forceDir.x * (chargeKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 2);
 
             e_Rigid.AddForce(chargeForce, ForceMode2D.Impulse);
         }

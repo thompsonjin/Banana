@@ -134,12 +134,21 @@ MonoBehaviour:
   groundCheck: {fileID: 5519777832520509073}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 72
   maxHealth: 3
   displayHealth:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  displayBananas:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  chargeBar: {fileID: 8971623386080281610}
+  powerSlider: {fileID: 991260835937992137}
+  bananaRegen: 5
   normalSpeed: 12
   chargeSpeed: 24
   jumpPower: 25
@@ -151,18 +160,12 @@ MonoBehaviour:
     m_Bits: 64
   kickPowerMax: 2
   chargePowerMax: 3
-  chargeCircle: {fileID: 0}
+  sprite: {fileID: 2127180801005447105}
   punchKnockback: 5
   uppercutKnockback: 10
-  kickKnockback: 15
+  kickKnockback: 25
+  chargeKnockback: 10
   maxBananas: 5
-  displayBananas:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  powerSlider: {fileID: 991260835937992137}
 --- !u!61 &4332758852388198093
 BoxCollider2D:
   m_ObjectHideFlags: 0
