@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 511718233}
   - component: {fileID: 511718232}
   - component: {fileID: 511718231}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Platform (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 885994873}
   - component: {fileID: 885994872}
   - component: {fileID: 885994871}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Platform (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -809,7 +809,7 @@ GameObject:
   - component: {fileID: 1020569228}
   - component: {fileID: 1020569227}
   - component: {fileID: 1020569226}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Platform (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -944,7 +944,7 @@ GameObject:
   - component: {fileID: 1495274944}
   - component: {fileID: 1495274943}
   - component: {fileID: 1495274942}
-  m_Layer: 3
+  m_Layer: 6
   m_Name: Platform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1071,6 +1071,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1895696347}
     m_Modifications:
+    - target: {fileID: 391053170484596849, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 826278509846221720, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941583826803519235, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356508160548329568, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.256291
@@ -1115,9 +1131,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robo Monkey (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316110571558589286, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5896823501176982874, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7201045343303122398, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1132,6 +1164,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1895696347}
     m_Modifications:
+    - target: {fileID: 391053170484596849, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 826278509846221720, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1941583826803519235, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356508160548329568, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356508160548329568, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.11
@@ -1176,9 +1228,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robo Monkey (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316110571558589286, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5896823501176982874, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7201045343303122398, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1303,6 +1371,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!212 &2099866396 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 2127180801005447105, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+  m_PrefabInstance: {fileID: 4698800578150094094}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4494610551791954568
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1311,13 +1384,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1895696347}
     m_Modifications:
+    - target: {fileID: 391053170484596849, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 826278509846221720, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1386342581099263643, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: maxHealth
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 1941583826803519235, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4356508160548329568, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: playerHitTimer
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356508160548329568, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4356508160548329568, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: playerLayer.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 4402670501952691263, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1363,9 +1456,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robo Monkey
       objectReference: {fileID: 0}
+    - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4417765287982814885, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5316110571558589286, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5896823501176982874, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7201045343303122398, guid: d19aab9c3506ff64c9c7a8c22d0c840a, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1429,9 +1538,25 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: sprite
+      value: 
+      objectReference: {fileID: 2099866396}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: chargeBar
       value: 
       objectReference: {fileID: 336445558}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: chargeKnockback
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: enemyLayer.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: displayHealth.Array.data[0]
       value: 

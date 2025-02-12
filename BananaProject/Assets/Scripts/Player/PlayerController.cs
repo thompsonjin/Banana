@@ -44,12 +44,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField]private float chargePowerMax;
     private float chargePowerTimer;
     public Slider chargeBar;
+    public bool aura;
+    public SpriteRenderer sprite;
     //GROUND POUND
     private bool groundPound;
     //KNOCKBACK VALUES
     [SerializeField] private float punchKnockback;
     [SerializeField] private float uppercutKnockback;
     [SerializeField] private float kickKnockback;
+    [SerializeField] private float chargeKnockback;
     [SerializeField] private int maxBananas;
     private int bananaCount;
     //BANANA UI
@@ -151,6 +154,7 @@ public class PlayerController : MonoBehaviour
       if(Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded())
       {
             groundPound = true;
+            SetAura(true);
       }
 
       //Charge
@@ -175,6 +179,7 @@ public class PlayerController : MonoBehaviour
             chargePowerTimer = 0;
             currentSpeed = normalSpeed;
             chargeBar.value = 0;
+            SetAura(false);
         }
 
       //TEMPORARY HEAL BUTTON
@@ -202,6 +207,7 @@ public class PlayerController : MonoBehaviour
             if(IsGrounded())
             {
                 groundPound = false;
+                SetAura(false);
             }
         }
         else
@@ -236,48 +242,51 @@ public class PlayerController : MonoBehaviour
 
       if(comboCount == 3)
       {
-         
-
-         foreach(Collider2D col in HitRange())
+         if(HitRange() != null)
          {
-            RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-            EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-            Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+             foreach (Collider2D col in HitRange())
+             {
+                 RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.SetHit();
-            e_Health.Damage(4);
+                 e_Ai.SetHit();
+                 e_Health.Damage(4);
+                 //find the orientation of the hit enemy relative to the player
+                 Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                 forceDir.Normalize();
 
-            //find the orientation of the hit enemy relative to the player
-            Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-            forceDir.Normalize();
+                 //using given direction change values to appropriate force
+                 Vector2 uppercutForce = new Vector2(-forceDir.x * (uppercutKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 20);
 
-            //using given direction change values to appropriate force
-            Vector2 uppercutForce = new Vector2(-forceDir.x * (uppercutKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 20);
+                 e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
+             }
 
-            e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
-         }  
-
-         comboCount = 0;  
+             comboCount = 0;
+         }       
       }
       else
       {
-         foreach(Collider2D col in HitRange())
+         if(HitRange() != null)
          {
-            RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-            EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-            Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+             foreach (Collider2D col in HitRange())
+             {
+                 RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.SetHit();
-            e_Health.Damage(2);
+                 e_Ai.SetHit();
+                 e_Health.Damage(2);
 
-            //find the orientation of the hit enemy relative to the player
-            Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-            forceDir.Normalize();
+                 //find the orientation of the hit enemy relative to the player
+                 Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                 forceDir.Normalize();
 
-            //using given direction change values to appropriate force
-            Vector2 punchForce = new Vector2(-forceDir.x * (punchKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+                 //using given direction change values to appropriate force
+                 Vector2 punchForce = new Vector2(-forceDir.x * (punchKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
 
-            e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
+                 e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
+             }
          }    
       }      
    }
@@ -343,6 +352,7 @@ public class PlayerController : MonoBehaviour
             if (chargePower >= chargePowerMax)
             {
                 //Activate when fully charged
+                SetAura(true);
                 currentSpeed = chargeSpeed;
                 chargePowerTimer -= Time.deltaTime;
                 chargeBar.value = chargePowerTimer / chargePowerMax;
@@ -360,6 +370,7 @@ public class PlayerController : MonoBehaviour
                         else
                         {
                             currentSpeed = normalSpeed;
+                            SetAura(false);
                         }
                     }
                 }
@@ -381,28 +392,67 @@ public class PlayerController : MonoBehaviour
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
    }
 
-   
-   //HEALTH MANAGMENT
-   public void TakeDamage()
-   {    
-      health--;
+    public void SetAura(bool a)
+    {
+        if (a)
+        {
+            aura = true;
+            sprite.color = Color.blue;
+        }
+        else
+        {
+            aura = false;
+            sprite.color = Color.gray;
+        }
+    }
 
-      if(health > 0)
-      {       
-         Debug.Log("DAMAGE");
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Enemy" && aura)
+        {
+            RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+            EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+            Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-         displayHealth[health].enabled = false;
-      }
-      else if(health == 0)
-      {
-         Debug.Log("You Are Dead");
+            e_Ai.SetHit();
+            e_Health.Damage(2);
 
-         displayHealth[health].enabled = false;
-      }
-      else
-      {
-         Debug.Log("You Are Dead");
-      }
+            //find the orientation of the hit enemy relative to the player
+            Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+            forceDir.Normalize();
+
+            //using given direction change values to appropriate force
+            Vector2 chargeForce = new Vector2(-forceDir.x * ((chargeKnockback / 2) * (Mathf.Abs(rb.velocity.x / 10) + 1)), 10);
+
+            e_Rigid.AddForce(chargeForce, ForceMode2D.Impulse);
+        }
+    }
+
+
+    //HEALTH MANAGMENT
+    public void TakeDamage()
+   {
+        if (!aura)
+        {
+            health--;
+
+            if (health > 0)
+            {
+                Debug.Log("DAMAGE");
+
+                displayHealth[health].enabled = false;
+            }
+            else if (health == 0)
+            {
+                Debug.Log("You Are Dead");
+
+                displayHealth[health].enabled = false;
+            }
+            else
+            {
+                Debug.Log("You Are Dead");
+            }
+        }       
    }
 
    public void GainHealth(int h)
