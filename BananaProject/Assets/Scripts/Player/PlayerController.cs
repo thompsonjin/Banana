@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private GameObject cameraFollowTarget;
+    private CameraFollowTarget camFT;
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -74,6 +76,7 @@ public class PlayerController : MonoBehaviour
       currentSpeed = normalSpeed;
 
       chargePowerTimer = 0;
+        camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
    } 
 
    void Update()
@@ -261,6 +264,8 @@ public class PlayerController : MonoBehaviour
         {
             isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
+
+            camFT.CallTurn();
         }
    }
 
