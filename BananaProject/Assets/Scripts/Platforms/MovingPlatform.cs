@@ -8,8 +8,8 @@ public class MovingPlatform : MonoBehaviour
 {
     public Transform[] points;
     public GameObject movePoint;
+    public GameObject platform;
     public float speed;
-    [SerializeField] public LayerMask platformLayer;
 
     Transform target;
     int targetNum = 0;
@@ -42,9 +42,9 @@ public class MovingPlatform : MonoBehaviour
     public void MovePlatform()
     {
 
-        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+        platform.transform.position = Vector3.MoveTowards(platform.transform.position, target.position, speed * Time.deltaTime);
 
-        if(transform.position == Physics2D.OverlapCircleAll(target.position, 1, platformLayer))
+        if(platform.transform.position == target.position)
         {
             targetNum++;
             if(targetNum == points.Length)
