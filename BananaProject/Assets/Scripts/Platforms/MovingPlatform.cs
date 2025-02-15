@@ -8,6 +8,20 @@ public class MovingPlatform : MonoBehaviour
 {
     public Transform[] points;
     public GameObject movePoint;
+    public float speed;
+    [SerializeField] public LayerMask platformLayer;
+
+    Transform target;
+    int targetNum = 0;
+
+    private void Start()
+    {
+        target = points[targetNum];
+    }
+    private void Update()
+    {
+        MovePlatform();
+    }
 
     public void AddPoints()
     {
@@ -23,5 +37,22 @@ public class MovingPlatform : MonoBehaviour
     {
         points[points.Length - 1].GetComponent<MovingPlatformPoint>().Delete();
         Array.Resize(ref points, points.Length - 1);
+    }
+
+    public void MovePlatform()
+    {
+
+        transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+
+        if(transform.position == Physics2D.OverlapCircleAll(target.position, 1, platformLayer))
+        {
+            targetNum++;
+            if(targetNum == points.Length)
+            {
+                targetNum = 0;
+            }
+
+            target = points[targetNum];
+        }
     }
 }
