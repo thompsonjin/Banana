@@ -497,7 +497,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
     //HEALTH MANAGMENT
     public void TakeDamage()
    {

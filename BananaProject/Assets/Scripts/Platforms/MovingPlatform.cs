@@ -14,6 +14,8 @@ public class MovingPlatform : MonoBehaviour
     Transform target;
     int targetNum = 0;
 
+    public GameObject platformSurface;
+
     private void Start()
     {
         target = points[targetNum];
@@ -41,10 +43,9 @@ public class MovingPlatform : MonoBehaviour
 
     public void MovePlatform()
     {
-
         platform.transform.position = Vector3.MoveTowards(platform.transform.position, target.position, speed * Time.deltaTime);
 
-        if(platform.transform.position == target.position)
+        if (platform.transform.position == target.position)
         {
             targetNum++;
             if(targetNum == points.Length)
