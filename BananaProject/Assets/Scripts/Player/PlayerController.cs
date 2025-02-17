@@ -35,6 +35,7 @@ public class PlayerController : MonoBehaviour
     private float horizontal;
     private float vertical;
     private bool vines;
+    private bool isClimbing;
     //Grace period where jump input is still registered after falling off a platform
     private float coyoteTime = 0.1f;
     private float coyoteTimeCounter;
@@ -90,16 +91,19 @@ public class PlayerController : MonoBehaviour
       //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
       if (IsGrounded())
       {
-       coyoteTimeCounter = coyoteTime;
+        coyoteTimeCounter = coyoteTime;
       }
       else
       {
-       coyoteTimeCounter -= Time.deltaTime;
+        coyoteTimeCounter -= Time.deltaTime;
       }
 
       if(Input.GetKeyDown(KeyCode.Space))
       {
         jumpBufferCounter = jumpBufferTime;
+
+            isClimbing = false;
+            rb.gravityScale = 7;
       }
       else
       {
@@ -120,6 +124,13 @@ public class PlayerController : MonoBehaviour
          rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
          coyoteTimeCounter = 0f;
+      }
+
+      //Climb
+      if(vines && Input.GetKeyDown(KeyCode.W))
+      {
+         isClimbing = true;
+         rb.gravityScale = 0;
       }
 
 
@@ -241,12 +252,10 @@ public class PlayerController : MonoBehaviour
                     SetAura(false);
                     recoverTime = 0;
                     groundPound = false;
-                }
-                
-                
+                }          
             }
         }
-        else if(vines)
+        else if(isClimbing)
         {
             //apply the product of horizontal and speed to the players current velocity
             rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
@@ -255,8 +264,7 @@ public class PlayerController : MonoBehaviour
         {
             //apply the product of horizontal and speed to the players current velocity
             rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
-        }
-      
+        }  
    }
 
    private bool IsGrounded()
@@ -279,9 +287,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Vines" && Input.GetKeyDown(KeyCode.W))
-        {
-            rb.gravityScale = 0;
+        if(collision.gameObject.tag == "Vines")
+        {           
             vines = true;
         }
     }
@@ -292,6 +299,8 @@ public class PlayerController : MonoBehaviour
         {
             rb.gravityScale = 7;
             vines = false;
+
+            isClimbing = false;
         }
     }
 
