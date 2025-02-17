@@ -29,8 +29,7 @@ public class MovingPlatform : MonoBehaviour
     {
         Array.Resize(ref points, points.Length + 1);
 
-        GameObject newObject = GameObject.Instantiate(movePoint);
-        newObject.transform.SetParent(this.transform);
+        GameObject newObject = GameObject.Instantiate(movePoint, this.transform);
         points[points.Length - 1] = newObject.transform;
 
     }
