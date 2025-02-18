@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float chargeSpeed;
     [SerializeField] private float jumpPower;
     private float horizontal;
+    private float vertical;
+    private bool vines;
+    private bool isClimbing;
     //Grace period where jump input is still registered after falling off a platform
     private float coyoteTime = 0.1f;
     private float coyoteTimeCounter;
@@ -76,27 +79,31 @@ public class PlayerController : MonoBehaviour
       currentSpeed = normalSpeed;
 
       chargePowerTimer = 0;
-        camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+      camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
    } 
 
    void Update()
    {
       //Get the players left and right input to calculate the force that needs to be applied
       horizontal = Input.GetAxisRaw("Horizontal");
+      vertical = Input.GetAxisRaw("Vertical");
 
       //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
-      if(IsGrounded())
+      if (IsGrounded())
       {
-       coyoteTimeCounter = coyoteTime;
+        coyoteTimeCounter = coyoteTime;
       }
       else
       {
-       coyoteTimeCounter -= Time.deltaTime;
+        coyoteTimeCounter -= Time.deltaTime;
       }
 
       if(Input.GetKeyDown(KeyCode.Space))
       {
         jumpBufferCounter = jumpBufferTime;
+
+        isClimbing = false;
+        rb.gravityScale = 7;
       }
       else
       {
@@ -117,6 +124,13 @@ public class PlayerController : MonoBehaviour
          rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
          coyoteTimeCounter = 0f;
+      }
+
+      //Climb
+      if(vines && Input.GetKeyDown(KeyCode.W))
+      {
+         isClimbing = true;
+         rb.gravityScale = 0;
       }
 
 
@@ -238,17 +252,19 @@ public class PlayerController : MonoBehaviour
                     SetAura(false);
                     recoverTime = 0;
                     groundPound = false;
-                }
-                
-                
+                }          
             }
+        }
+        else if(isClimbing)
+        {
+            //apply the product of horizontal and speed to the players current velocity
+            rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
         }
         else
         {
             //apply the product of horizontal and speed to the players current velocity
             rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
-        }
-      
+        }  
    }
 
    private bool IsGrounded()
@@ -269,9 +285,28 @@ public class PlayerController : MonoBehaviour
         }
    }
 
-   //COMBAT FUNCTIONS
-   //deal damage and knockback on each attack with the damage doubled every three hits
-   private void BasicAttack()
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.tag == "Vines")
+        {           
+            vines = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Vines")
+        {
+            rb.gravityScale = 7;
+            vines = false;
+
+            isClimbing = false;
+        }
+    }
+
+    //COMBAT FUNCTIONS
+    //deal damage and knockback on each attack with the damage doubled every three hits
+    private void BasicAttack()
    {
       comboCount++;
 
@@ -496,7 +531,6 @@ public class PlayerController : MonoBehaviour
             e_Rigid.AddForce(chargeForce, ForceMode2D.Impulse);
         }
     }
-
 
     //HEALTH MANAGMENT
     public void TakeDamage()
