@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
       vertical = Input.GetAxisRaw("Vertical");
 
       //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
-      if (IsGrounded())
+      if (IsGrounded() || isClimbing)
       {
         coyoteTimeCounter = coyoteTime;
       }
@@ -132,6 +132,8 @@ public class PlayerController : MonoBehaviour
          isClimbing = true;
          rb.gravityScale = 0;
       }
+
+        Debug.Log(isClimbing);
 
 
       //Punch

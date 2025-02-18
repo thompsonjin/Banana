@@ -716,7 +716,7 @@ PrefabInstance:
       objectReference: {fileID: 1618494786}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 328
+      value: 72
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: displayHealth.Array.data[0]
@@ -1314,6 +1314,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Vine Area
       objectReference: {fileID: 0}
+    - target: {fileID: 3193634078697744176, guid: ba327550231176c409583b4555be9d99, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1387,6 +1391,10 @@ PrefabInstance:
     - target: {fileID: 4680368944862349329, guid: cd1f979b4ebc1f34587d1f265a2e647f, type: 3}
       propertyPath: m_Name
       value: Vine Thin
+      objectReference: {fileID: 0}
+    - target: {fileID: 4680368944862349329, guid: cd1f979b4ebc1f34587d1f265a2e647f, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6091998829206615370, guid: cd1f979b4ebc1f34587d1f265a2e647f, type: 3}
       propertyPath: m_LocalPosition.x
