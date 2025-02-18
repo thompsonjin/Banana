@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
       currentSpeed = normalSpeed;
 
       chargePowerTimer = 0;
-        camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+      camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
    } 
 
    void Update()
@@ -102,8 +102,8 @@ public class PlayerController : MonoBehaviour
       {
         jumpBufferCounter = jumpBufferTime;
 
-            isClimbing = false;
-            rb.gravityScale = 7;
+        isClimbing = false;
+        rb.gravityScale = 7;
       }
       else
       {

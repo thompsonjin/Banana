@@ -928,7 +928,7 @@ GameObject:
   - component: {fileID: 1508946755}
   - component: {fileID: 1508946754}
   - component: {fileID: 1508946753}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Vines (1)
   m_TagString: Vines
   m_Icon: {fileID: 0}
@@ -1197,7 +1197,7 @@ GameObject:
   - component: {fileID: 1761893519}
   - component: {fileID: 1761893518}
   - component: {fileID: 1761893517}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Vines
   m_TagString: Vines
   m_Icon: {fileID: 0}
