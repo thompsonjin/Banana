@@ -17,7 +17,7 @@ public class RoboMonkeyAI : MonoBehaviour
     [SerializeField] private float chaseSpeed;
     private Vector2 moveDir;
     private bool isFacingRight;
-    private bool patrol;
+    [SerializeField] private bool patrol;
     private bool turn;
 
     [Header("Combat")]

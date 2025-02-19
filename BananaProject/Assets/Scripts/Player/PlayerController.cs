@@ -133,8 +133,6 @@ public class PlayerController : MonoBehaviour
          rb.gravityScale = 0;
       }
 
-        Debug.Log(isClimbing);
-
 
       //Punch
       if(Input.GetMouseButtonDown(0))
