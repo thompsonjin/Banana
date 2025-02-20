@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2127180801005447105}
   - component: {fileID: 307851999158270081}
   - component: {fileID: 3069054259231414762}
+  - component: {fileID: 622046107485541659}
   - component: {fileID: 4332758852388198093}
   m_Layer: 7
   m_Name: Player
@@ -135,6 +136,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 72
+  cameraFollowTarget: {fileID: 0}
   maxHealth: 3
   displayHealth:
   - {fileID: 0}
@@ -159,6 +161,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   kickPowerMax: 2
+  shadowKickKnockback: 0
+  shadowKickDistance: 0
+  hasShadowKick: 0
+  shadowKickMaxCharge: 0
+  shadowKickChargeRate: 1
   chargePowerMax: 3
   sprite: {fileID: 2127180801005447105}
   punchKnockback: 5
@@ -166,6 +173,19 @@ MonoBehaviour:
   kickKnockback: 25
   chargeKnockback: 10
   maxBananas: 5
+--- !u!114 &622046107485541659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 34807361531927040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4af91775568e8bd47ab295a346494326, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shadowShard: {fileID: 4982363664481059624, guid: 1c8c633f82eddde4dbd3df3d3b4075db, type: 3}
 --- !u!61 &4332758852388198093
 BoxCollider2D:
   m_ObjectHideFlags: 0

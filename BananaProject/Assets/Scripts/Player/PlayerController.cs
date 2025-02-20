@@ -44,15 +44,29 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferCounter;
     public bool isFacingRight;
 
-    [Header("Combat")]
+    [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
     private int comboCount;
+
+    [Header("Kick")]
     //Kick
     private float kickPower;
     [SerializeField] private float kickPowerMax;
     bool kickPowered;
+    //Shadow Kick
+    [SerializeField] private float shadowKickKnockback;
+    //How far the player will go with the shadow kick
+    [SerializeField] private float shadowKickDistance;
+    [SerializeField] private bool hasShadowKick = false;
+    private float shadowKickPower;
+    //Seconds needed to charge the kick
+    [SerializeField] private float shadowKickMaxCharge;
+    private bool isChargingShadowKick;
+    [SerializeField] private float shadowKickChargeRate = 1f;
+
+    [Header("Charge")]
     //Charge
     private float chargePower;
     [SerializeField]private float chargePowerMax;
@@ -63,6 +77,8 @@ public class PlayerController : MonoBehaviour
     //GROUND POUND
     private bool groundPound;
     private float recoverTime;
+
+    [Header("Knockback stats")]
     //KNOCKBACK VALUES
     [SerializeField] private float punchKnockback;
     [SerializeField] private float uppercutKnockback;
@@ -135,48 +151,44 @@ public class PlayerController : MonoBehaviour
 
 
       //Punch
-      if(Input.GetMouseButtonDown(0))
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Y))
       {
          BasicAttack();
       }
 
-      //Kick
-      if(Input.GetMouseButton(1) && IsGrounded())
-      {
+        //Regular Kick
+        if (Input.GetKeyDown(KeyCode.B) && IsGrounded())
+        {
+            BasicKick();
+        }
+
+        // Shadow kick charging
+        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.B) && hasShadowKick && IsGrounded())
+        {
             if (bananaCount > 0)
             {
-                kickPower += Time.deltaTime;
-                powerSlider.value = kickPower / kickPowerMax;
+                isChargingShadowKick = true;
+                shadowKickPower += Time.deltaTime * shadowKickChargeRate; // Add charge rate multiplier
+                powerSlider.value = shadowKickPower / shadowKickMaxCharge;
 
-                if (kickPower >= kickPowerMax)
+                if (shadowKickPower >= shadowKickMaxCharge)
                 {
-                    kickPower = kickPowerMax;
-                    kickPowered = true;
+                    shadowKickPower = shadowKickMaxCharge;
                 }
             }
-      }
+        }
 
-      if (Input.GetMouseButtonUp(1) && IsGrounded())
-      {
-            if (kickPowered)
-            {
-                KickAttack(true);
-                UseBanana(1);
-                kickPowered = false;
-                kickPower = 0;
-                powerSlider.value = 0;
-            }
-            else
-            {
-                KickAttack(false);
-                kickPowered = false;
-                kickPower = 0;
-                powerSlider.value = 0;
-            }         
-      }
+        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.B) && isChargingShadowKick)
+        {
+            ShadowKick();
+            UseBanana(1);
+            isChargingShadowKick = false;
+            shadowKickPower = 0;
+            powerSlider.value = 0;
+        }
 
-      //Ground Pound
-      if(Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded())
+        //Ground Pound
+        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded())
       {
             if (bananaCount > 0)
             {
@@ -189,7 +201,7 @@ public class PlayerController : MonoBehaviour
       //Charge
 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             if(bananaCount >= 3)
             {
@@ -198,12 +210,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && canCharge)
+        if (Input.GetKey(KeyCode.X) && canCharge)
         {
             ChargeAttack();      
         }
 
-        if(Input.GetKeyUp(KeyCode.LeftShift))
+        if(Input.GetKeyUp(KeyCode.X))
         {
             chargePower = 0;
             chargePowerTimer = 0;
@@ -377,60 +389,95 @@ public class PlayerController : MonoBehaviour
       }      
    }
 
-   private void KickAttack(bool c)
+
+    //Basic kick call
+   private void BasicKick()
    {
-        if (c)
+        foreach (Collider2D col in HitRange())
         {
-            foreach (Collider2D col in HitRange())
+            if (col.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+                e_Ai.SetHit();
+                e_Ai.SetPatrol(false);
+                col.GetComponent<EnemyHealth>().Damage(2);
 
-                if(e_Ai != null)
-                {
-                    
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(6);
-
-                    //find the orientation of the hit enemy relative to the player
-                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                    forceDir.Normalize();
-
-                    //using given direction change values to appropriate force
-                    Vector2 kickForce = new Vector2(-forceDir.x * (kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
-
-                    e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
-                }
-
+                Vector2 forceDir = this.transform.position - col.transform.position;
+                forceDir.Normalize();
+                Vector2 kickForce = new Vector2(-forceDir.x * kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1), 5);
+                col.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
             }
         }
-        else
+    }
+
+    //Shadow Kick mechanic
+    private void ShadowKick()
+    {
+        if (shadowKickPower <= 0) return;
+
+        //Calculate charge ratio and movement distance
+        float chargeRatio = shadowKickPower / shadowKickMaxCharge;
+        float moveDistance = shadowKickDistance * chargeRatio;
+        Vector2 moveDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+        //Calculate new position
+        Vector3 currentPos = transform.position;
+        Vector3 movement = new Vector3(moveDirection.x * moveDistance, 0, 0);
+        Vector3 newPos = currentPos + movement;
+
+        //Safety check for valid position
+        if (float.IsNaN(newPos.x) || float.IsNaN(newPos.y) || float.IsNaN(newPos.z))
         {
-            foreach (Collider2D col in HitRange())
+            Debug.LogWarning("Invalid position calculated in ShadowKick!");
+            return;
+        }
+
+        //Check for enemies along the path before moving
+        RaycastHit2D[] hits = Physics2D.LinecastAll(currentPos, newPos, enemyLayer);
+        foreach (RaycastHit2D hit in hits)
+        {
+            if (hit.collider.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+                e_Ai.SetHit();
+                e_Ai.SetPatrol(false);
+                hit.collider.GetComponent<EnemyHealth>().Damage(4);
 
-                if(e_Ai != null)
-                {
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(3);
-
-                    //find the orientation of the hit enemy relative to the player
-                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                    forceDir.Normalize();
-
-                    //using given direction change values to appropriate force
-                    Vector2 kickForce = new Vector2(-forceDir.x * ((kickKnockback / 2) * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
-
-                    e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
-                }              
+                Vector2 forceDir = currentPos - hit.collider.transform.position;
+                forceDir.Normalize();
+                Vector2 kickForce = new Vector2(
+                    -forceDir.x * shadowKickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1) * chargeRatio,
+                    5 * chargeRatio
+                );
+                hit.collider.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
             }
-        }      
+        }
+
+        //Move the player after processing all hits
+        transform.position = newPos;
+
+        //Check for enemies at final position
+        foreach (Collider2D col in HitRange())
+        {
+            if (col.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
+            {
+                e_Ai.SetHit();
+                e_Ai.SetPatrol(false);
+                col.GetComponent<EnemyHealth>().Damage(4);
+
+                Vector2 forceDir = currentPos - col.transform.position;
+                forceDir.Normalize();
+                Vector2 kickForce = new Vector2(
+                    -forceDir.x * shadowKickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1) * chargeRatio,
+                    5 * chargeRatio
+                );
+                col.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
+            }
+        }
+    }
+
+    //Method to enable and disable Shadow Kick
+    public void EnableShadowKick()
+    {
+        hasShadowKick = true;
     }
 
     public void ChargeAttack()
