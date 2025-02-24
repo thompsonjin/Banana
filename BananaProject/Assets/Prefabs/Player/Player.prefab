@@ -38,6 +38,7 @@ Transform:
   - {fileID: 1845000926006799965}
   - {fileID: 280152045252730823}
   - {fileID: 8561812753874378413}
+  - {fileID: 989249281021628823}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2127180801005447105
@@ -161,10 +162,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   kickPowerMax: 2
-  shadowKickKnockback: 0
-  shadowKickDistance: 0
+  shadowKickKnockback: 30
+  shadowKickDistance: 8
   hasShadowKick: 0
-  shadowKickMaxCharge: 0
+  shadowKickMaxCharge: 3
   shadowKickChargeRate: 1
   chargePowerMax: 3
   sprite: {fileID: 2127180801005447105}
@@ -173,6 +174,12 @@ MonoBehaviour:
   kickKnockback: 25
   chargeKnockback: 10
   maxBananas: 5
+  throwForce: 23
+  pickupRange: 1.5
+  carryPoint: {fileID: 989249281021628823}
+  throwableLayer:
+    serializedVersion: 2
+    m_Bits: 512
 --- !u!114 &622046107485541659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -185,7 +192,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4af91775568e8bd47ab295a346494326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shadowShard: {fileID: 4982363664481059624, guid: 1c8c633f82eddde4dbd3df3d3b4075db, type: 3}
 --- !u!61 &4332758852388198093
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -231,6 +237,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &631711312539562542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 989249281021628823}
+  m_Layer: 7
+  m_Name: CarryPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &989249281021628823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 631711312539562542}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.78, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 649561680886051299}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &926351951140451351
 GameObject:
   m_ObjectHideFlags: 0
@@ -467,7 +504,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

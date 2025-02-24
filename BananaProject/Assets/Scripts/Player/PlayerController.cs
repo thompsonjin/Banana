@@ -86,9 +86,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float chargeKnockback;
     [SerializeField] private int maxBananas;
     private int bananaCount;
-    
-    
-   void Awake()
+
+    [Header("Throwing Mechanics")]
+    [SerializeField] private float throwForce = 10f;
+    [SerializeField] private float pickupRange = 1.5f;
+    [SerializeField] private Transform carryPoint;
+    [SerializeField] private LayerMask throwableLayer;
+    private ThrowableObject carriedObject;
+    private bool isCarrying = false;
+
+
+    void Awake()
    {
       health = maxHealth;
       bananaCount = maxBananas;
@@ -189,14 +197,14 @@ public class PlayerController : MonoBehaviour
 
         //Ground Pound
         if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded())
-      {
+        {
             if (bananaCount > 0)
             {
                 groundPound = true;
                 SetAura(true);
                 UseBanana(1);
             }      
-      }
+        }
 
       //Charge
 
@@ -225,8 +233,11 @@ public class PlayerController : MonoBehaviour
             canCharge = false;
         }
 
-      //TEMPORARY HEAL BUTTON
-      if(Input.GetKeyDown(KeyCode.F))
+        //METHOD TO CHECK FOR THROWABLE OBJECTS
+        CheckPickupAndThrow();
+
+        //TEMPORARY HEAL BUTTON
+        if (Input.GetKeyDown(KeyCode.F))
       {
          GainHealth(1);
       }
@@ -520,8 +531,63 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   //Find all the enemies within the monkey's effective damage range
-   private Collider2D[] HitRange()
+    //Throw Object Mechanic
+    private void CheckPickupAndThrow()
+    {
+        //Throw
+        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.Y))
+        {
+            ThrowObject();
+        }
+        //Pickup
+        else if (!isCarrying && Input.GetKeyDown(KeyCode.E))
+        {
+            TryPickupObject();
+        }
+    }
+
+    private void TryPickupObject()
+    {
+        //Check for throwable objects in range
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, pickupRange, throwableLayer);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.TryGetComponent<ThrowableObject>(out ThrowableObject throwable))
+            {
+                //Pick up the object
+                carriedObject = throwable;
+                carriedObject.OnPickup();
+
+                //Parent to carry point
+                throwable.transform.parent = carryPoint;
+                throwable.transform.localPosition = Vector3.zero;
+
+                isCarrying = true;
+                break;
+            }
+        }
+    }
+
+    private void ThrowObject()
+    {
+        if (carriedObject != null)
+        {
+            carriedObject.transform.parent = null;
+
+            //Calculate throw direction based on player facing
+            Vector2 throwDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+            //Throw the object
+            carriedObject.Throw(throwDirection, throwForce);
+
+            carriedObject = null;
+            isCarrying = false;
+        }
+    }
+
+    //Find all the enemies within the monkey's effective damage range
+    private Collider2D[] HitRange()
    {
       Collider2D[] enemiesHit =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
