@@ -29,6 +29,7 @@ public class ThrowableObject : MonoBehaviour
         col.enabled = true;
         isThrown = true;
 
+        //Force applied when thrown
         Vector2 throwVector = (direction * throwForce) + (Vector2.up * upwardForce);
         rb.AddForce(throwVector, ForceMode2D.Impulse);
     }
@@ -37,6 +38,7 @@ public class ThrowableObject : MonoBehaviour
     {
         if (!isThrown) return;
 
+        //Checks for enemy collision
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (collision.gameObject.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
