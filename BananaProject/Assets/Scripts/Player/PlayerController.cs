@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferTime = 0.1f;
     private float jumpBufferCounter;
     public bool isFacingRight;
+    public bool boop;
 
     [Header("Combat")]
     [SerializeField] private Transform attackPoint;
@@ -263,8 +264,11 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            //apply the product of horizontal and speed to the players current velocity
-            rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
+            if (!boop)
+            {
+                //apply the product of horizontal and speed to the players current velocity
+                rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
+            }          
         }  
    }
 

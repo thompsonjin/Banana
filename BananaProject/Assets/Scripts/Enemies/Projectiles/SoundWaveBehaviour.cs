@@ -4,34 +4,22 @@ using UnityEngine;
 
 public class SoundWaveBehaviour : MonoBehaviour
 {
-    private Vector3 scaleChange;
-    private Vector3 positionChange;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-       
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-       
-    }
-
+  
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Player")
         {
             Vector3 player = collision.gameObject.transform.position;
             Rigidbody2D rb = collision.gameObject.GetComponent<Rigidbody2D>();
+            PlayerController p_Con = collision.gameObject.GetComponent<PlayerController>();
 
             Vector3 relativePos = this.transform.parent.position - player;
             relativePos.Normalize();
 
-            Vector3 boopForce = new Vector3(relativePos.x * 10000, -20, 0);
+            Vector2 boopForce = new Vector3(relativePos.x * 3000, -500);
+            Debug.Log(boopForce);
 
-            rb.AddForce(-boopForce, ForceMode2D.Impulse);
+            rb.AddForce(-boopForce, ForceMode2D.Force);
         }
     }
 }

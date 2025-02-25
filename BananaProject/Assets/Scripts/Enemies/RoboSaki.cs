@@ -28,11 +28,14 @@ public class RoboSaki : BaseEnemy
     private const float PLAYER_HIT_TIME = .8f;
     private float playerHitTimer;
     public GameObject soundWave;
+    private bool soundSpawn;
+    private float reloadTimer;
+    private const float RELOAD = 2;
 
     // Start is called before the first frame update
     void Awake()
     {
-        playerHitTimer = PLAYER_HIT_TIME;
+        
         player = GameObject.Find("Player");
         p_Con = player.GetComponent<PlayerController>();
         SetPatrol(true);    
@@ -69,28 +72,37 @@ public class RoboSaki : BaseEnemy
             {
                 inRange = true;
             }
+            else
+            {
+                inRange = false;
+            }
         }
 
         //give a grace period then attempt to damage the player if they are still within range if not reset
         if (inRange)
         {
-            playerHitTimer -= Time.deltaTime;
-
-            if (playerHitTimer <= 0)
+            if(!soundSpawn && reloadTimer <= 0)
             {
-                if (HitRange())
-                {
-                    Instantiate(soundWave, attackPoint);
-                    playerHitTimer = PLAYER_HIT_TIME;
-                }
-                else
-                {
-                    playerHitTimer = PLAYER_HIT_TIME;
-                    inRange = false;
-                }
+                playerHitTimer = PLAYER_HIT_TIME;
+                Instantiate(soundWave, attackPoint);
+                reloadTimer = RELOAD;
+                soundSpawn = true;
             }
-
         }
+
+        playerHitTimer -= Time.deltaTime;
+
+        if(playerHitTimer <= 0)
+        {
+            if (soundSpawn)
+            {
+                Destroy(attackPoint.GetChild(0).gameObject);
+                soundSpawn = false;
+            }
+            reloadTimer -= Time.deltaTime;
+        }
+
+        
 
         //track how long the enemy is stunned by the hit 
         if (hit)

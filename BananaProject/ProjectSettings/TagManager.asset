@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Vines
+  - Sound
   layers:
   - Default
   - TransparentFX

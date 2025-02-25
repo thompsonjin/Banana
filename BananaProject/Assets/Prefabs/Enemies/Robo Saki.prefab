@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1747606586019389245}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.19, y: -0.11, z: 0.034703158}
+  m_LocalPosition: {x: 1.07, y: 0.005, z: 0.034703158}
   m_LocalScale: {x: 1, y: 0.53856856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afb6a9fefe5b7f542b566a6122d9229a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  e_AI: {fileID: 2866844096244829126}
+  e_AI: {fileID: 0}
 --- !u!1 &4378459362953290890
 GameObject:
   m_ObjectHideFlags: 0
@@ -446,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 2
+  maxHealth: 6
 --- !u!114 &2866844096244829126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -468,7 +468,8 @@ MonoBehaviour:
   patrolSpeed: 1.5
   chaseSpeed: 3
   attackPoint: {fileID: 5306715940737423308}
-  attackRange: 0
+  attackRange: 2
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
+  soundWave: {fileID: 2086159476869321304, guid: 55f54afc239788d4d8e45a5d1f2ff813, type: 3}

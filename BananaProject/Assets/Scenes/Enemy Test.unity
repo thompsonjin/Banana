@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -908,8 +907,8 @@ Transform:
   m_GameObject: {fileID: 1949594093}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.7006, y: -5.53, z: 0}
-  m_LocalScale: {x: 60.6305, y: 1, z: 1}
+  m_LocalPosition: {x: 19.7006, y: -8.4254, z: 0}
+  m_LocalScale: {x: 60.6305, y: 6.7907, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -978,25 +977,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2866844096244829126, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
-      propertyPath: soundWave
-      value: 
-      objectReference: {fileID: 2086159476869321304, guid: 55f54afc239788d4d8e45a5d1f2ff813, type: 3}
-    - target: {fileID: 2866844096244829126, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
-      propertyPath: attackRange
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2866844096244829126, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
-      propertyPath: playerLayer.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
     - target: {fileID: 5925756607552273175, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
       propertyPath: m_Name
       value: Robo Saki
-      objectReference: {fileID: 0}
-    - target: {fileID: 5970660792250349119, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
-      propertyPath: e_AI
-      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
       propertyPath: m_LocalPosition.x
