@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
             if (bananaCount > 0)
             {
                 isChargingShadowKick = true;
-                shadowKickPower += Time.deltaTime * shadowKickChargeRate; // Add charge rate multiplier
+                shadowKickPower += Time.deltaTime * shadowKickChargeRate;
                 powerSlider.value = shadowKickPower / shadowKickMaxCharge;
 
                 if (shadowKickPower >= shadowKickMaxCharge)
@@ -430,59 +430,57 @@ public class PlayerController : MonoBehaviour
         float moveDistance = shadowKickDistance * chargeRatio;
         Vector2 moveDirection = isFacingRight ? Vector2.right : Vector2.left;
 
-        //Calculate new position
-        Vector3 currentPos = transform.position;
-        Vector3 movement = new Vector3(moveDirection.x * moveDistance, 0, 0);
-        Vector3 newPos = currentPos + movement;
+        Vector2 currentPos = transform.position;
+        Vector2 movement = moveDirection * moveDistance;
+        Vector2 intendedPos = currentPos + movement;
 
-        //Safety check for valid position
-        if (float.IsNaN(newPos.x) || float.IsNaN(newPos.y) || float.IsNaN(newPos.z))
-        {
-            Debug.LogWarning("Invalid position calculated in ShadowKick!");
-            return;
-        }
+        //Debug purposes
+        Debug.Log($"Starting ShadowKick - Current: {currentPos}, Intended: {intendedPos}, Distance: {moveDistance}");
 
-        //Check for enemies along the path before moving
-        RaycastHit2D[] hits = Physics2D.LinecastAll(currentPos, newPos, enemyLayer);
-        foreach (RaycastHit2D hit in hits)
+        //Create box for enemy detection
+        Vector2 boxSize = new Vector2(0.5f, 1f);
+        Vector2 boxCenter = currentPos + (moveDirection * (moveDistance / 2));
+
+        //Debug purposes
+        Debug.DrawLine(currentPos, intendedPos, Color.red, 1f);
+
+        //Check for enemies in the path
+        Collider2D hitCollider = Physics2D.OverlapBox(
+            boxCenter,
+            new Vector2(moveDistance, 1f), 0f, enemyLayer);
+
+        if (hitCollider != null)
         {
-            if (hit.collider.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
+            Debug.Log($"Hit enemy: {hitCollider.name} at position: {hitCollider.transform.position}");
+
+            //Calculate distance to enemy
+            float distanceToEnemy = Vector2.Distance(currentPos, hitCollider.transform.position);
+            Vector2 finalPos = currentPos + (moveDirection * (distanceToEnemy - 1f));
+
+            Debug.Log($"Moving to position before enemy: {finalPos}");
+
+            //Handle enemy interaction
+            if (hitCollider.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
             {
                 e_Ai.SetHit();
                 e_Ai.SetPatrol(false);
-                hit.collider.GetComponent<EnemyHealth>().Damage(4);
+                hitCollider.GetComponent<EnemyHealth>().Damage(4);
 
-                Vector2 forceDir = currentPos - hit.collider.transform.position;
-                forceDir.Normalize();
-                Vector2 kickForce = new Vector2(
-                    -forceDir.x * shadowKickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1) * chargeRatio,
-                    5 * chargeRatio
-                );
-                hit.collider.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
+                Vector2 kickForce = moveDirection * shadowKickKnockback * chargeRatio;
+                hitCollider.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
             }
+
+            //Move player
+            transform.position = new Vector3(finalPos.x, finalPos.y, transform.position.z);
         }
-
-        //Move the player after processing all hits
-        transform.position = newPos;
-
-        //Check for enemies at final position
-        foreach (Collider2D col in HitRange())
+        else
         {
-            if (col.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
-            {
-                e_Ai.SetHit();
-                e_Ai.SetPatrol(false);
-                col.GetComponent<EnemyHealth>().Damage(4);
-
-                Vector2 forceDir = currentPos - col.transform.position;
-                forceDir.Normalize();
-                Vector2 kickForce = new Vector2(
-                    -forceDir.x * shadowKickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1) * chargeRatio,
-                    5 * chargeRatio
-                );
-                col.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
-            }
+            Debug.Log("No enemy hit, moving full distance");
+            transform.position = new Vector3(intendedPos.x, intendedPos.y, transform.position.z);
         }
+
+        //Reset velocity
+        rb.velocity = Vector2.zero;
     }
 
     //Method to enable and disable Shadow Kick
