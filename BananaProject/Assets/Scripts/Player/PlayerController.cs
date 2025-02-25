@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
     //GROUND POUND
     private bool groundPound;
     private float recoverTime;
+    [SerializeField] bool hasGroundPound = false;
 
     [Header("Knockback stats")]
     //KNOCKBACK VALUES
@@ -170,7 +171,7 @@ public class PlayerController : MonoBehaviour
             BasicKick();
         }
 
-        // Shadow kick charging
+        //Shadow kick charging
         if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.B) && hasShadowKick && IsGrounded())
         {
             if (bananaCount > 0)
@@ -196,7 +197,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Ground Pound
-        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded())
+        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
             {
@@ -486,6 +487,12 @@ public class PlayerController : MonoBehaviour
     public void EnableShadowKick()
     {
         hasShadowKick = true;
+    }
+
+    //Method to enable and disable Ground Pound
+    public void EnableGroundPound()
+    {
+        hasGroundPound = true;
     }
 
     public void ChargeAttack()

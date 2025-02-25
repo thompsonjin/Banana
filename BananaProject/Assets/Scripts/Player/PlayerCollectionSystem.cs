@@ -26,5 +26,12 @@ public class PlayerCollectionSystem : MonoBehaviour
             pControl.EnableShadowKick();
             Destroy(collision.gameObject);
         }
+
+        //Ground Pound shard detection
+        if (collision.gameObject.CompareTag("Pound Shard"))
+        {
+            pControl.EnableGroundPound();
+            Destroy(collision.gameObject);
+        }
     }
 }
