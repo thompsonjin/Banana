@@ -445,9 +445,7 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(currentPos, intendedPos, Color.red, 1f);
 
         //Check for enemies in the path
-        Collider2D hitCollider = Physics2D.OverlapBox(
-            boxCenter,
-            new Vector2(moveDistance, 1f), 0f, enemyLayer);
+        Collider2D hitCollider = Physics2D.OverlapBox(boxCenter, new Vector2(moveDistance, 1f), 0f, enemyLayer);
 
         if (hitCollider != null)
         {
@@ -475,6 +473,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            //Debug purposes
             Debug.Log("No enemy hit, moving full distance");
             transform.position = new Vector3(intendedPos.x, intendedPos.y, transform.position.z);
         }
