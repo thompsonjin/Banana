@@ -162,7 +162,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   kickPowerMax: 2
-  shadowKickKnockback: 30
+  shadowKickKnockback: 40
   shadowKickDistance: 8
   hasShadowKick: 0
   shadowKickMaxCharge: 3
