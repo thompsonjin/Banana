@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bananaRegen;
 
     [Header("Movement")]
+    [SerializeField] private float slowSpeed;
     [SerializeField] private float normalSpeed;
     private float currentSpeed;
     [SerializeField] private float chargeSpeed;
@@ -284,6 +285,7 @@ public class PlayerController : MonoBehaviour
             camFT.CallTurn();
         }
    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

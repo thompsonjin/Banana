@@ -3,59 +3,54 @@ using System.Collections.Generic;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
 
-public class RoboProposcis : BaseEnemy
+public class RoboChimp : BaseEnemy
 {
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
-    private GameObject player;
 
     [Header("Movement")]
-    private Vector2 moveDir;
-    private bool isFacingRight;
+    public bool isFacingRight;
 
     [Header("Combat")]
-    [SerializeField] private LayerMask playerLayer;
-    private const float PLAYER_HIT_TIME = 1.5f;
+    private const float PLAYER_HIT_TIME = 5;
     private float playerHitTimer;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform projectileSpawn;
+    [SerializeField] private bool spray;
 
     // Start is called before the first frame update
     void Awake()
     {
+        Flip();
         playerHitTimer = PLAYER_HIT_TIME;
-        player = GameObject.Find("Player");
-        patrol = false;
+        spray = false;
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (!patrol)
+        if (!spray)
         {
-            moveDir = this.transform.position - player.transform.position;
-            moveDir.Normalize();
-
             playerHitTimer -= Time.deltaTime;
 
-            if(playerHitTimer <= 0)
+            if (playerHitTimer <= 0)
             {
-                Instantiate(projectile, projectileSpawn.position, Quaternion.identity);
-                playerHitTimer = PLAYER_HIT_TIME;
+                Instantiate(projectile, projectileSpawn);
+                spray = true;
             }
+
         }
-
-        //track how long the enemy is stunned by the hit 
-        if (hit)
+        else
         {
-            hitTimer -= Time.deltaTime;
+            playerHitTimer += Time.deltaTime;
 
-            if (hitTimer <= 0)
+            if (playerHitTimer >= PLAYER_HIT_TIME)
             {
-                hit = false;
+                Destroy(projectileSpawn.transform.GetChild(0).gameObject);
+                spray = false;
             }
         }
 
@@ -63,20 +58,16 @@ public class RoboProposcis : BaseEnemy
         {
             rb.velocity = Vector3.zero;
         }
-
-        Flip();
     }
 
     private void Flip()
     {
         //Rotate the character along the y axis based on the last horizontal input of the player
-        if (isFacingRight && moveDir.x < 0f || !isFacingRight && moveDir.x > 0f)
+        if (!isFacingRight)
         {
-            isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
         }
     }
-
     private bool IsGrounded()
     {
         //Use groundCheck transform to check whether or not the enemy is touching the gorund
