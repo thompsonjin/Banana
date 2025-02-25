@@ -44,7 +44,6 @@ public class WaterBehaviour : MonoBehaviour
             Vector3 pushForce = this.transform.parent.position - player;
             pushForce.Normalize();
             pushForce.x = pushForce.x * 1000;
-            Debug.Log(pushForce);
 
             rb.AddForce(-pushForce, ForceMode2D.Force);
         }

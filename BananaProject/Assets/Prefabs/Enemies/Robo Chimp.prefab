@@ -338,8 +338,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 7195335734353101711}
+  groundCheck: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isFacingRight: 0
   projectile: {fileID: 0}
   projectileSpawn: {fileID: 0}
+  spray: 0
 --- !u!1 &5832397932754312981
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,7 +357,7 @@ GameObject:
   - component: {fileID: 4328877526601342820}
   - component: {fileID: 513474886815051510}
   - component: {fileID: 4836245118904019447}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Detection Zone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

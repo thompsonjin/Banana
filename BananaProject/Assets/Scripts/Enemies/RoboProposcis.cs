@@ -27,7 +27,7 @@ public class RoboProposcis : BaseEnemy
     {
         playerHitTimer = PLAYER_HIT_TIME;
         player = GameObject.Find("Player");
-        patrol = false;
+        patrol = true;
     }
 
     // Update is called once per frame
