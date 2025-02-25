@@ -5,13 +5,13 @@ using UnityEngine;
 public class PlayerDetection : MonoBehaviour
 {
 
-  [SerializeField] private RoboMonkeyAI r_AI;
+  [SerializeField] private BaseEnemy e_AI;
 
   void OnTriggerEnter2D(Collider2D col)
   {
     if(col.gameObject.tag == "Player")
     {
-        r_AI.SetPatrol(false);
+        e_AI.SetPatrol(false);
     }
   }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     private PlayerController p_Con;
+    private BaseEnemy b_En;
 
     [SerializeField] private int health;
     [SerializeField] private int maxHealth;
@@ -13,6 +14,7 @@ public class EnemyHealth : MonoBehaviour
     void Start()
     {
         p_Con = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        b_En = this.gameObject.GetComponent<BaseEnemy>();
         health = maxHealth;
     }
 
@@ -25,5 +27,10 @@ public class EnemyHealth : MonoBehaviour
             p_Con.GiveBanana(1);
             Destroy(this.gameObject);
         }
+    }
+
+    public void Hit()
+    {
+
     }
 }

@@ -316,7 +316,7 @@ public class PlayerController : MonoBehaviour
         {
             if(HitRange() != null)
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
@@ -349,7 +349,7 @@ public class PlayerController : MonoBehaviour
         {
             if(HitRange() != null)
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
@@ -383,7 +383,7 @@ public class PlayerController : MonoBehaviour
         {
             foreach (Collider2D col in HitRange())
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
@@ -410,7 +410,7 @@ public class PlayerController : MonoBehaviour
         {
             foreach (Collider2D col in HitRange())
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
@@ -505,7 +505,7 @@ public class PlayerController : MonoBehaviour
     {
         if(col.gameObject.tag == "Enemy" && aura)
         {
-            RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+            BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
