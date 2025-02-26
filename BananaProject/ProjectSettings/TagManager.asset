@@ -10,6 +10,8 @@ TagManager:
   - Shadow Shard
   - Banana Coin
   - Pound Shard
+  - Wall
+  - Throwable
   layers:
   - Default
   - TransparentFX
