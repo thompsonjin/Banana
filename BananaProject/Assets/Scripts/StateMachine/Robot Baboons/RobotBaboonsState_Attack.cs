@@ -41,20 +41,20 @@ public class RobotBaboonsState_Attack : EnemyState
        enemyControllor. SetMoveSpeed(new Vector2(0, 0));
         if ( enemyControllor.  transform.position.x< enemyControllor.   player.transform.position.x)
         {
-            //玩家在右侧
+            //player on right
             enemyControllor.    SetFaceDir(1);
         }
         else
         {
-            //玩家在左侧
+            //player on left
             enemyControllor.    SetFaceDir(-1);
         }
 
         attackTimer += Time.deltaTime;
         if (attackTimer>1/ enemyControllor. attackSpeed)
         {
-            //放动画
-            
+           
+            //animation
             animator.Play(statehash);
             attackTimer = 0;
         }

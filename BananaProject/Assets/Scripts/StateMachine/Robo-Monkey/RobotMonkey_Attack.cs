@@ -43,12 +43,12 @@ public class RobotMonkey_Attack : EnemyState
         if ( enemyControllor.  transform.position.x< enemyControllor.   player.transform.position.x)
         {
             //玩家在右侧
-            enemyControllor.    SetFaceDir(-1);
+            enemyControllor.    SetFaceDir(1);
         }
         else
         {
             //玩家在左侧
-            enemyControllor.    SetFaceDir(1);
+            enemyControllor.    SetFaceDir(-1);
         }
         attackTimer += Time.deltaTime;
         if (attackTimer>1/ enemyControllor. attackSpeed)

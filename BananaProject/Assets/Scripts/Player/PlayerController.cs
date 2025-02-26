@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
-    private int health;
+    public int health;
     //HEALTH UI
     [SerializeField] private Image[] displayHealth = new Image[3];
 
@@ -281,7 +281,9 @@ public class PlayerController : MonoBehaviour
             isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
 
+            /*
             camFT.CallTurn();
+        */
         }
    }
 
@@ -309,23 +311,20 @@ public class PlayerController : MonoBehaviour
     private void BasicAttack()
    {
       comboCount++;
-
       if(comboCount == 3)
       {
         foreach (Collider2D col in HitRange())
         {
             if(HitRange() != null)
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                EnemyController e_Ai = col.gameObject.GetComponent<EnemyController>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
                 
                 if (e_Ai != null)
                 {
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(4);
+                    e_Ai.BeAttack(1000);
+                    /*e_Ai.SetPatrol(false);*/
                     //find the orientation of the hit enemy relative to the player
                     Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
                     forceDir.Normalize();
@@ -349,15 +348,12 @@ public class PlayerController : MonoBehaviour
         {
             if(HitRange() != null)
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                EnemyController e_Ai = col.gameObject.GetComponent<EnemyController>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
                 if(e_Ai != null)
                 {
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(2);
+                    e_Ai.BeAttack(1000);
 
                     //find the orientation of the hit enemy relative to the player
                     Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
@@ -383,16 +379,14 @@ public class PlayerController : MonoBehaviour
         {
             foreach (Collider2D col in HitRange())
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                EnemyController e_Ai = col.gameObject.GetComponent<EnemyController>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
                 if(e_Ai != null)
                 {
                     
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(6);
+                    e_Ai.BeAttack(1000);
+                    
 
                     //find the orientation of the hit enemy relative to the player
                     Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
@@ -410,16 +404,13 @@ public class PlayerController : MonoBehaviour
         {
             foreach (Collider2D col in HitRange())
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                EnemyController e_Ai = col.gameObject.GetComponent<EnemyController>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
                 if(e_Ai != null)
                 {
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(3);
-
+                    e_Ai.BeAttack(1000);
+               
                     //find the orientation of the hit enemy relative to the player
                     Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
                     forceDir.Normalize();
@@ -505,19 +496,17 @@ public class PlayerController : MonoBehaviour
     {
         if(col.gameObject.tag == "Enemy" && aura)
         {
-            RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
-            EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+            EnemyController e_Ai = col.gameObject.GetComponent<EnemyController>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-            e_Ai.SetHit();
-            e_Ai.SetPatrol(false);
+        
             if (groundPound)
             {
-                e_Health.Damage(5);
+                e_Ai.BeAttack(1000);
             }
             else
             {
-                e_Health.Damage(4);
+                e_Ai.BeAttack(1000);
                 recoverTime = 0;
             }
             
@@ -538,7 +527,6 @@ public class PlayerController : MonoBehaviour
         if (!aura)
         {
             health--;
-
             if (health > 0)
             {
                 Debug.Log("DAMAGE");
@@ -569,6 +557,8 @@ public class PlayerController : MonoBehaviour
 
       displayHealth[health - 1].enabled = true;
    }
+   
+
 
    //BANANA MANAGMENT
    private void UseBanana(int b)

@@ -7,6 +7,7 @@ public class WaterLine : MonoBehaviour
     public float flySpeed;
     public bool flyRight;
     private Vector2 Speed;
+    public float ap;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +23,18 @@ public class WaterLine : MonoBehaviour
         GetComponent<Rigidbody2D>().velocity = Speed;
         Destroy(gameObject,10f);
     }
-
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<PlayerController>().TakeDamage();
+            //»÷ÍËÍæ¼Ò
+            
+            
+            Destroy(gameObject,10f);
+            
+        }
+    }
     // Update is called once per frame
     void Update()
     {

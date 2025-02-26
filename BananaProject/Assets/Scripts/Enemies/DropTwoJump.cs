@@ -8,6 +8,6 @@ public class DropTwoJump : MonoBehaviour
 
     public void DropTwoJumpItem()
     {
-        GameObject item = Instantiate(prefab, transform.parent.parent.position, Quaternion.identity);
+        GameObject item = Instantiate(prefab, transform.position, Quaternion.identity);
     }
 }

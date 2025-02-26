@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Banana : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
@@ -14,4 +14,6 @@ public class Banana : MonoBehaviour
             other.gameObject.GetComponent<PlayerController>().GiveBanana(1);
         }
     }
+
+
 }

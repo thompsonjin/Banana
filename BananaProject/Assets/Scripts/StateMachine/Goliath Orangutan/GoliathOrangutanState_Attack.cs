@@ -52,7 +52,7 @@ public class GoliathOrangutanState_Attack : EnemyState
         attackTimer += Time.deltaTime;
         if (attackTimer>1/ enemyControllor. attackSpeed)
         {
-            //·Å¶¯»­
+            // animation
             animator.Play(statehash);
             attackTimer = 0;
         }

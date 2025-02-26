@@ -46,7 +46,6 @@ public class LaserProboscisMonkeSatte_Partrol : EnemyState
 
         if (  Mathf.Abs( enemyControllor. transform.position.x-   enemyControllor. patrolPoints[enemyControllor.patrolPointIndex].transform.position.x)   <0.2f)
         {
-            Debug.Log(1);
             //到达巡逻点了
             enemyControllor.patrolPointIndex = 1 - enemyControllor.patrolPointIndex;
             return;

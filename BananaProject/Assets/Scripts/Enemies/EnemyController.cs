@@ -33,24 +33,28 @@ public class EnemyController : MonoBehaviour
         patrolPointIndex = 1;
     }
 
-    public void BeAttack()
+    public void BeAttack(int ap)
     {
         bool isFront = (transform.localScale.x > 0) != (player.localScale.x > 0);
 
         if (gameObject.CompareTag("GoliathOrangutan"))
         {
-            if (transform.localScale.x>0!=(player.localScale.x>0))
+            if ((transform.localScale.x>0)==(player.localRotation.y>=-10))
             {
 
                 //Can't attack from the shield side
                 return;
             }
         }
-        
+        Debug.Log(11);
         hp -= ap;
         if (hp<=0)
         {
-            onDie.Invoke();
+            if (onDie!=null)
+            {
+                onDie?.Invoke();
+            }
+           
             Destroy(gameObject);
             //drop banana
         }
