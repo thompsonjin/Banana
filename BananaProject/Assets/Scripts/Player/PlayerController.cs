@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferCounter;
     public bool isFacingRight;
     public bool boop;
+    private float boopTimer;
+    private const float MAX_BOOP_TIME = .5f;
 
     [Header("Combat")]
     [SerializeField] private Transform attackPoint;
@@ -234,7 +236,19 @@ public class PlayerController : MonoBehaviour
 
                 bananaRegenTimer = 0;
             }
-        }  
+        }
+
+
+        if (boop)
+        {
+            boopTimer -= Time.deltaTime;
+
+            if(boopTimer <= 0)
+            {
+                boopTimer = MAX_BOOP_TIME;
+                boop = false;
+            }
+        }
 
       Flip();
    }
@@ -242,34 +256,34 @@ public class PlayerController : MonoBehaviour
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
    {
-        if(groundPound)
+        if (!boop)
         {
-            //apply a force directly down and lock horizontal movement
-            rb.velocity = new Vector2(rb.velocity.x, -50);
-            if(IsGrounded())
+            if (groundPound)
             {
-                recoverTime += Time.deltaTime;
-                if(recoverTime > .5f)
+                //apply a force directly down and lock horizontal movement
+                rb.velocity = new Vector2(rb.velocity.x, -50);
+                if (IsGrounded())
                 {
-                    SetAura(false);
-                    recoverTime = 0;
-                    groundPound = false;
-                }          
+                    recoverTime += Time.deltaTime;
+                    if (recoverTime > .5f)
+                    {
+                        SetAura(false);
+                        recoverTime = 0;
+                        groundPound = false;
+                    }
+                }
             }
-        }
-        else if(isClimbing)
-        {
-            //apply the product of horizontal and speed to the players current velocity
-            rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
-        }
-        else
-        {
-            if (!boop)
+            else if (isClimbing)
+            {
+                //apply the product of horizontal and speed to the players current velocity
+                rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
+            }
+            else
             {
                 //apply the product of horizontal and speed to the players current velocity
                 rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
-            }          
-        }  
+            }
+        }     
    }
 
    private bool IsGrounded()
@@ -538,9 +552,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool GetGroundPound()
+    {
+        return groundPound;
+    }
+
     //HEALTH MANAGMENT
     public void TakeDamage()
-   {
+    {
         if (!aura)
         {
             health--;
@@ -562,7 +581,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("You Are Dead");
             }
         }       
-   }
+    }
 
    public void GainHealth(int h)
    {

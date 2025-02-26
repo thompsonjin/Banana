@@ -16,10 +16,10 @@ public class SoundWaveBehaviour : MonoBehaviour
             Vector3 relativePos = this.transform.parent.position - player;
             relativePos.Normalize();
 
-            Vector2 boopForce = new Vector3(relativePos.x * 3000, -500);
-            Debug.Log(boopForce);
+            Vector2 boopForce = new Vector3(relativePos.x * 5, -4);
 
-            rb.AddForce(-boopForce, ForceMode2D.Force);
+            p_Con.boop = true;
+            rb.AddForce(-boopForce, ForceMode2D.Impulse);
         }
     }
 }
