@@ -33,5 +33,12 @@ public class PlayerCollectionSystem : MonoBehaviour
             pControl.EnableGroundPound();
             Destroy(collision.gameObject);
         }
+
+        //Banana Gun shard detection
+        if (collision.gameObject.CompareTag("Gun Shard"))
+        {
+            pControl.EnableBananaGun();
+            Destroy(collision.gameObject);
+        }
     }
 }
