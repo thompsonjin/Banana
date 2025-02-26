@@ -41,7 +41,7 @@ public class ThrowableObject : MonoBehaviour
         //Checks for enemy collision
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            if (collision.gameObject.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
+            if (collision.gameObject.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
             {
                 e_Ai.SetHit();
                 e_Ai.SetPatrol(false);
