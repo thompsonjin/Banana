@@ -50,15 +50,29 @@ public class PlayerController : MonoBehaviour
     public bool sakiBoost;
     private bool secondJump;
 
-    [Header("Combat")]
+    [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
     private int comboCount;
+
+    [Header("Kick")]
     //Kick
     private float kickPower;
     [SerializeField] private float kickPowerMax;
     bool kickPowered;
+    //Shadow Kick
+    [SerializeField] private float shadowKickKnockback;
+    //How far the player will go with the shadow kick
+    [SerializeField] private float shadowKickDistance;
+    [SerializeField] private bool hasShadowKick = false;
+    private float shadowKickPower;
+    //Seconds needed to charge the kick
+    [SerializeField] private float shadowKickMaxCharge;
+    private bool isChargingShadowKick;
+    [SerializeField] private float shadowKickChargeRate = 1f;
+
+    [Header("Charge")]
     //Charge
     private float chargePower;
     [SerializeField]private float chargePowerMax;
@@ -69,6 +83,9 @@ public class PlayerController : MonoBehaviour
     //GROUND POUND
     private bool groundPound;
     private float recoverTime;
+    [SerializeField] bool hasGroundPound = false;
+
+    [Header("Knockback stats")]
     //KNOCKBACK VALUES
     [SerializeField] private float punchKnockback;
     [SerializeField] private float uppercutKnockback;
@@ -76,9 +93,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float chargeKnockback;
     [SerializeField] private int maxBananas;
     private int bananaCount;
-    
-    
-   void Awake()
+
+    [Header("Throwing Mechanics")]
+    [SerializeField] private float throwForce = 10f;
+    [SerializeField] private float pickupRange = 1.5f;
+    [SerializeField] private Transform carryPoint;
+    [SerializeField] private LayerMask throwableLayer;
+    private ThrowableObject carriedObject;
+    private bool isCarrying = false;
+
+
+    void Awake()
    {
       health = maxHealth;
       bananaCount = maxBananas;
@@ -150,61 +175,57 @@ public class PlayerController : MonoBehaviour
 
 
       //Punch
-      if(Input.GetMouseButtonDown(0))
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Y))
       {
          BasicAttack();
       }
 
-      //Kick
-      if(Input.GetMouseButton(1) && IsGrounded())
-      {
+        //Regular Kick
+        if (Input.GetKeyDown(KeyCode.B) && IsGrounded())
+        {
+            BasicKick();
+        }
+
+        //Shadow kick charging
+        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.B) && hasShadowKick && IsGrounded())
+        {
             if (bananaCount > 0)
             {
-                kickPower += Time.deltaTime;
-                powerSlider.value = kickPower / kickPowerMax;
+                isChargingShadowKick = true;
+                shadowKickPower += Time.deltaTime * shadowKickChargeRate;
+                powerSlider.value = shadowKickPower / shadowKickMaxCharge;
 
-                if (kickPower >= kickPowerMax)
+                if (shadowKickPower >= shadowKickMaxCharge)
                 {
-                    kickPower = kickPowerMax;
-                    kickPowered = true;
+                    shadowKickPower = shadowKickMaxCharge;
                 }
             }
-      }
+        }
 
-      if (Input.GetMouseButtonUp(1) && IsGrounded())
-      {
-            if (kickPowered)
-            {
-                KickAttack(true);
-                UseBanana(1);
-                kickPowered = false;
-                kickPower = 0;
-                powerSlider.value = 0;
-            }
-            else
-            {
-                KickAttack(false);
-                kickPowered = false;
-                kickPower = 0;
-                powerSlider.value = 0;
-            }         
-      }
+        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.B) && isChargingShadowKick)
+        {
+            ShadowKick();
+            UseBanana(1);
+            isChargingShadowKick = false;
+            shadowKickPower = 0;
+            powerSlider.value = 0;
+        }
 
-      //Ground Pound
-      if(Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded())
-      {
+        //Ground Pound
+        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
+        {
             if (bananaCount > 0)
             {
                 groundPound = true;
                 SetAura(true);
                 UseBanana(1);
             }      
-      }
+        }
 
       //Charge
 
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.X))
         {
             if(bananaCount >= 3)
             {
@@ -213,12 +234,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.LeftShift) && canCharge)
+        if (Input.GetKey(KeyCode.X) && canCharge)
         {
             ChargeAttack();      
         }
 
-        if(Input.GetKeyUp(KeyCode.LeftShift))
+        if(Input.GetKeyUp(KeyCode.X))
         {
             chargePower = 0;
             chargePowerTimer = 0;
@@ -228,8 +249,11 @@ public class PlayerController : MonoBehaviour
             canCharge = false;
         }
 
-      //TEMPORARY HEAL BUTTON
-      if(Input.GetKeyDown(KeyCode.F))
+        //METHOD TO CHECK FOR THROWABLE OBJECTS
+        CheckPickupAndThrow();
+
+        //TEMPORARY HEAL BUTTON
+        if (Input.GetKeyDown(KeyCode.F))
       {
          GainHealth(1);
       }
@@ -408,60 +432,101 @@ public class PlayerController : MonoBehaviour
       }      
    }
 
-   private void KickAttack(bool c)
+
+    //Basic kick call
+   private void BasicKick()
    {
-        if (c)
+        foreach (Collider2D col in HitRange())
         {
-            foreach (Collider2D col in HitRange())
+            if (col.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
             {
-                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+                
+                e_Ai.SetHit();
+                e_Ai.SetPatrol(false);
+                col.GetComponent<EnemyHealth>().Damage(2);
 
-                if(e_Ai != null)
-                {
-                    
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(6);
-
-                    //find the orientation of the hit enemy relative to the player
-                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                    forceDir.Normalize();
-
-                    //using given direction change values to appropriate force
-                    Vector2 kickForce = new Vector2(-forceDir.x * (kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
-
-                    e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
-                }
-
+                Vector2 forceDir = this.transform.position - col.transform.position;
+                forceDir.Normalize();
+                Vector2 kickForce = new Vector2(-forceDir.x * kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1), 5);
+                e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
             }
+        }
+    }
+
+    //Shadow Kick mechanic
+    private void ShadowKick()
+    {
+        if (shadowKickPower <= 0) return;
+
+        //Calculate charge ratio and movement distance
+        float chargeRatio = shadowKickPower / shadowKickMaxCharge;
+        float moveDistance = shadowKickDistance * chargeRatio;
+        Vector2 moveDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+        Vector2 currentPos = transform.position;
+        Vector2 movement = moveDirection * moveDistance;
+        Vector2 intendedPos = currentPos + movement;
+
+        //Debug purposes
+        Debug.Log($"Starting ShadowKick - Current: {currentPos}, Intended: {intendedPos}, Distance: {moveDistance}");
+
+        //Create box for enemy detection
+        Vector2 boxSize = new Vector2(0.5f, 1f);
+        Vector2 boxCenter = currentPos + (moveDirection * (moveDistance / 2));
+
+        //Debug purposes
+        Debug.DrawLine(currentPos, intendedPos, Color.red, 1f);
+
+        //Check for enemies in the path
+        Collider2D hitCollider = Physics2D.OverlapBox(boxCenter, new Vector2(moveDistance, 1f), 0f, enemyLayer);
+
+        if (hitCollider != null)
+        {
+            Debug.Log($"Hit enemy: {hitCollider.name} at position: {hitCollider.transform.position}");
+
+            //Calculate distance to enemy
+            float distanceToEnemy = Vector2.Distance(currentPos, hitCollider.transform.position);
+            Vector2 finalPos = currentPos + (moveDirection * (distanceToEnemy - 1f));
+
+            Debug.Log($"Moving to position before enemy: {finalPos}");
+
+            //Handle enemy interaction
+            if (hitCollider.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
+            {
+                e_Ai.SetHit();
+                e_Ai.SetPatrol(false);
+                hitCollider.GetComponent<EnemyHealth>().Damage(4);
+
+                Vector2 kickForce = moveDirection * shadowKickKnockback * chargeRatio;
+                hitCollider.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
+            }
+
+            //Move player
+            transform.position = new Vector3(finalPos.x, finalPos.y, transform.position.z);
         }
         else
         {
-            foreach (Collider2D col in HitRange())
-            {
-                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+            //Debug purposes
+            Debug.Log("No enemy hit, moving full distance");
+            transform.position = new Vector3(intendedPos.x, intendedPos.y, transform.position.z);
+        }
 
-                if(e_Ai != null)
-                {
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(3);
+        //Reset velocity
+        rb.velocity = Vector2.zero;
+    }
 
-                    //find the orientation of the hit enemy relative to the player
-                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                    forceDir.Normalize();
+    //Method to enable and disable Shadow Kick
+    public void EnableShadowKick()
+    {
+        hasShadowKick = true;
+    }
 
-                    //using given direction change values to appropriate force
-                    Vector2 kickForce = new Vector2(-forceDir.x * ((kickKnockback / 2) * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
-
-                    e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
-                }              
-            }
-        }      
+    //Method to enable and disable Ground Pound
+    public void EnableGroundPound()
+    {
+        hasGroundPound = true;
     }
 
     public void ChargeAttack()
@@ -504,8 +569,63 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   //Find all the enemies within the monkey's effective damage range
-   private Collider2D[] HitRange()
+    //Throw Object Mechanic
+    private void CheckPickupAndThrow()
+    {
+        //Throw
+        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.Y))
+        {
+            ThrowObject();
+        }
+        //Pickup
+        else if (!isCarrying && Input.GetKeyDown(KeyCode.E))
+        {
+            TryPickupObject();
+        }
+    }
+
+    private void TryPickupObject()
+    {
+        //Check for throwable objects in range
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, pickupRange, throwableLayer);
+
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.TryGetComponent<ThrowableObject>(out ThrowableObject throwable))
+            {
+                //Pick up the object
+                carriedObject = throwable;
+                carriedObject.OnPickup();
+
+                //Parent to carry point
+                throwable.transform.parent = carryPoint;
+                throwable.transform.localPosition = Vector3.zero;
+
+                isCarrying = true;
+                break;
+            }
+        }
+    }
+
+    private void ThrowObject()
+    {
+        if (carriedObject != null)
+        {
+            carriedObject.transform.parent = null;
+
+            //Calculate throw direction based on player facing
+            Vector2 throwDirection = isFacingRight ? Vector2.right : Vector2.left;
+
+            //Throw the object
+            carriedObject.Throw(throwDirection, throwForce);
+
+            carriedObject = null;
+            isCarrying = false;
+        }
+    }
+
+    //Find all the enemies within the monkey's effective damage range
+    private Collider2D[] HitRange()
    {
       Collider2D[] enemiesHit =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 

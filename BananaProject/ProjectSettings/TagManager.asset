@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - Vines
   - Sound
+  - Shadow Shard
+  - Banana Coin
+  - Pound Shard
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - Enemy
   - Player
   - Vines
-  - 
+  - Throwable
   - 
   - 
   - 
