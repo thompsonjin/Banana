@@ -445,6 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f455c16f3564494dafbc78edd1acbad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saki: 1
   health: 0
   maxHealth: 6
 --- !u!114 &2866844096244829126

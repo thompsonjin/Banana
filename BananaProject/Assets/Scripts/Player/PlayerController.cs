@@ -47,6 +47,8 @@ public class PlayerController : MonoBehaviour
     public bool boop;
     private float boopTimer;
     private const float MAX_BOOP_TIME = .5f;
+    public bool sakiBoost;
+    private bool secondJump;
 
     [Header("Combat")]
     [SerializeField] private Transform attackPoint;
@@ -119,7 +121,7 @@ public class PlayerController : MonoBehaviour
          //if the player is allowed to jump apply jump power to the player's velocity
          rb.velocity = new Vector2(rb.velocity.x, jumpPower);
 
-         jumpBufferCounter = 0f;
+         jumpBufferCounter = 0f;         
       }
 
       //jump height is variable based on how long the player holds space
@@ -128,6 +130,15 @@ public class PlayerController : MonoBehaviour
          rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
          coyoteTimeCounter = 0f;
+      }
+
+      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
+      {
+          //if the player is allowed to jump apply jump power to the player's velocity
+          rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
+
+          jumpBufferCounter = 0f;
+          sakiBoost = false;
       }
 
       //Climb

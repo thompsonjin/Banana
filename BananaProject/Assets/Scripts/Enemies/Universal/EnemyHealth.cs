@@ -7,6 +7,8 @@ public class EnemyHealth : MonoBehaviour
     private PlayerController p_Con;
     private BaseEnemy b_En;
 
+    public bool saki;
+
     [SerializeField] private int health;
     [SerializeField] private int maxHealth;
 
@@ -24,6 +26,10 @@ public class EnemyHealth : MonoBehaviour
 
         if(health <= 0)
         {
+            if (saki)
+            {
+                p_Con.sakiBoost = true;
+            }
             p_Con.GiveBanana(1);
             Destroy(this.gameObject);
         }
