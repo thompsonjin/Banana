@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     private float boopTimer;
     private const float MAX_BOOP_TIME = .5f;
     public bool sakiBoost;
-    private bool secondJump;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
