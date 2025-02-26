@@ -8,6 +8,12 @@ public class Bullet : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private int damage = 4;
 
+
+    private void Update()
+    {
+        StartCoroutine(Countdown(3));
+    }
+
     void Start()
     {
         rb.velocity = transform.right * shotSpeed;
@@ -25,7 +31,17 @@ public class Bullet : MonoBehaviour
             e_Health.Damage(damage);
             Destroy(gameObject);
         }
-        
     }
-
+    
+    private IEnumerator Countdown(int seconds)
+    {
+        int counter = seconds;
+        while (counter > 0)
+        {
+            yield return new WaitForSeconds(1);
+            counter--;
+        }
+        Destroy(gameObject);
+    }
 }
+
