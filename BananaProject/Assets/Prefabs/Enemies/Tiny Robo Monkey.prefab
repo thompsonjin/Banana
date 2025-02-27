@@ -448,7 +448,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saki: 0
   health: 0
-  maxHealth: 4
+  maxHealth: 2
 --- !u!114 &6292489306893372428
 MonoBehaviour:
   m_ObjectHideFlags: 0
