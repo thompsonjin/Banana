@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5503804406302632496}
   - component: {fileID: 472351924071559787}
-  - component: {fileID: 4963217553662747351}
+  - component: {fileID: 4073534826472725064}
   m_Layer: 0
   m_Name: Detection Zone
   m_TagString: Untagged
@@ -109,7 +109,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 23.81409, y: 6.0861382}
   m_EdgeRadius: 0
---- !u!114 &4963217553662747351
+--- !u!114 &4073534826472725064
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -118,7 +118,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2479898036852162849}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afb6a9fefe5b7f542b566a6122d9229a, type: 3}
+  m_Script: {fileID: 11500000, guid: f91677836c379bb43994bdef9b4b0fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   e_AI: {fileID: 0}
@@ -280,8 +280,8 @@ GameObject:
   - component: {fileID: 2965716323220579342}
   - component: {fileID: 4390681780903404696}
   - component: {fileID: 5476207649128049458}
-  - component: {fileID: 8072669275438082387}
   - component: {fileID: 6292489306893372428}
+  - component: {fileID: 5869095225936000058}
   m_Layer: 6
   m_Name: Tiny Robo Monkey
   m_TagString: Enemy
@@ -434,21 +434,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &8072669275438082387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8267496545744331273}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f455c16f3564494dafbc78edd1acbad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saki: 0
-  health: 0
-  maxHealth: 3
 --- !u!114 &6292489306893372428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,6 +459,21 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
+--- !u!114 &5869095225936000058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8267496545744331273}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12359f9e33238954cb90973a194c42a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saki: 0
+  health: 0
+  maxHealth: 2
 --- !u!1 &8866066275836076120
 GameObject:
   m_ObjectHideFlags: 0
