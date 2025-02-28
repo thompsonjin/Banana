@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float bananaRegen;
 
     [Header("Movement")]
+    [SerializeField] private float slowSpeed;
     [SerializeField] private float normalSpeed;
     private float currentSpeed;
     [SerializeField] private float chargeSpeed;
@@ -43,6 +44,11 @@ public class PlayerController : MonoBehaviour
     private float jumpBufferTime = 0.1f;
     private float jumpBufferCounter;
     public bool isFacingRight;
+    public bool boop;
+    private float boopTimer;
+    private const float MAX_BOOP_TIME = .5f;
+    public bool sakiBoost;
+    private bool secondJump;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -151,7 +157,7 @@ public class PlayerController : MonoBehaviour
          //if the player is allowed to jump apply jump power to the player's velocity
          rb.velocity = new Vector2(rb.velocity.x, jumpPower);
 
-         jumpBufferCounter = 0f;
+         jumpBufferCounter = 0f;         
       }
 
       //jump height is variable based on how long the player holds space
@@ -160,6 +166,15 @@ public class PlayerController : MonoBehaviour
          rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
          coyoteTimeCounter = 0f;
+      }
+
+      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
+      {
+          //if the player is allowed to jump apply jump power to the player's velocity
+          rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
+
+          jumpBufferCounter = 0f;
+          sakiBoost = false;
       }
 
       //Climb
@@ -292,7 +307,19 @@ public class PlayerController : MonoBehaviour
 
                 bananaRegenTimer = 0;
             }
-        }  
+        }
+
+
+        if (boop)
+        {
+            boopTimer -= Time.deltaTime;
+
+            if(boopTimer <= 0)
+            {
+                boopTimer = MAX_BOOP_TIME;
+                boop = false;
+            }
+        }
 
       Flip();
    }
@@ -300,31 +327,34 @@ public class PlayerController : MonoBehaviour
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
    {
-        if(groundPound)
+        if (!boop)
         {
-            //apply a force directly down and lock horizontal movement
-            rb.velocity = new Vector2(rb.velocity.x, -50);
-            if(IsGrounded())
+            if (groundPound)
             {
-                recoverTime += Time.deltaTime;
-                if(recoverTime > .5f)
+                //apply a force directly down and lock horizontal movement
+                rb.velocity = new Vector2(rb.velocity.x, -50);
+                if (IsGrounded())
                 {
-                    SetAura(false);
-                    recoverTime = 0;
-                    groundPound = false;
-                }          
+                    recoverTime += Time.deltaTime;
+                    if (recoverTime > .5f)
+                    {
+                        SetAura(false);
+                        recoverTime = 0;
+                        groundPound = false;
+                    }
+                }
             }
-        }
-        else if(isClimbing)
-        {
-            //apply the product of horizontal and speed to the players current velocity
-            rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
-        }
-        else
-        {
-            //apply the product of horizontal and speed to the players current velocity
-            rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
-        }  
+            else if (isClimbing)
+            {
+                //apply the product of horizontal and speed to the players current velocity
+                rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
+            }
+            else
+            {
+                //apply the product of horizontal and speed to the players current velocity
+                rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
+            }
+        }     
    }
 
    private bool IsGrounded()
@@ -344,6 +374,7 @@ public class PlayerController : MonoBehaviour
             camFT.CallTurn();
         }
    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -376,7 +407,7 @@ public class PlayerController : MonoBehaviour
         {
             if(HitRange() != null)
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
@@ -409,7 +440,7 @@ public class PlayerController : MonoBehaviour
         {
             if(HitRange() != null)
             {
-                RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
                 EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
@@ -443,8 +474,11 @@ public class PlayerController : MonoBehaviour
    {
         foreach (Collider2D col in HitRange())
         {
-            if (col.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
+            if (col.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
             {
+
+                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
+                
                 e_Ai.SetHit();
                 e_Ai.SetPatrol(false);
                 col.GetComponent<EnemyHealth>().Damage(2);
@@ -452,7 +486,7 @@ public class PlayerController : MonoBehaviour
                 Vector2 forceDir = this.transform.position - col.transform.position;
                 forceDir.Normalize();
                 Vector2 kickForce = new Vector2(-forceDir.x * kickKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1), 5);
-                col.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
+                e_Rigid.AddForce(kickForce, ForceMode2D.Impulse);
             }
         }
     }
@@ -495,7 +529,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"Moving to position before enemy: {finalPos}");
 
             //Handle enemy interaction
-            if (hitCollider.TryGetComponent<RoboMonkeyAI>(out RoboMonkeyAI e_Ai))
+            if (hitCollider.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
             {
                 e_Ai.SetHit();
                 e_Ai.SetPatrol(false);
@@ -675,7 +709,7 @@ public class PlayerController : MonoBehaviour
     {
         if(col.gameObject.tag == "Enemy" && aura)
         {
-            RoboMonkeyAI e_Ai = col.gameObject.GetComponent<RoboMonkeyAI>();
+            BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
@@ -702,9 +736,14 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public bool GetGroundPound()
+    {
+        return groundPound;
+    }
+
     //HEALTH MANAGMENT
     public void TakeDamage()
-   {
+    {
         if (!aura)
         {
             health--;
@@ -726,7 +765,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("You Are Dead");
             }
         }       
-   }
+    }
 
    public void GainHealth(int h)
    {
