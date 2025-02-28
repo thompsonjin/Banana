@@ -34,7 +34,7 @@ public class LaserBehaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if(collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
+        if(collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Throwable")
         {
             Destroy(this.gameObject);
         }

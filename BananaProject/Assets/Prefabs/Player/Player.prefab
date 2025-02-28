@@ -188,7 +188,11 @@ MonoBehaviour:
   firePoint: {fileID: 3001912954819293346}
   bulletprefab: {fileID: 2792605518736310862, guid: b54b55b3165d69b46848a17ecefb40b9, type: 3}
   hasBananaGun: 0
+  isGunPulled: 0
   fireRate: 0.1
+  weaponSprite: {fileID: 1412065979232524402}
+  gunDuration: 10
+  gunTimer: 0
 --- !u!114 &622046107485541659
 MonoBehaviour:
   m_ObjectHideFlags: 0

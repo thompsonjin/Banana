@@ -625,12 +625,12 @@ public class PlayerController : MonoBehaviour
     private void CheckPickupAndThrow()
     {
         //Throw
-        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.Y))
+        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.J))
         {
             ThrowObject();
         }
         //Pickup
-        else if (!isCarrying && Input.GetKeyDown(KeyCode.E))
+        else if (!isCarrying && Input.GetKeyDown(KeyCode.J))
         {
             TryPickupObject();
         }
