@@ -21,7 +21,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D hitInfo)
     {
-        RoboMonkeyAI e_Ai = hitInfo.GetComponent<RoboMonkeyAI>();
+        BaseEnemy e_Ai = hitInfo.GetComponent<BaseEnemy>();
         EnemyHealth e_Health = hitInfo.GetComponent<EnemyHealth>();
 
         if (e_Health != null && e_Ai != null)
