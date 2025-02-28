@@ -101,15 +101,26 @@ public class PlayerController : MonoBehaviour
     private ThrowableObject carriedObject;
     private bool isCarrying = false;
 
+    [Header("Weapon")]
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject bulletprefab;
+    [SerializeField] private bool hasBananaGun = false;
+    [SerializeField] private bool isGunPulled = false;
+    [SerializeField] private float fireRate = 0.5f;
+    private float nextFireTime = 0f;
+    [SerializeField] private SpriteRenderer weaponSprite;
+    [SerializeField] private float gunDuration = 10f;
+    [SerializeField] private float gunTimer = 0f;
 
     void Awake()
    {
-      health = maxHealth;
-      bananaCount = maxBananas;
-      currentSpeed = normalSpeed;
+    health = maxHealth;
+    bananaCount = maxBananas;
+    currentSpeed = normalSpeed;
 
-      chargePowerTimer = 0;
-      camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+    chargePowerTimer = 0;
+    camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+    weaponSprite.enabled = false;
    } 
 
    void Update()
@@ -222,8 +233,6 @@ public class PlayerController : MonoBehaviour
         }
 
       //Charge
-
-
         if (Input.GetKeyDown(KeyCode.L))
         {
             if(bananaCount >= 3)
@@ -246,6 +255,33 @@ public class PlayerController : MonoBehaviour
             chargeBar.value = 0;
             SetAura(false);
             canCharge = false;
+        }
+
+        //Shooting Banana Gun
+        
+        if (Input.GetKeyDown(KeyCode.Z) && hasBananaGun && !isGunPulled) 
+        {
+            if (bananaCount >= 3)
+            {
+                isGunPulled = true;
+                weaponSprite.enabled = true;
+                UseBanana(3);
+                gunTimer = gunDuration;
+            }
+        }
+
+        if (isGunPulled)
+        {
+            gunTimer -= Time.deltaTime;
+            if (gunTimer < 0)
+            {
+                isGunPulled = false;
+                weaponSprite.enabled = false;
+            }
+            else if (Input.GetKey(KeyCode.Y) || Input.GetKey(KeyCode.Mouse0))
+            {
+                Shoot();
+            }
         }
 
         //METHOD TO CHECK FOR THROWABLE OBJECTS
@@ -566,6 +602,23 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+    }
+
+    //Shoot method for Banana gun
+    private void Shoot()
+    {
+        if (Time.time >= nextFireTime)
+        {
+            Instantiate(bulletprefab, firePoint.position, firePoint.rotation);
+            nextFireTime = Time.time + fireRate;
+        }
+        
+    }
+
+    //Method to activate the banana Gun
+    public void EnableBananaGun()
+    {
+        hasBananaGun = true;
     }
 
     //Throw Object Mechanic

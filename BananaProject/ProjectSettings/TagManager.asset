@@ -13,6 +13,7 @@ TagManager:
   - Wall
   - Throwable
   - Floor
+  - Gun Shard
   layers:
   - Default
   - TransparentFX
