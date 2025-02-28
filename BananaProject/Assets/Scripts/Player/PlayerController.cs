@@ -48,7 +48,6 @@ public class PlayerController : MonoBehaviour
     private float boopTimer;
     private const float MAX_BOOP_TIME = .5f;
     public bool sakiBoost;
-    private bool secondJump;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -186,19 +185,19 @@ public class PlayerController : MonoBehaviour
 
 
       //Punch
-      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Y))
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
       {
          BasicAttack();
       }
 
         //Regular Kick
-        if (Input.GetKeyDown(KeyCode.B) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.K) && IsGrounded())
         {
             BasicKick();
         }
 
         //Shadow kick charging
-        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.B) && hasShadowKick && IsGrounded())
+        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.K) && hasShadowKick && IsGrounded())
         {
             if (bananaCount > 0)
             {
@@ -213,7 +212,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.B) && isChargingShadowKick)
+        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
         {
             ShadowKick();
             UseBanana(1);
@@ -223,7 +222,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Ground Pound
-        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
+        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
             {
@@ -234,7 +233,7 @@ public class PlayerController : MonoBehaviour
         }
 
       //Charge
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             if(bananaCount >= 3)
             {
@@ -243,12 +242,12 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(KeyCode.X) && canCharge)
+        if (Input.GetKey(KeyCode.L) && canCharge)
         {
             ChargeAttack();      
         }
 
-        if(Input.GetKeyUp(KeyCode.X))
+        if(Input.GetKeyUp(KeyCode.L))
         {
             chargePower = 0;
             chargePowerTimer = 0;

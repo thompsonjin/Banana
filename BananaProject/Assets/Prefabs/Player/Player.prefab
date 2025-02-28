@@ -153,10 +153,13 @@ MonoBehaviour:
   chargeBar: {fileID: 8971623386080281610}
   powerSlider: {fileID: 991260835937992137}
   bananaRegen: 5
+  slowSpeed: 0
   normalSpeed: 12
   chargeSpeed: 24
   jumpPower: 25
   isFacingRight: 1
+  boop: 0
+  sakiBoost: 0
   attackPoint: {fileID: 280152045252730823}
   attackRange: 0.6
   enemyLayer:
@@ -165,7 +168,7 @@ MonoBehaviour:
   kickPowerMax: 2
   shadowKickKnockback: 40
   shadowKickDistance: 8
-  hasShadowKick: 0
+  hasShadowKick: 1
   shadowKickMaxCharge: 3
   shadowKickChargeRate: 1
   chargePowerMax: 3
