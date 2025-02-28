@@ -11,6 +11,7 @@ TagManager:
   - Banana Coin
   - Pound Shard
   - Gun Shard
+  - Shield Shard
   layers:
   - Default
   - TransparentFX

@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     [SerializeField] private int maxHealth;
     private int health;
+    //BANANA SHIELD
+    [SerializeField] private bool hasBananaShield = false;
+    private bool banananaShieldActive = false;
+    [SerializeField] private GameObject shieldVisual;
     //HEALTH UI
     [SerializeField] private Image[] displayHealth = new Image[3];
 
@@ -262,11 +266,11 @@ public class PlayerController : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Z) && hasBananaGun && !isGunPulled) 
         {
-            if (bananaCount >= 3)
+            if (bananaCount >= 5)
             {
                 isGunPulled = true;
                 weaponSprite.enabled = true;
-                UseBanana(3);
+                UseBanana(5);
                 gunTimer = gunDuration;
             }
         }
@@ -283,6 +287,19 @@ public class PlayerController : MonoBehaviour
             {
                 Shoot();
             }
+        }
+
+        //Banana shield handling
+        if (hasBananaShield && bananaCount >= maxBananas && !banananaShieldActive)
+        {
+            banananaShieldActive = true;
+            shieldVisual.SetActive(true);
+            Debug.Log("Banana Shield ON");
+        }
+        else if (bananaCount < maxBananas)
+        {
+            banananaShieldActive = false;
+            shieldVisual.SetActive(false);
         }
 
         //METHOD TO CHECK FOR THROWABLE OBJECTS
@@ -565,6 +582,12 @@ public class PlayerController : MonoBehaviour
         hasGroundPound = true;
     }
 
+    //Method to enable and disable Banana Shield
+    public void EnableBananaShield()
+    {
+        hasBananaShield = true;
+    }
+
     public void ChargeAttack()
     { //Hold to charge dash
         if (chargePower < chargePowerMax)
@@ -746,6 +769,16 @@ public class PlayerController : MonoBehaviour
     {
         if (!aura)
         {
+            //Check if banana shield is active and able to use
+            if (hasBananaShield && banananaShieldActive)
+            {
+                banananaShieldActive = false;
+                shieldVisual.SetActive(false);
+                UseBanana(2);
+                Debug.Log("BLOCKED BY JAMES");
+                return;
+            }
+
             health--;
 
             if (health > 0)
