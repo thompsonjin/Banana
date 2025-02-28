@@ -155,7 +155,7 @@ MonoBehaviour:
   bananaRegen: 5
   slowSpeed: 0
   normalSpeed: 12
-  chargeSpeed: 24
+  chargeSpeed: 35
   jumpPower: 25
   isFacingRight: 1
   boop: 0
