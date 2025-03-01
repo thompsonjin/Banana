@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class HarmingLiquid : MonoBehaviour
 {
-    public float speed;
+    public float riseSpeed;
+    public float fallSpeed;
     public GameObject liquid;
 
     [Header("Water Type")]
@@ -34,14 +35,14 @@ public class HarmingLiquid : MonoBehaviour
 
     void RisingWater()
     {
-        liquid.transform.position = Vector3.MoveTowards(this.transform.position, endPos.position, speed * Time.deltaTime);
+        liquid.transform.position = Vector3.MoveTowards(this.transform.position, endPos.position, riseSpeed * Time.deltaTime);
     }
 
     void EbbingWater()
     {
         if (up)
         {
-            liquid.transform.position = Vector3.MoveTowards(liquid.transform.position, endPos.position, speed * Time.deltaTime);
+            liquid.transform.position = Vector3.MoveTowards(liquid.transform.position, endPos.position, riseSpeed * Time.deltaTime);
 
             if(liquid.transform.position.y >= endPos.position.y)
             {
@@ -51,7 +52,7 @@ public class HarmingLiquid : MonoBehaviour
         }
         else
         {
-            liquid.transform.position = Vector3.MoveTowards(liquid.transform.position, startPos.position, speed * Time.deltaTime);
+            liquid.transform.position = Vector3.MoveTowards(liquid.transform.position, startPos.position, fallSpeed * Time.deltaTime);
 
             if (liquid.transform.position.y <= startPos.position.y)
             {

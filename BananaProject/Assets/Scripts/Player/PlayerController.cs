@@ -261,13 +261,13 @@ public class PlayerController : MonoBehaviour
 
         //Shooting Banana Gun
         
-        if (Input.GetKeyDown(KeyCode.Z) && hasBananaGun && !isGunPulled) 
+        if (Input.GetKeyDown(KeyCode.I) && hasBananaGun && !isGunPulled) 
         {
-            if (bananaCount >= 3)
+            if (bananaCount >= 5)
             {
                 isGunPulled = true;
                 weaponSprite.enabled = true;
-                UseBanana(3);
+                UseBanana(5);
                 gunTimer = gunDuration;
             }
         }
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour
                 isGunPulled = false;
                 weaponSprite.enabled = false;
             }
-            else if (Input.GetKey(KeyCode.Y) || Input.GetKey(KeyCode.Mouse0))
+            else if (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.Mouse0))
             {
                 Shoot();
             }
@@ -395,6 +395,8 @@ public class PlayerController : MonoBehaviour
             isClimbing = false;
         }
     }
+
+    
 
     //COMBAT FUNCTIONS
     //deal damage and knockback on each attack with the damage doubled every three hits
