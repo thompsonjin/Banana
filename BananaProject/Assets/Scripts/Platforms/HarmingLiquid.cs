@@ -1,19 +1,63 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class HarmingLiquid : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.tag == "Player")
-        {
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage();
-        }
+    public float speed;
+    public GameObject liquid;
 
-        if(collision.gameObject.tag == "Enemy")
+    [Header("Water Type")]
+    public bool rising;
+    public bool ebbing;
+
+
+    [Header("Rising Positions")]
+    public Transform startPos;
+    public Transform endPos;
+
+    bool up = true;
+
+
+    private void Update()
+    {
+        if (rising)
         {
-            collision.gameObject.GetComponent<EnemyHealth>().Damage(10);
+            RisingWater();
         }
+        else if (ebbing)
+        {
+            EbbingWater();
+        }
+    }
+
+    void RisingWater()
+    {
+        liquid.transform.position = Vector3.MoveTowards(this.transform.position, endPos.position, speed * Time.deltaTime);
+    }
+
+    void EbbingWater()
+    {
+        if (up)
+        {
+            liquid.transform.position = Vector3.MoveTowards(liquid.transform.position, endPos.position, speed * Time.deltaTime);
+
+            if(liquid.transform.position.y >= endPos.position.y)
+            {
+                up = false;
+            }
+           
+        }
+        else
+        {
+            liquid.transform.position = Vector3.MoveTowards(liquid.transform.position, startPos.position, speed * Time.deltaTime);
+
+            if (liquid.transform.position.y <= startPos.position.y)
+            {
+                up = true;
+            }
+        }
+        
     }
 }

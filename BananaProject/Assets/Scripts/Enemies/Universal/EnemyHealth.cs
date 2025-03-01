@@ -29,6 +29,7 @@ public class EnemyHealth : MonoBehaviour
             if (saki)
             {
                 p_Con.sakiBoost = true;
+                p_Con.sakiBoostIndicator.SetActive(true);
             }
             p_Con.GiveBanana(1);
             Destroy(this.gameObject);

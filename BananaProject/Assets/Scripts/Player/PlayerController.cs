@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
     private float boopTimer;
     private const float MAX_BOOP_TIME = .5f;
     public bool sakiBoost;
+    public GameObject sakiBoostIndicator;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -174,6 +175,7 @@ public class PlayerController : MonoBehaviour
 
           jumpBufferCounter = 0f;
           sakiBoost = false;
+            sakiBoostIndicator.SetActive(false);
       }
 
       //Climb
