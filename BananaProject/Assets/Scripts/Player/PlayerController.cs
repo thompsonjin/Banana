@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -768,15 +769,10 @@ public class PlayerController : MonoBehaviour
 
                 displayHealth[health].enabled = false;
             }
-            else if (health == 0)
+            else if (health <= 0)
             {
-                Debug.Log("You Are Dead");
-
                 displayHealth[health].enabled = false;
-            }
-            else
-            {
-                Debug.Log("You Are Dead");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }       
     }
