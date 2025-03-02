@@ -5,6 +5,7 @@ using UnityEngine;
 public class Liquid : MonoBehaviour
 {
     public bool enemyKill;
+    public bool instant;
 
     private float swimTimer;
     public float maxSwimTime;
@@ -14,7 +15,17 @@ public class Liquid : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            swimTimer = maxSwimTime;
+            if (!instant)
+            {
+                swimTimer = maxSwimTime;
+                collision.gameObject.GetComponent<PlayerController>().swim = true;
+                collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3.5f;
+            }
+            else
+            {
+                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+            }
+           
         }
 
         if (collision.gameObject.tag == "Enemy" && enemyKill)
@@ -27,13 +38,28 @@ public class Liquid : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            swimTimer -= Time.deltaTime;
-
-            if(swimTimer <= 0)
+            if (!instant)
             {
-                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
-                swimTimer = maxSwimTime;
-            }
+                swimTimer -= Time.deltaTime;
+
+                if (swimTimer <= 0)
+                {
+                    collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+                    swimTimer = maxSwimTime;
+                }
+            }          
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Player")
+        {
+            if (!instant)
+            {
+                collision.gameObject.GetComponent<PlayerController>().swim = false;
+                collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 7;
+            }          
         }
     }
 

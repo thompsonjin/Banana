@@ -10,6 +10,7 @@ public class MovingPlatform : MonoBehaviour
     public GameObject movePoint;
     public GameObject platform;
     public float speed;
+    public bool trigger;
 
     Transform target;
     int targetNum = 0;
@@ -22,7 +23,10 @@ public class MovingPlatform : MonoBehaviour
     }
     private void Update()
     {
-        MovePlatform();
+        if (trigger)
+        {
+            MovePlatform();
+        }       
     }
 
     public void AddPoints()

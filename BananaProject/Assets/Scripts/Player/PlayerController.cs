@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     private const float MAX_BOOP_TIME = .5f;
     public bool sakiBoost;
     public GameObject sakiBoostIndicator;
+    public bool swim;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -144,8 +145,14 @@ public class PlayerController : MonoBehaviour
       {
         jumpBufferCounter = jumpBufferTime;
 
-        isClimbing = false;
-        rb.gravityScale = 7;
+        if (isClimbing)
+        {
+           if (!swim)
+           {
+              rb.gravityScale = 7;
+           }
+           isClimbing = false;
+        }              
       }
       else
       {
@@ -389,7 +396,11 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Vines")
         {
-            rb.gravityScale = 7;
+            if (!swim)
+            {
+                rb.gravityScale = 7;
+            }
+            
             vines = false;
 
             isClimbing = false;
