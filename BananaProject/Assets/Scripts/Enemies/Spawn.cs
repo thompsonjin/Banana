@@ -12,6 +12,10 @@ public class Spawn : MonoBehaviour
     float startTimer;
     [SerializeField] float initStartTime;
 
+    public bool enemySpawn;
+    public GameObject[] enemies = new GameObject[2];
+    public int enemiesLeft;
+
     private void Start()
     {
         startTimer = initStartTime;
@@ -31,7 +35,23 @@ public class Spawn : MonoBehaviour
 
             if (spawnTimer <= 0)
             {
-                Instantiate(spawnItem, this.transform);
+                if (enemySpawn)
+                {
+                    if(enemiesLeft > 0)
+                    {
+                        Instantiate(enemies[enemiesLeft], this.transform);
+                        enemiesLeft--;
+                    }
+                    else
+                    {
+                      
+                    }
+                }
+                else
+                {
+                    Instantiate(spawnItem, this.transform);       
+                }
+
                 spawnTimer = spawnTimeMax;
             }
         }

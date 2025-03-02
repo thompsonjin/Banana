@@ -17,9 +17,7 @@ public class Liquid : MonoBehaviour
         {
             if (!instant)
             {
-                swimTimer = maxSwimTime;
-                collision.gameObject.GetComponent<PlayerController>().swim = true;
-                collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3.5f;
+                swimTimer = maxSwimTime;     
             }
             else
             {
@@ -40,6 +38,8 @@ public class Liquid : MonoBehaviour
         {
             if (!instant)
             {
+                collision.gameObject.GetComponent<PlayerController>().swim = true;
+                collision.gameObject.GetComponent<Rigidbody2D>().gravityScale = 3.5f;
                 swimTimer -= Time.deltaTime;
 
                 if (swimTimer <= 0)
@@ -47,7 +47,13 @@ public class Liquid : MonoBehaviour
                     collision.gameObject.GetComponent<PlayerController>().TakeDamage();
                     swimTimer = maxSwimTime;
                 }
-            }          
+            }
+            else
+            {
+                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+            }
         }
     }
 

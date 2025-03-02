@@ -300,7 +300,12 @@ public class PlayerController : MonoBehaviour
         //TEMPORARY HEAL BUTTON
         if (Input.GetKeyDown(KeyCode.F))
       {
-         GainHealth(1);
+            if(bananaCount >= 3)
+            {
+                UseBanana(4);
+                GainHealth(1);
+            }
+         
       }
 
         //BANANA REGENERATION
