@@ -35,7 +35,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slowSpeed;
     [SerializeField] private float normalSpeed;
     private float currentSpeed;
-    [SerializeField] private float chargeSpeed;
     [SerializeField] private float jumpPower;
     private float horizontal;
     private float vertical;
@@ -78,9 +77,11 @@ public class PlayerController : MonoBehaviour
 
     [Header("Charge")]
     //Charge
-    private float chargePower;
-    [SerializeField]private float chargePowerMax;
-    private float chargePowerTimer;
+    [SerializeField] private float chargeDuration = 6f;
+    [SerializeField] private float boostSpeed = 24f;
+    [SerializeField] private bool hasCharge = false;
+    private bool isCharged = false;
+    private float chargeTimer;
     private bool aura;
     public SpriteRenderer sprite;
     private bool canCharge;
@@ -123,7 +124,6 @@ public class PlayerController : MonoBehaviour
     bananaCount = maxBananas;
     currentSpeed = normalSpeed;
 
-    chargePowerTimer = 0;
     camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
     weaponSprite.enabled = false;
    } 
@@ -190,19 +190,19 @@ public class PlayerController : MonoBehaviour
 
 
       //Punch
-      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Y))
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.L))
       {
          BasicAttack();
       }
 
         //Regular Kick
-        if (Input.GetKeyDown(KeyCode.B) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.K) && IsGrounded())
         {
             BasicKick();
         }
 
         //Shadow kick charging
-        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.B) && hasShadowKick && IsGrounded())
+        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.K) && hasShadowKick && IsGrounded())
         {
             if (bananaCount > 0)
             {
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.B) && isChargingShadowKick)
+        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
         {
             ShadowKick();
             UseBanana(1);
@@ -227,7 +227,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Ground Pound
-        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
+        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
             {
@@ -238,33 +238,38 @@ public class PlayerController : MonoBehaviour
         }
 
       //Charge
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.J) && !isCharged && hasCharge)
         {
             if(bananaCount >= 3)
             {
                 UseBanana(3);
+                isCharged = true;
                 canCharge = true;
+                SetAura(true);
+                currentSpeed = boostSpeed;
+                chargeTimer = chargeDuration;
+                chargeBar.value = 1f;
             }
         }
 
-        if (Input.GetKey(KeyCode.X) && canCharge)
+        if (canCharge)
         {
-            ChargeAttack();      
-        }
+            chargeTimer -= Time.deltaTime;
+            chargeBar.value = chargeTimer / chargeDuration;
 
-        if(Input.GetKeyUp(KeyCode.X))
-        {
-            chargePower = 0;
-            chargePowerTimer = 0;
-            currentSpeed = normalSpeed;
-            chargeBar.value = 0;
-            SetAura(false);
-            canCharge = false;
+            if (chargeTimer <= 0)
+            {
+                currentSpeed = normalSpeed;
+                chargeBar.value = 0;
+                SetAura(false);
+                canCharge = false;
+                isCharged = false;
+            }
         }
 
         //Shooting Banana Gun
-        
-        if (Input.GetKeyDown(KeyCode.Z) && hasBananaGun && !isGunPulled) 
+
+        if (Input.GetKeyDown(KeyCode.H) && hasBananaGun && !isGunPulled) 
         {
             if (bananaCount >= 5)
             {
@@ -283,7 +288,7 @@ public class PlayerController : MonoBehaviour
                 isGunPulled = false;
                 weaponSprite.enabled = false;
             }
-            else if (Input.GetKey(KeyCode.Y) || Input.GetKey(KeyCode.Mouse0))
+            else if (Input.GetKey(KeyCode.L) || Input.GetKey(KeyCode.Mouse0))
             {
                 Shoot();
             }
@@ -339,7 +344,20 @@ public class PlayerController : MonoBehaviour
         }
 
       Flip();
-   }
+
+        //Height check in map to kill the player if it goes below a specified height
+        if (transform.position.y <= -150)
+        {
+            for (int i = health - 1; i >= 0; i--)
+            {
+                displayHealth[i].enabled = false;
+            }
+
+            health = 0;
+            Debug.Log("You Are Dead");
+            Die();
+        }
+    }
 
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
@@ -588,44 +606,10 @@ public class PlayerController : MonoBehaviour
         hasBananaShield = true;
     }
 
-    public void ChargeAttack()
-    { //Hold to charge dash
-        if (chargePower < chargePowerMax)
-        {
-            currentSpeed = 0;
-            chargePower += Time.deltaTime;
-            chargePowerTimer += Time.deltaTime;
-            chargeBar.value = chargePowerTimer / chargePowerMax;
-        }
-        else
-        {
-            if (chargePower >= chargePowerMax)
-            {
-                //Activate when fully charged
-                SetAura(true);
-                currentSpeed = chargeSpeed;
-                chargePowerTimer -= Time.deltaTime;
-                chargeBar.value = chargePowerTimer / chargePowerMax;
-
-                if (chargePowerTimer <= 0)
-                {
-                    //if holding for longer than the allowed time use more banana shards to extend if no shards cancel ability
-                    if (chargePowerTimer <= -1)
-                    {
-                        if (bananaCount > 0)
-                        {
-                            UseBanana(1);
-                            chargePowerTimer = 0;
-                        }
-                        else
-                        {
-                            currentSpeed = normalSpeed;
-                            SetAura(false);
-                        }
-                    }
-                }
-            }
-        }
+    //Method to enable and disable Charge
+    public void EnableCharge()
+    {
+        hasCharge = true;
     }
 
     //Shoot method for Banana gun
@@ -649,7 +633,7 @@ public class PlayerController : MonoBehaviour
     private void CheckPickupAndThrow()
     {
         //Throw
-        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.Y))
+        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.L))
         {
             ThrowObject();
         }
@@ -789,6 +773,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (health == 0)
             {
+                Die();
                 Debug.Log("You Are Dead");
 
                 displayHealth[health].enabled = false;
@@ -811,6 +796,14 @@ public class PlayerController : MonoBehaviour
 
       displayHealth[health - 1].enabled = true;
    }
+
+    //Death management logic
+    public void Die()
+    {
+        gameObject.SetActive(false);
+
+        GameManager.Instance.OnPLayerDeath();
+    }
 
    //BANANA MANAGMENT
    private void UseBanana(int b)

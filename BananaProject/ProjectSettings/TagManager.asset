@@ -12,6 +12,7 @@ TagManager:
   - Pound Shard
   - Gun Shard
   - Shield Shard
+  - Charge Shard
   layers:
   - Default
   - TransparentFX
