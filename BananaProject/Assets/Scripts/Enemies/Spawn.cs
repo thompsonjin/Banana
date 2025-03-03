@@ -5,6 +5,9 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
     [SerializeField] GameObject spawnItem;
+    [SerializeField] GameObject[] enemyPoolOne;
+    [SerializeField] GameObject[] enemyPoolTwo;
+    [SerializeField] GameObject[] enemyPoolThree;
 
     float spawnTimer;
     [SerializeField] float spawnTimeMax;
@@ -12,9 +15,7 @@ public class Spawn : MonoBehaviour
     float startTimer;
     [SerializeField] float initStartTime;
 
-    public bool enemySpawn;
-    public GameObject[] enemies = new GameObject[2];
-    public int enemiesLeft;
+    public bool timed;
 
     private void Start()
     {
@@ -25,37 +26,40 @@ public class Spawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(startTimer >= 0)
+        if (timed)
         {
-            startTimer -= Time.deltaTime;
-        }
-        else
-        {
-            spawnTimer -= Time.deltaTime;
-
-            if (spawnTimer <= 0)
+            if (startTimer >= 0)
             {
-                if (enemySpawn)
-                {
-                    if(enemiesLeft > 0)
-                    {
-                        Instantiate(enemies[enemiesLeft], this.transform);
-                        enemiesLeft--;
-                    }
-                    else
-                    {
-                      
-                    }
-                }
-                else
-                {
-                    Instantiate(spawnItem, this.transform);       
-                }
-
-                spawnTimer = spawnTimeMax;
+                startTimer -= Time.deltaTime;
             }
-        }
+            else
+            {
+                spawnTimer -= Time.deltaTime;
 
-       
+                if (spawnTimer <= 0)
+                {
+                    Instantiate(spawnItem, this.transform);
+                    spawnTimer = spawnTimeMax;
+                }
+            }
+        }   
+    }
+
+    public void SpawnImmediate(int wave, int enemy)
+    {
+        switch (wave)
+        {
+            case 1:
+                Instantiate(enemyPoolOne[enemy], this.transform);
+                break;
+
+            case 2:
+                Instantiate(enemyPoolTwo[enemy], this.transform);
+                break;
+
+            case 3:
+                Instantiate(enemyPoolThree[enemy], this.transform);
+                break;
+        }
     }
 }
