@@ -18,7 +18,7 @@ public class MovingPlatformSurface : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy")
         {
-            collision.transform.parent = null;
+               collision.transform.parent = null;
         }
     }
 }

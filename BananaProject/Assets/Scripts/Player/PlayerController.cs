@@ -133,6 +133,7 @@ public class PlayerController : MonoBehaviour
       vertical = Input.GetAxisRaw("Vertical");
 
       //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
+      //Some movement logic taken from,Seth Walters, 2023, CharacterController, Raiders of Mara Project 
       if (IsGrounded() || isClimbing)
       {
         coyoteTimeCounter = coyoteTime;
