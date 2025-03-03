@@ -140,7 +140,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 72
   cameraFollowTarget: {fileID: 0}
-  player: {fileID: 0}
   maxHealth: 3
   hasBananaShield: 0
   shieldVisual: {fileID: 6176218626836076067}
@@ -170,10 +169,13 @@ MonoBehaviour:
     m_Bits: 64
   kickPowerMax: 2
   shadowKickKnockback: 40
-  shadowKickDistance: 8
   hasShadowKick: 0
-  shadowKickMaxCharge: 3
-  shadowKickChargeRate: 1
+  baseChargeTime: 1
+  maxChargeTime: 3
+  baseKickSpeed: 40
+  maxKickSpeed: 80
+  baseKickDistance: 8
+  maxKickDistance: 16
   chargeDuration: 6
   boostSpeed: 24
   hasCharge: 0

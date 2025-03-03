@@ -66,14 +66,17 @@ public class PlayerController : MonoBehaviour
     bool kickPowered;
     //Shadow Kick
     [SerializeField] private float shadowKickKnockback;
-    //How far the player will go with the shadow kick
-    [SerializeField] private float shadowKickDistance;
     [SerializeField] private bool hasShadowKick = false;
     private float shadowKickPower;
-    //Seconds needed to charge the kick
-    [SerializeField] private float shadowKickMaxCharge;
     private bool isChargingShadowKick;
-    [SerializeField] private float shadowKickChargeRate = 1f;
+    private bool isShadowKicking = false;
+    [SerializeField] private float baseChargeTime = 1f;
+    [SerializeField] private float maxChargeTime = 3f;
+    [SerializeField] private float baseKickSpeed = 40f;
+    [SerializeField] private float maxKickSpeed = 80f;
+    [SerializeField] private float baseKickDistance = 8f;
+    [SerializeField] private float maxKickDistance = 16f;
+
 
     [Header("Charge")]
     //Charge
@@ -207,12 +210,20 @@ public class PlayerController : MonoBehaviour
             if (bananaCount > 0)
             {
                 isChargingShadowKick = true;
-                shadowKickPower += Time.deltaTime * shadowKickChargeRate;
-                powerSlider.value = shadowKickPower / shadowKickMaxCharge;
+                shadowKickPower += Time.deltaTime;
 
-                if (shadowKickPower >= shadowKickMaxCharge)
+                if (shadowKickPower >= maxChargeTime)
                 {
-                    shadowKickPower = shadowKickMaxCharge;
+                    shadowKickPower = maxChargeTime;
+                    powerSlider.value = 1f;
+                }
+                else if (shadowKickPower >= baseChargeTime)
+                {
+                    powerSlider.value = 0.5f;
+                }
+                else
+                {
+                    powerSlider.value = (shadowKickPower / baseChargeTime) * 0.5f;
                 }
             }
         }
@@ -362,7 +373,7 @@ public class PlayerController : MonoBehaviour
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
    {
-        if (!boop)
+        if (!boop && !isShadowKicking)
         {
             if (groundPound)
             {
@@ -529,63 +540,82 @@ public class PlayerController : MonoBehaviour
     //Shadow Kick mechanic
     private void ShadowKick()
     {
-        if (shadowKickPower <= 0) return;
+        if (shadowKickPower < baseChargeTime) return;  
 
-        //Calculate charge ratio and movement distance
-        float chargeRatio = shadowKickPower / shadowKickMaxCharge;
-        float moveDistance = shadowKickDistance * chargeRatio;
-        Vector2 moveDirection = isFacingRight ? Vector2.right : Vector2.left;
-
-        Vector2 currentPos = transform.position;
-        Vector2 movement = moveDirection * moveDistance;
-        Vector2 intendedPos = currentPos + movement;
-
-        //Debug purposes
-        Debug.Log($"Starting ShadowKick - Current: {currentPos}, Intended: {intendedPos}, Distance: {moveDistance}");
-
-        //Create box for enemy detection
-        Vector2 boxSize = new Vector2(0.5f, 1f);
-        Vector2 boxCenter = currentPos + (moveDirection * (moveDistance / 2));
-
-        //Debug purposes
-        Debug.DrawLine(currentPos, intendedPos, Color.red, 1f);
-
-        //Check for enemies in the path
-        Collider2D hitCollider = Physics2D.OverlapBox(boxCenter, new Vector2(moveDistance, 1f), 0f, enemyLayer);
-
-        if (hitCollider != null)
+        //Determine the speed and distance based on charge level
+        float kickDistance;
+        float kickSpeed;
+        if (shadowKickPower >= maxChargeTime)
         {
-            Debug.Log($"Hit enemy: {hitCollider.name} at position: {hitCollider.transform.position}");
-
-            //Calculate distance to enemy
-            float distanceToEnemy = Vector2.Distance(currentPos, hitCollider.transform.position);
-            Vector2 finalPos = currentPos + (moveDirection * (distanceToEnemy - 1f));
-
-            Debug.Log($"Moving to position before enemy: {finalPos}");
-
-            //Handle enemy interaction
-            if (hitCollider.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
-            {
-                e_Ai.SetHit();
-                e_Ai.SetPatrol(false);
-                hitCollider.GetComponent<EnemyHealth>().Damage(4);
-
-                Vector2 kickForce = moveDirection * shadowKickKnockback * chargeRatio;
-                hitCollider.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
-            }
-
-            //Move player
-            transform.position = new Vector3(finalPos.x, finalPos.y, transform.position.z);
+            kickDistance = maxKickDistance;
+            kickSpeed = maxKickSpeed;
         }
         else
         {
-            //Debug purposes
-            Debug.Log("No enemy hit, moving full distance");
-            transform.position = new Vector3(intendedPos.x, intendedPos.y, transform.position.z);
+            kickDistance = baseKickDistance;
+            kickSpeed = baseKickSpeed;
         }
 
-        //Reset velocity
+        //Used to give omnidirectionality
+        Vector2 moveDirection = new Vector2(horizontal, vertical);
+
+        //Check to see if the kick is going to be used with "facing" value or omnidirectionality
+        if (moveDirection == Vector2.zero)
+        {
+            moveDirection = isFacingRight ? Vector2.right : Vector2.left;
+        }
+        else
+        {
+            moveDirection.Normalize();
+        }
+
+        isShadowKicking = true;
+
+        rb.velocity = moveDirection * kickSpeed;
+
+        //Courotine handles the kick movement
+        StartCoroutine(HandleShadowKickMovement(kickDistance));
+    }
+
+    private IEnumerator HandleShadowKickMovement(float kickDistance)
+    {
+        Vector2 startPos = transform.position;
+        float distanceTraveled = 0f;
+
+        //Used to keep track of enemies and not hit them multiple times
+        HashSet<Collider2D> hitEnemies = new HashSet<Collider2D>();
+
+        while (distanceTraveled < kickDistance)
+        {
+            //Check for enemies using the same method as other attacks
+            foreach (Collider2D col in HitRange())
+            {
+                if (hitEnemies.Contains(col)) continue;
+
+                if (col.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
+                {
+                    //Add enemy to hit list
+                    hitEnemies.Add(col);
+
+                    e_Ai.SetHit();
+                    e_Ai.SetPatrol(false);
+                    col.GetComponent<EnemyHealth>().Damage(4);
+
+                    //Apply knockback to enemy
+                    Vector2 kickForce = rb.velocity.normalized * shadowKickKnockback;
+                    col.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
+                }
+            }
+
+            //Update distance traveled
+            distanceTraveled = Vector2.Distance(startPos, transform.position);
+
+            yield return null;
+        }
+
         rb.velocity = Vector2.zero;
+
+        isShadowKicking = false;
     }
 
     //Method to enable and disable Shadow Kick
