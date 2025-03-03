@@ -51,8 +51,6 @@ public class Liquid : MonoBehaviour
             else
             {
                 collision.gameObject.GetComponent<PlayerController>().TakeDamage();
-                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
-                collision.gameObject.GetComponent<PlayerController>().TakeDamage();
             }
         }
     }

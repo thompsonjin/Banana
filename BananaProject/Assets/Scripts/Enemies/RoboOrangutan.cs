@@ -107,7 +107,7 @@ public class RoboOrangutan : BaseEnemy
     //COMBAT FUNCTIONS
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Wall")
+        if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Throwable")
         {
             turn = !turn;
         }
