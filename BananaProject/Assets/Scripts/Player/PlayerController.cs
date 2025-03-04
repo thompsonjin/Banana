@@ -284,8 +284,6 @@ public class PlayerController : MonoBehaviour
 
         if(Input.GetKeyUp(KeyCode.L))
         {
-            chargePower = 0;
-            chargePowerTimer = 0;
             currentSpeed = normalSpeed;
             chargeBar.value = 0;
             SetAura(false);
