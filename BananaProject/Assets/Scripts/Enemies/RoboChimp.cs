@@ -14,7 +14,7 @@ public class RoboChimp : BaseEnemy
     public bool isFacingRight;
 
     [Header("Combat")]
-    private const float PLAYER_HIT_TIME = 5;
+    private const float PLAYER_HIT_TIME = 2.5f;
     private float playerHitTimer;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform projectileSpawn;

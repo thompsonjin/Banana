@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
+
+
+#if UNITY_EDITOR
+
 [CustomEditor(typeof(MovingPlatform))]
 public class PointArrayEditor : Editor
 {
@@ -29,3 +33,4 @@ public class PointArrayEditor : Editor
 
     }
 }
+#endif

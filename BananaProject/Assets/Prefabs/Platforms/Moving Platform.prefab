@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9d032f96e8ba1a48ac4255132d62408, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Plat: {fileID: 7689719173030094038}
 --- !u!1 &7713071105012085574
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,4 +462,5 @@ MonoBehaviour:
   movePoint: {fileID: 7656598881201169350, guid: dccf64fc593f55e4f9370f9600c02ea3, type: 3}
   platform: {fileID: 3204823881214291466}
   speed: 3
+  trigger: 1
   platformSurface: {fileID: 7315177168184224939}
