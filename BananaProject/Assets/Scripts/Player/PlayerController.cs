@@ -75,10 +75,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shadowKickChargeRate = 1f;
 
     [Header("Charge")]
-    //Charge
-    private float chargePower;
-    [SerializeField]private float chargePowerMax;
-    private float chargePowerTimer;
+    [SerializeField] private float chargeDuration = 6f;
+    [SerializeField] private float boostSpeed = 24f;
+    [SerializeField] private bool hasCharge = false;
+    private bool isCharged = false;
+    private float chargeTimer;
     private bool aura;
     public SpriteRenderer sprite;
     private bool canCharge;
@@ -86,6 +87,7 @@ public class PlayerController : MonoBehaviour
     private bool groundPound;
     private float recoverTime;
     [SerializeField] bool hasGroundPound = false;
+
 
     [Header("Knockback stats")]
     //KNOCKBACK VALUES
@@ -121,7 +123,6 @@ public class PlayerController : MonoBehaviour
     bananaCount = maxBananas;
     currentSpeed = normalSpeed;
 
-    chargePowerTimer = 0;
     camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
     weaponSprite.enabled = false;
    } 
@@ -243,33 +244,48 @@ public class PlayerController : MonoBehaviour
             }      
         }
 
-      //Charge
+        //Charge
+
         if (Input.GetKeyDown(KeyCode.L))
         {
-            if(bananaCount >= 3)
+            if (bananaCount >= 3)
             {
                 UseBanana(3);
+                isCharged = true;
                 canCharge = true;
+                SetAura(true);
+                currentSpeed = boostSpeed;
+                chargeTimer = chargeDuration;
+                chargeBar.value = 1f;
             }
         }
 
         if (Input.GetKey(KeyCode.L) && canCharge)
         {
-            ChargeAttack();      
+            chargeTimer -= Time.deltaTime;
+            chargeBar.value = chargeTimer / chargeDuration;
+
+            if (chargeTimer <= 0)
+            {
+                currentSpeed = normalSpeed;
+                chargeBar.value = 0;
+                SetAura(false);
+                canCharge = false;
+                isCharged = false;
+            }
         }
 
-        if(Input.GetKeyUp(KeyCode.L))
+        if (Input.GetKeyUp(KeyCode.L))
         {
-            chargePower = 0;
-            chargePowerTimer = 0;
             currentSpeed = normalSpeed;
             chargeBar.value = 0;
             SetAura(false);
             canCharge = false;
         }
 
+
         //Shooting Banana Gun
-        
+
         if (Input.GetKeyDown(KeyCode.I) && hasBananaGun && !isGunPulled) 
         {
             if (bananaCount >= 5)
@@ -337,7 +353,7 @@ public class PlayerController : MonoBehaviour
         }
 
       Flip();
-   }
+    }
 
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
@@ -586,46 +602,7 @@ public class PlayerController : MonoBehaviour
         hasGroundPound = true;
     }
 
-    public void ChargeAttack()
-    { //Hold to charge dash
-        if (chargePower < chargePowerMax)
-        {
-            currentSpeed = 0;
-            chargePower += Time.deltaTime;
-            chargePowerTimer += Time.deltaTime;
-            chargeBar.value = chargePowerTimer / chargePowerMax;
-        }
-        else
-        {
-            if (chargePower >= chargePowerMax)
-            {
-                //Activate when fully charged
-                SetAura(true);
-                currentSpeed = chargeSpeed;
-                chargePowerTimer -= Time.deltaTime;
-                chargeBar.value = chargePowerTimer / chargePowerMax;
-
-                if (chargePowerTimer <= 0)
-                {
-                    //if holding for longer than the allowed time use more banana shards to extend if no shards cancel ability
-                    if (chargePowerTimer <= -1)
-                    {
-                        if (bananaCount > 0)
-                        {
-                            UseBanana(1);
-                            chargePowerTimer = 0;
-                        }
-                        else
-                        {
-                            currentSpeed = normalSpeed;
-                            SetAura(false);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
+   
     //Shoot method for Banana gun
     private void Shoot()
     {
