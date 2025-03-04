@@ -16,6 +16,7 @@ TagManager:
   - Gun Shard
   - Shield Shard
   - Charge Shard
+  - BFBG
   layers:
   - Default
   - TransparentFX

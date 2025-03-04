@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaterBehaviour : MonoBehaviour
 {
     private Vector3 scaleChange;
-    private Vector3 positionChange;
+    private Vector3 correction;
     private RoboChimp r_Chi;
 
     // Start is called before the first frame update
@@ -16,11 +16,11 @@ public class WaterBehaviour : MonoBehaviour
 
         if (r_Chi.isFacingRight)
         {
-            positionChange = new Vector3(0.02f, 0, 0);
+            correction = new Vector3(0.02f, 0, 0);
         }
         else
         {
-            positionChange = new Vector3(-0.02f, 0, 0);
+            correction = new Vector3(-0.02f, 0, 0);
         }           
     }
 
@@ -30,7 +30,7 @@ public class WaterBehaviour : MonoBehaviour
         if(transform.localScale.x <= 20)
         {
             transform.localScale += scaleChange;
-            transform.position += positionChange;
+            transform.position += correction;
         }  
     }
 
