@@ -14,7 +14,6 @@ public class BFBGPlatform : MonoBehaviour
         b_Man = GameObject.FindWithTag("BFBG").GetComponent<BFBGManager>();
         speed = b_Man.speed;
         rb.velocity = new Vector2(-1 * speed, 0);
-        //rb.isKinematic = true;
     }
 
     // Update is called once per frame
