@@ -13,6 +13,8 @@ public class BFBGManager : MonoBehaviour
     [SerializeField] float scaleRate;
     [SerializeField] float correctionRate;
     [SerializeField] float laserRange;
+    float laserInterval;
+    [SerializeField] float maxLaserInterval;
     private Vector3 scaleChange;
     private Vector3 correction;
     public bool endLaser;
@@ -41,45 +43,42 @@ public class BFBGManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (fireLaser)
-        {
-            firedBananas = 0;
 
-            if (!spawned)
+        //Laser Cycle
+
+        //Banana Cycle
+
+        fireInterval -= Time.deltaTime;
+
+        if (fireInterval <= 0)
+        {
+            FireBananaPlatforms();
+        }
+
+
+        if (!spawned)
+        {
+            laserInterval -= Time.deltaTime;
+            if(laserInterval <= 0)
             {
                 Debug.Log("Spawn Laser");
                 SpawnLasers();
+                endLaser = false;
                 spawned = true;
             }
-            else
+           
+        }
+        else
+        {
+            FireLasers(scaleChange, correction, laserRange);
+            if (endLaser)
             {
-                FireLasers(scaleChange, correction, laserRange);
-                if (endLaser)
-                {
-                    DestroyLasers();
-                    fireBanana = true;
-                    fireLaser = false;
-                }
+                DestroyLasers();
+                laserInterval = maxLaserInterval;
+                spawned = false;
             }
         }
 
-        if (fireBanana)
-        {
-            fireInterval -= Time.deltaTime;
-
-            if (fireInterval <= 0)
-            {
-                FireBananaPlatforms();
-            }
-
-            if(firedBananas == maxBananas)
-            {
-                spawned = false;
-                endLaser = false;
-                fireLaser = true;
-                fireBanana = false;
-            }     
-        }       
     }
 
     void SpawnLasers()
@@ -109,7 +108,6 @@ public class BFBGManager : MonoBehaviour
     void FireBananaPlatforms()
     {
         Instantiate(bananaPlatform, spawnPos[Random.Range(0, spawnPos.Length)].position, Quaternion.identity);
-        firedBananas++;
         fireInterval = maxInterval;
     }
 }
