@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -124,89 +123,82 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gunTimer = 0f;
 
     void Awake()
-   {
-    health = maxHealth;
-    bananaCount = maxBananas;
-    currentSpeed = normalSpeed;
+    {
+        health = maxHealth;
+        bananaCount = maxBananas;
+        currentSpeed = normalSpeed;
 
-    camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-    weaponSprite.enabled = false;
-   } 
+        camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+        weaponSprite.enabled = false;
+    }
 
-   void Update()
-   {
-      //Get the players left and right input to calculate the force that needs to be applied
-      horizontal = Input.GetAxisRaw("Horizontal");
-      vertical = Input.GetAxisRaw("Vertical");
+    void Update()
+    {
+        //Get the players left and right input to calculate the force that needs to be applied
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
 
-      //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
-      //Some movement logic taken from,Seth Walters, 2023, CharacterController, Raiders of Mara Project 
-      if (IsGrounded() || isClimbing)
-      {
-        coyoteTimeCounter = coyoteTime;
-      }
-      else
-      {
-        coyoteTimeCounter -= Time.deltaTime;
-      }
-
-      if(Input.GetKeyDown(KeyCode.Space))
-      {
-        jumpBufferCounter = jumpBufferTime;
-
-        if (isClimbing)
+        //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
+        if (IsGrounded() || isClimbing)
         {
-           if (!swim)
-           {
-              rb.gravityScale = 7;
-           }
-           isClimbing = false;
-        }              
-      }
-      else
-      {
-        jumpBufferCounter -= Time.deltaTime;
-      }
+            coyoteTimeCounter = coyoteTime;
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime;
+        }
 
-      if(jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
-      {
-         //if the player is allowed to jump apply jump power to the player's velocity
-         rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            jumpBufferCounter = jumpBufferTime;
 
-         jumpBufferCounter = 0f;         
-      }
+            isClimbing = false;
+            rb.gravityScale = 7;
+        }
+        else
+        {
+            jumpBufferCounter -= Time.deltaTime;
+        }
 
-      //jump height is variable based on how long the player holds space
-      if(Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
-      {
-         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
+        {
+            //if the player is allowed to jump apply jump power to the player's velocity
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
 
-         coyoteTimeCounter = 0f;
-      }
+            jumpBufferCounter = 0f;
+        }
 
-      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
-      {
-          //if the player is allowed to jump apply jump power to the player's velocity
-          rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
+        //jump height is variable based on how long the player holds space
+        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
-          jumpBufferCounter = 0f;
-          sakiBoost = false;
-          sakiBoostIndicator.SetActive(false);
-      }
+            coyoteTimeCounter = 0f;
+        }
 
-      //Climb
-      if(vines && Input.GetKeyDown(KeyCode.W))
-      {
-         isClimbing = true;
-         rb.gravityScale = 0;
-      }
+        if (!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
+        {
+            //if the player is allowed to jump apply jump power to the player's velocity
+            rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
+
+            jumpBufferCounter = 0f;
+            sakiBoost = false;
+        }
+
+        //Climb
+        if (vines && Input.GetKeyDown(KeyCode.W))
+        {
+            isClimbing = true;
+            rb.gravityScale = 0;
+        }
 
 
-      //Punch
-      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
-      {
-         BasicAttack();
-      }
+        //Punch
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
+        {
+            BasicAttack();
+        }
 
         //Regular Kick
         if (Input.GetKeyDown(KeyCode.K) && IsGrounded())
@@ -248,6 +240,8 @@ public class PlayerController : MonoBehaviour
         }
 
         //Ground Pound
+
+
         if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
@@ -255,10 +249,11 @@ public class PlayerController : MonoBehaviour
                 groundPound = true;
                 SetAura(true);
                 UseBanana(1);
-            }      
+            }
         }
 
         //Charge
+
 
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -296,7 +291,6 @@ public class PlayerController : MonoBehaviour
             SetAura(false);
             canCharge = false;
         }
-
 
         //Shooting Banana Gun
 
@@ -341,19 +335,11 @@ public class PlayerController : MonoBehaviour
         //METHOD TO CHECK FOR THROWABLE OBJECTS
         CheckPickupAndThrow();
 
-        //METHOD TO CHECK FOR THROWABLE OBJECTS
-        CheckPickupAndThrow();
-
         //TEMPORARY HEAL BUTTON
         if (Input.GetKeyDown(KeyCode.F))
-      {
-            if(bananaCount >= 3)
-            {
-                UseBanana(4);
-                GainHealth(1);
-            }
-         
-      }
+        {
+            GainHealth(1);
+        }
 
         //BANANA REGENERATION
         if (!canCharge)
@@ -375,17 +361,17 @@ public class PlayerController : MonoBehaviour
         {
             boopTimer -= Time.deltaTime;
 
-            if(boopTimer <= 0)
+            if (boopTimer <= 0)
             {
                 boopTimer = MAX_BOOP_TIME;
                 boop = false;
             }
         }
 
-      Flip();
+        Flip();
 
         //Height check in map to kill the player if it goes below a specified height
-        if (transform.position.y <= -150)
+        if (transform.position.y <= -300)
         {
             for (int i = health - 1; i >= 0; i--)
             {
@@ -398,10 +384,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   //MOVEMENT FUNCTIONS
-   private void FixedUpdate()
-   {
-        if (!boop)
+    //MOVEMENT FUNCTIONS
+    private void FixedUpdate()
+    {
+        if (!boop && !isShadowKicking)
         {
             if (groundPound)
             {
@@ -428,32 +414,32 @@ public class PlayerController : MonoBehaviour
                 //apply the product of horizontal and speed to the players current velocity
                 rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
             }
-        }     
-   }
+        }
+    }
 
-   private bool IsGrounded()
-   {
-      //Use groundCheck transform to check whether or not the player is touching the gorund
-      return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
-   }
+    private bool IsGrounded()
+    {
+        //Use groundCheck transform to check whether or not the player is touching the gorund
+        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    }
 
-   private void Flip()
-   {
+    private void Flip()
+    {
         //Rotate the character along the y axis based on the last horizontal input of the player
-        if(isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
+        if (isFacingRight && horizontal < 0f || !isFacingRight && horizontal > 0f)
         {
             isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
 
             camFT.CallTurn();
         }
-   }
+    }
 
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Vines")
-        {           
+        if (collision.gameObject.tag == "Vines")
+        {
             vines = true;
         }
     }
@@ -462,103 +448,97 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Vines")
         {
-            if (!swim)
-            {
-                rb.gravityScale = 7;
-            }
-            
+            rb.gravityScale = 7;
             vines = false;
 
             isClimbing = false;
         }
     }
 
-    
-
     //COMBAT FUNCTIONS
     //deal damage and knockback on each attack with the damage doubled every three hits
     private void BasicAttack()
-   {
-      comboCount++;
+    {
+        comboCount++;
 
-      if(comboCount == 3)
-      {
-        foreach (Collider2D col in HitRange())
+        if (comboCount == 3)
         {
-            if(HitRange() != null)
+            foreach (Collider2D col in HitRange())
             {
-                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
-
-                
-                if (e_Ai != null)
+                if (HitRange() != null)
                 {
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(4);
-                    //find the orientation of the hit enemy relative to the player
-                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                    forceDir.Normalize();
+                    BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
+                    EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                    Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-                    //using given direction change values to appropriate force
-                    Vector2 uppercutForce = new Vector2(-forceDir.x * (uppercutKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 20);
 
-                    e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
+                    if (e_Ai != null)
+                    {
+                        e_Ai.SetHit();
+                        e_Ai.SetPatrol(false);
+                        e_Health.Damage(4);
+                        //find the orientation of the hit enemy relative to the player
+                        Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                        forceDir.Normalize();
+
+                        //using given direction change values to appropriate force
+                        Vector2 uppercutForce = new Vector2(-forceDir.x * (uppercutKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 20);
+
+                        e_Rigid.AddForce(uppercutForce, ForceMode2D.Impulse);
+
+                    }
 
                 }
 
-            }       
-           
+            }
+
+            comboCount = 0;
         }
-
-        comboCount = 0;       
-      }
-      else
-      {
-        foreach (Collider2D col in HitRange())
+        else
         {
-            if(HitRange() != null)
+            foreach (Collider2D col in HitRange())
             {
-                BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
-                EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
-                Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
-
-                if(e_Ai != null)
+                if (HitRange() != null)
                 {
-                    e_Ai.SetHit();
-                    e_Ai.SetPatrol(false);
-                    e_Health.Damage(2);
+                    BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
+                    EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+                    Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
-                    //find the orientation of the hit enemy relative to the player
-                    Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
-                    forceDir.Normalize();
+                    if (e_Ai != null)
+                    {
+                        e_Ai.SetHit();
+                        e_Ai.SetPatrol(false);
+                        e_Health.Damage(2);
 
-                    //using given direction change values to appropriate force
-                    Vector2 punchForce = new Vector2(-forceDir.x * (punchKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+                        //find the orientation of the hit enemy relative to the player
+                        Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
+                        forceDir.Normalize();
 
-                    e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
+                        //using given direction change values to appropriate force
+                        Vector2 punchForce = new Vector2(-forceDir.x * (punchKnockback * (Mathf.Abs(rb.velocity.x / 10) + 1)), 5);
+
+                        e_Rigid.AddForce(punchForce, ForceMode2D.Impulse);
+                    }
+
+
                 }
 
-               
-            }    
-           
+            }
+
         }
-        
-      }      
-   }
+    }
 
 
     //Basic kick call
-   private void BasicKick()
-   {
+    private void BasicKick()
+    {
         foreach (Collider2D col in HitRange())
         {
             if (col.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
             {
 
                 Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
-                
+
                 e_Ai.SetHit();
                 e_Ai.SetPatrol(false);
                 col.GetComponent<EnemyHealth>().Damage(2);
@@ -664,7 +644,18 @@ public class PlayerController : MonoBehaviour
         hasGroundPound = true;
     }
 
-   
+    //Method to enable and disable Banana Shield
+    public void EnableBananaShield()
+    {
+        hasBananaShield = true;
+    }
+
+    //Method to enable and disable Charge
+    public void EnableCharge()
+    {
+        hasCharge = true;
+    }
+
     //Shoot method for Banana gun
     private void Shoot()
     {
@@ -673,7 +664,7 @@ public class PlayerController : MonoBehaviour
             Instantiate(bulletprefab, firePoint.position, firePoint.rotation);
             nextFireTime = Time.time + fireRate;
         }
-        
+
     }
 
     //Method to activate the banana Gun
@@ -686,12 +677,12 @@ public class PlayerController : MonoBehaviour
     private void CheckPickupAndThrow()
     {
         //Throw
-        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.J))
+        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.L))
         {
             ThrowObject();
         }
         //Pickup
-        else if (!isCarrying && Input.GetKeyDown(KeyCode.J))
+        else if (!isCarrying && Input.GetKeyDown(KeyCode.E))
         {
             TryPickupObject();
         }
@@ -739,17 +730,17 @@ public class PlayerController : MonoBehaviour
 
     //Find all the enemies within the monkey's effective damage range
     private Collider2D[] HitRange()
-   {
-      Collider2D[] enemiesHit =  Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
+    {
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(attackPoint.position, attackRange, enemyLayer);
 
-      return enemiesHit;       
-   }
+        return enemiesHit;
+    }
 
-   void OnDrawGizmosSelected()
-   {
+    void OnDrawGizmosSelected()
+    {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
-   }
+    }
 
     public void SetAura(bool a)
     {
@@ -767,7 +758,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Enemy" && aura)
+        if (col.gameObject.tag == "Enemy" && aura)
         {
             BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
             EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
@@ -784,7 +775,7 @@ public class PlayerController : MonoBehaviour
                 e_Health.Damage(4);
                 recoverTime = 0;
             }
-            
+
             //find the orientation of the hit enemy relative to the player
             Vector2 forceDir = this.transform.position - col.gameObject.transform.position;
             forceDir.Normalize();
@@ -837,17 +828,18 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
     public void GainHealth(int h)
-   {
-      health += h;
+    {
+        health += h;
 
-      if(health >= maxHealth)
-      {
-         health = maxHealth;
-      }
+        if (health >= maxHealth)
+        {
+            health = maxHealth;
+        }
 
-      displayHealth[health - 1].enabled = true;
-   }
+        displayHealth[health - 1].enabled = true;
+    }
 
     //Death management logic
     public void Die()
@@ -857,29 +849,28 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.OnPLayerDeath();
     }
 
-
     //BANANA MANAGMENT
     private void UseBanana(int b)
-   {
+    {
         bananaCount -= b;
 
         for (int i = 0; i < b; i++)
         {
             displayBananas[bananaCount + i].enabled = false;
-        }     
-   }
+        }
+    }
 
-   public void GiveBanana(int b)
-   {
-      bananaCount += b;
+    public void GiveBanana(int b)
+    {
+        bananaCount += b;
 
-      if(bananaCount > maxBananas)
-      {
-         bananaCount = maxBananas;
-      }
-      else
-      {
-         displayBananas[bananaCount -  1].enabled = true;
-      }    
-   }
+        if (bananaCount > maxBananas)
+        {
+            bananaCount = maxBananas;
+        }
+        else
+        {
+            displayBananas[bananaCount - 1].enabled = true;
+        }
+    }
 }
