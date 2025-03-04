@@ -184,6 +184,7 @@ public class PlayerController : MonoBehaviour
 
           jumpBufferCounter = 0f;
           sakiBoost = false;
+            sakiBoostIndicator.SetActive(false);
       }
 
       //Climb
@@ -202,18 +203,18 @@ public class PlayerController : MonoBehaviour
       }
 
         //Regular Kick
-        if (Input.GetKeyDown(KeyCode.K) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.K))
         {
             BasicKick();
         }
 
         //Shadow kick charging
-        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.K) && hasShadowKick && IsGrounded())
+        if (Input.GetMouseButton(1) && hasShadowKick || Input.GetKey(KeyCode.K) && hasShadowKick)
         {
             if (bananaCount > 0)
             {
                 isChargingShadowKick = true;
-                shadowKickPower += Time.deltaTime;
+                shadowKickPower += .01f + Time.deltaTime;
 
                 if (shadowKickPower >= maxChargeTime)
                 {
@@ -252,43 +253,56 @@ public class PlayerController : MonoBehaviour
                 UseBanana(1);
             }
         }
-      //Charge
-        if (Input.GetKeyDown(KeyCode.L))
+        //Charge
+        if (hasCharge)
         {
-            if (bananaCount >= 3)
+            if (Input.GetKeyDown(KeyCode.L))
             {
-                UseBanana(3);
-                isCharged = true;
-                canCharge = true;
-                SetAura(true);
-                currentSpeed = boostSpeed;
-                chargeTimer = chargeDuration;
-                chargeBar.value = 1f;
+                if (bananaCount >= 3)
+                {
+                    UseBanana(3);
+                    isCharged = true;
+                    canCharge = true;
+                    SetAura(true);
+                    currentSpeed = boostSpeed;
+                    chargeTimer = chargeDuration;
+                    chargeBar.value = 1f;
+                }
             }
-        }
 
-        if (Input.GetKey(KeyCode.L) && canCharge)
-        {
-            chargeTimer -= Time.deltaTime;
-            chargeBar.value = chargeTimer / chargeDuration;
+            if (Input.GetKey(KeyCode.L) && canCharge)
+            {
+                chargeTimer -= Time.deltaTime;
+                chargeBar.value = chargeTimer / chargeDuration;
 
-            if (chargeTimer <= 0)
+                if (chargeTimer <= 0)
+                {
+                    if (bananaCount == 0)
+                    {
+                        currentSpeed = normalSpeed;
+                        chargeBar.value = 0;
+                        SetAura(false);
+                        canCharge = false;
+                        isCharged = false;
+                    }
+                    else
+                    {
+                        UseBanana(1);
+                        chargeTimer = chargeDuration;
+                    }
+
+                }
+            }
+
+            if (Input.GetKeyUp(KeyCode.L))
             {
                 currentSpeed = normalSpeed;
                 chargeBar.value = 0;
                 SetAura(false);
                 canCharge = false;
-                isCharged = false;
             }
         }
-
-        if (Input.GetKeyUp(KeyCode.L))
-        {
-            currentSpeed = normalSpeed;
-            chargeBar.value = 0;
-            SetAura(false);
-            canCharge = false;
-        }
+        
 
         //Shooting Banana Gun
 
@@ -333,9 +347,10 @@ public class PlayerController : MonoBehaviour
         //METHOD TO CHECK FOR THROWABLE OBJECTS
         CheckPickupAndThrow();
 
-        //TEMPORARY HEAL BUTTON
-        if (Input.GetKeyDown(KeyCode.F))
+        //HEAL
+        if (Input.GetKeyDown(KeyCode.F) && bananaCount >= 4)
         {
+            UseBanana(4);
             GainHealth(1);
         }
 
@@ -675,12 +690,12 @@ public class PlayerController : MonoBehaviour
     private void CheckPickupAndThrow()
     {
         //Throw
-        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.L))
+        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.J))
         {
             ThrowObject();
         }
         //Pickup
-        else if (!isCarrying && Input.GetKeyDown(KeyCode.E))
+        else if (!isCarrying && Input.GetKeyDown(KeyCode.J))
         {
             TryPickupObject();
         }
@@ -793,37 +808,34 @@ public class PlayerController : MonoBehaviour
     //HEALTH MANAGMENT
     public void TakeDamage()
     {
-        if (!aura)
+        //Check if banana shield is active and able to use
+        if (hasBananaShield && banananaShieldActive)
         {
-            //Check if banana shield is active and able to use
-            if (hasBananaShield && banananaShieldActive)
-            {
-                banananaShieldActive = false;
-                shieldVisual.SetActive(false);
-                UseBanana(2);
-                Debug.Log("BLOCKED BY JAMES");
-                return;
-            }
+            banananaShieldActive = false;
+            shieldVisual.SetActive(false);
+            UseBanana(2);
+            Debug.Log("BLOCKED BY JAMES");
+            return;
+        }
 
-            health--;
+        health--;
 
-            if (health > 0)
-            {
-                Debug.Log("DAMAGE");
+        if (health > 0)
+        {
+            Debug.Log("DAMAGE");
 
-                displayHealth[health].enabled = false;
-            }
-            else if (health == 0)
-            {
-                Die();
-                Debug.Log("You Are Dead");
+            displayHealth[health].enabled = false;
+        }
+        else if (health == 0)
+        {
+            Die();
+            Debug.Log("You Are Dead");
 
-                displayHealth[health].enabled = false;
-            }
-            else
-            {
-                Debug.Log("You Are Dead");
-            }
+            displayHealth[health].enabled = false;
+        }
+        else
+        {
+            Debug.Log("You Are Dead");
         }
     }
 
@@ -838,15 +850,6 @@ public class PlayerController : MonoBehaviour
 
         displayHealth[health - 1].enabled = true;
     }
-
-    //Death management logic
-    public void Die()
-    {
-        gameObject.SetActive(false);
-
-        GameManager.Instance.OnPLayerDeath();
-    }
-
 
     //Death management logic
     public void Die()
