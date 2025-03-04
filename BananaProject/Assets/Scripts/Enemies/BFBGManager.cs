@@ -19,9 +19,11 @@ public class BFBGManager : MonoBehaviour
 
     [Header("Banana Platform Attributes")]
     public GameObject bananaPlatform;
-    [SerializeField] int firedBananas;
+    int firedBananas;
+    [SerializeField] int maxBananas;
     float fireInterval;
     [SerializeField]float maxInterval;
+    public float speed;
 
     bool fireLaser = true;
     bool fireBanana;
@@ -41,8 +43,11 @@ public class BFBGManager : MonoBehaviour
     {
         if (fireLaser)
         {
+            firedBananas = 0;
+
             if (!spawned)
             {
+                Debug.Log("Spawn Laser");
                 SpawnLasers();
                 spawned = true;
             }
@@ -60,18 +65,25 @@ public class BFBGManager : MonoBehaviour
 
         if (fireBanana)
         {
-            FireBananaPlatforms();
-            spawned = false;
-            endLaser = false;
-            fireLaser = true;
-            fireBanana = false;
+            fireInterval -= Time.deltaTime;
+
+            if (fireInterval <= 0)
+            {
+                FireBananaPlatforms();
+            }
+
+            if(firedBananas == maxBananas)
+            {
+                spawned = false;
+                endLaser = false;
+                fireLaser = true;
+                fireBanana = false;
+            }     
         }       
     }
 
     void SpawnLasers()
     {
-       
-
         foreach(Transform t in spawnPos)
         {
             Instantiate(laser, t);
@@ -96,15 +108,8 @@ public class BFBGManager : MonoBehaviour
 
     void FireBananaPlatforms()
     {
-        for(int i = 0; i < firedBananas; i++)
-        {
-            fireInterval -= Time.deltaTime;
-
-            if(fireInterval <= 0)
-            {
-                Instantiate(bananaPlatform, spawnPos[Random.Range(0, spawnPos.Length)]);
-                fireInterval = maxInterval;
-            }            
-        }
+        Instantiate(bananaPlatform, spawnPos[Random.Range(0, spawnPos.Length)].position, Quaternion.identity);
+        firedBananas++;
+        fireInterval = maxInterval;
     }
 }
