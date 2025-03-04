@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7227429533643453736}
   - component: {fileID: 7852629935429658797}
-  - component: {fileID: 4488832926778699351}
+  - component: {fileID: 5183423103024823462}
   m_Layer: 0
   m_Name: Detection Zone
   m_TagString: Untagged
@@ -140,7 +140,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 13.913837, y: 7.3000774}
   m_EdgeRadius: 0
---- !u!114 &4488832926778699351
+--- !u!114 &5183423103024823462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91677836c379bb43994bdef9b4b0fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  e_AI: {fileID: 6393625457130097754}
+  e_AI: {fileID: 0}
 --- !u!1 &4410582306327930064
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,8 +196,8 @@ GameObject:
   - component: {fileID: 7865484477705647449}
   - component: {fileID: 7792441419641807416}
   - component: {fileID: 954118723051806127}
-  - component: {fileID: 2875228993310728431}
   - component: {fileID: 6393625457130097754}
+  - component: {fileID: 2915176699026304077}
   m_Layer: 6
   m_Name: Robo Proboscis
   m_TagString: Enemy
@@ -386,6 +386,21 @@ MonoBehaviour:
     m_Bits: 128
   projectile: {fileID: 6919797778990794045, guid: 4df73ef61c1d03f498fbd47bcb6760ff, type: 3}
   projectileSpawn: {fileID: 7726398540081954735}
+--- !u!114 &2915176699026304077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5184890065183806211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12359f9e33238954cb90973a194c42a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saki: 0
+  health: 0
+  maxHealth: 8
 --- !u!1 &7174620720673208489
 GameObject:
   m_ObjectHideFlags: 0
