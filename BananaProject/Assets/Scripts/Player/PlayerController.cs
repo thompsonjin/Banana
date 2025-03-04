@@ -847,15 +847,6 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.OnPLayerDeath();
     }
 
-
-    //Death management logic
-    public void Die()
-    {
-        gameObject.SetActive(false);
-
-        GameManager.Instance.OnPLayerDeath();
-    }
-
    //BANANA MANAGMENT
    private void UseBanana(int b)
    {
