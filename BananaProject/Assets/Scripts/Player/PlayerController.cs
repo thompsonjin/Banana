@@ -123,82 +123,83 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gunTimer = 0f;
 
     void Awake()
-    {
-        health = maxHealth;
-        bananaCount = maxBananas;
-        currentSpeed = normalSpeed;
 
-        camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-        weaponSprite.enabled = false;
-    }
+   {
+    health = maxHealth;
+    bananaCount = maxBananas;
+    currentSpeed = normalSpeed;
 
-    void Update()
-    {
-        //Get the players left and right input to calculate the force that needs to be applied
-        horizontal = Input.GetAxisRaw("Horizontal");
-        vertical = Input.GetAxisRaw("Vertical");
+    camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+    weaponSprite.enabled = false;
+   } 
 
-        //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
-        if (IsGrounded() || isClimbing)
-        {
-            coyoteTimeCounter = coyoteTime;
-        }
-        else
-        {
-            coyoteTimeCounter -= Time.deltaTime;
-        }
+   void Update()
+   {
+      //Get the players left and right input to calculate the force that needs to be applied
+      horizontal = Input.GetAxisRaw("Horizontal");
+      vertical = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            jumpBufferCounter = jumpBufferTime;
+      //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
+      if (IsGrounded() || isClimbing)
+      {
+        coyoteTimeCounter = coyoteTime;
+      }
+      else
+      {
+        coyoteTimeCounter -= Time.deltaTime;
+      }
 
-            isClimbing = false;
-            rb.gravityScale = 7;
-        }
-        else
-        {
-            jumpBufferCounter -= Time.deltaTime;
-        }
+      if(Input.GetKeyDown(KeyCode.Space))
+      {
+        jumpBufferCounter = jumpBufferTime;
 
-        if (jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
-        {
-            //if the player is allowed to jump apply jump power to the player's velocity
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower);
+        isClimbing = false;
+        rb.gravityScale = 7;
+      }
+      else
+      {
+        jumpBufferCounter -= Time.deltaTime;
+      }
 
-            jumpBufferCounter = 0f;
-        }
+      if(jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
+      {
+         //if the player is allowed to jump apply jump power to the player's velocity
+         rb.velocity = new Vector2(rb.velocity.x, jumpPower);
 
-        //jump height is variable based on how long the player holds space
-        if (Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+         jumpBufferCounter = 0f;         
+      }
 
-            coyoteTimeCounter = 0f;
-        }
+      //jump height is variable based on how long the player holds space
+      if(Input.GetKeyUp(KeyCode.Space) && rb.velocity.y > 0f)
+      {
+         rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
 
-        if (!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
-        {
-            //if the player is allowed to jump apply jump power to the player's velocity
-            rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
+         coyoteTimeCounter = 0f;
+      }
 
-            jumpBufferCounter = 0f;
-            sakiBoost = false;
-        }
+      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
+      {
+          //if the player is allowed to jump apply jump power to the player's velocity
+          rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
 
-        //Climb
-        if (vines && Input.GetKeyDown(KeyCode.W))
-        {
-            isClimbing = true;
-            rb.gravityScale = 0;
-        }
+          jumpBufferCounter = 0f;
+          sakiBoost = false;
+      }
+
+      //Climb
+      if(vines && Input.GetKeyDown(KeyCode.W))
+      {
+         isClimbing = true;
+         rb.gravityScale = 0;
+      }
 
 
-        //Punch
+      //Punch
 
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
-        {
-            BasicAttack();
-        }
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
+      {
+         BasicAttack();
+      }
 
         //Regular Kick
         if (Input.GetKeyDown(KeyCode.K) && IsGrounded())
@@ -251,10 +252,7 @@ public class PlayerController : MonoBehaviour
                 UseBanana(1);
             }
         }
-
-        //Charge
-
-
+      //Charge
         if (Input.GetKeyDown(KeyCode.L))
         {
             if (bananaCount >= 3)
@@ -294,7 +292,7 @@ public class PlayerController : MonoBehaviour
 
         //Shooting Banana Gun
 
-        if (Input.GetKeyDown(KeyCode.H) && hasBananaGun && !isGunPulled)
+        if (Input.GetKeyDown(KeyCode.H) && hasBananaGun && !isGunPulled) 
         {
             if (bananaCount >= 5)
             {
@@ -372,6 +370,7 @@ public class PlayerController : MonoBehaviour
 
         //Height check in map to kill the player if it goes below a specified height
         if (transform.position.y <= -300)
+
         {
             for (int i = health - 1; i >= 0; i--)
             {
@@ -384,9 +383,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //MOVEMENT FUNCTIONS
-    private void FixedUpdate()
-    {
+   //MOVEMENT FUNCTIONS
+   private void FixedUpdate()
+   {
         if (!boop && !isShadowKicking)
         {
             if (groundPound)
@@ -554,8 +553,7 @@ public class PlayerController : MonoBehaviour
     //Shadow Kick mechanic
     private void ShadowKick()
     {
-        if (shadowKickPower < baseChargeTime) return;
-
+        if (shadowKickPower < baseChargeTime) return;  
         //Determine the speed and distance based on charge level
         float kickDistance;
         float kickSpeed;
@@ -849,9 +847,18 @@ public class PlayerController : MonoBehaviour
         GameManager.Instance.OnPLayerDeath();
     }
 
-    //BANANA MANAGMENT
-    private void UseBanana(int b)
+
+    //Death management logic
+    public void Die()
     {
+        gameObject.SetActive(false);
+
+        GameManager.Instance.OnPLayerDeath();
+    }
+
+   //BANANA MANAGMENT
+   private void UseBanana(int b)
+   {
         bananaCount -= b;
 
         for (int i = 0; i < b; i++)

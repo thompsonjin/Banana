@@ -14,6 +14,8 @@ TagManager:
   - Throwable
   - Floor
   - Gun Shard
+  - Shield Shard
+  - Charge Shard
   layers:
   - Default
   - TransparentFX

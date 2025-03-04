@@ -72,7 +72,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4711889197714414898}
   - component: {fileID: 6763657336232047205}
-  - component: {fileID: 5970660792250349119}
+  - component: {fileID: 4322296747682698268}
   m_Layer: 0
   m_Name: Detection Zone
   m_TagString: Untagged
@@ -140,7 +140,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.9931674, y: 3.3772552}
   m_EdgeRadius: 0
---- !u!114 &5970660792250349119
+--- !u!114 &4322296747682698268
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -280,8 +280,8 @@ GameObject:
   - component: {fileID: 1031477614962070195}
   - component: {fileID: 2739517574859578174}
   - component: {fileID: 5435910304000538889}
-  - component: {fileID: 8004265786840662948}
   - component: {fileID: 2866844096244829126}
+  - component: {fileID: 2035811525113258466}
   m_Layer: 6
   m_Name: Robo Saki
   m_TagString: Enemy
@@ -474,3 +474,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   soundWave: {fileID: 2086159476869321304, guid: 55f54afc239788d4d8e45a5d1f2ff813, type: 3}
+--- !u!114 &2035811525113258466
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925756607552273175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12359f9e33238954cb90973a194c42a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saki: 1
+  health: 0
+  maxHealth: 8
