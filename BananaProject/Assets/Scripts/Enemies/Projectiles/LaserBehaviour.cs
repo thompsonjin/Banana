@@ -30,9 +30,14 @@ public class LaserBehaviour : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage(); 
+            collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+            Destroy(this.gameObject);
         }
 
-        Destroy(this.gameObject);
+        if(collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall")
+        {
+            Destroy(this.gameObject);
+        }
+        
     }
 }

@@ -10,6 +10,9 @@ TagManager:
   - Shadow Shard
   - Banana Coin
   - Pound Shard
+  - Wall
+  - Throwable
+  - Floor
   - Gun Shard
   - Shield Shard
   - Charge Shard
@@ -24,7 +27,7 @@ TagManager:
   - Player
   - Vines
   - Throwable
-  - 
+  - Projectile
   - 
   - 
   - 

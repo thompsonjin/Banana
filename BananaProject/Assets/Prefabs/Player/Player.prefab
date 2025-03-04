@@ -179,6 +179,11 @@ MonoBehaviour:
   chargeDuration: 6
   boostSpeed: 24
   hasCharge: 0
+  shadowKickDistance: 8
+  hasShadowKick: 1
+  shadowKickMaxCharge: 3
+  shadowKickChargeRate: 1
+  chargePowerMax: 3
   sprite: {fileID: 2127180801005447105}
   hasGroundPound: 0
   punchKnockback: 5

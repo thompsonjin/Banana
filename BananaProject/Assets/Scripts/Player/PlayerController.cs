@@ -51,7 +51,6 @@ public class PlayerController : MonoBehaviour
     private float boopTimer;
     private const float MAX_BOOP_TIME = .5f;
     public bool sakiBoost;
-    private bool secondJump;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -193,7 +192,8 @@ public class PlayerController : MonoBehaviour
 
 
       //Punch
-      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.L))
+
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
       {
          BasicAttack();
       }
@@ -238,7 +238,9 @@ public class PlayerController : MonoBehaviour
         }
 
         //Ground Pound
-        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.L) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
+
+
+        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
             {
@@ -249,7 +251,9 @@ public class PlayerController : MonoBehaviour
         }
 
       //Charge
-        if (Input.GetKeyDown(KeyCode.J) && !isCharged && hasCharge)
+
+
+        if (Input.GetKeyDown(KeyCode.L))
         {
             if(bananaCount >= 3)
             {
@@ -263,7 +267,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (canCharge)
+        if (Input.GetKey(KeyCode.L) && canCharge)
         {
             chargeTimer -= Time.deltaTime;
             chargeBar.value = chargeTimer / chargeDuration;
@@ -276,6 +280,16 @@ public class PlayerController : MonoBehaviour
                 canCharge = false;
                 isCharged = false;
             }
+        }
+
+        if(Input.GetKeyUp(KeyCode.L))
+        {
+            chargePower = 0;
+            chargePowerTimer = 0;
+            currentSpeed = normalSpeed;
+            chargeBar.value = 0;
+            SetAura(false);
+            canCharge = false;
         }
 
         //Shooting Banana Gun

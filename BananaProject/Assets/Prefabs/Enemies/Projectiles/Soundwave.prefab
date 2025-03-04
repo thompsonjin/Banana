@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1994811150885282195}
   - component: {fileID: -1217213363651433233}
   - component: {fileID: 6323148452641663753}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Soundwave
   m_TagString: Sound
   m_Icon: {fileID: 0}
