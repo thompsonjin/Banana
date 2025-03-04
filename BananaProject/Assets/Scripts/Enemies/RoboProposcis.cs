@@ -17,7 +17,7 @@ public class RoboProposcis : BaseEnemy
 
     [Header("Combat")]
     [SerializeField] private LayerMask playerLayer;
-    private const float PLAYER_HIT_TIME = 1.5f;
+    private const float PLAYER_HIT_TIME = 3f;
     private float playerHitTimer;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform projectileSpawn;

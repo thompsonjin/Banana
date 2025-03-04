@@ -10,6 +10,12 @@ TagManager:
   - Shadow Shard
   - Banana Coin
   - Pound Shard
+  - Wall
+  - Throwable
+  - Floor
+  - Gun Shard
+  - Shield Shard
+  - Charge Shard
   layers:
   - Default
   - TransparentFX
@@ -21,7 +27,7 @@ TagManager:
   - Player
   - Vines
   - Throwable
-  - 
+  - Projectile
   - 
   - 
   - 

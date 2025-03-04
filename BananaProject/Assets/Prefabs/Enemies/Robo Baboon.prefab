@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 5896823501176982874}
   - component: {fileID: 4805531208770990874}
   - component: {fileID: -5507830868273764942}
-  - component: {fileID: 2568192586084889356}
+  - component: {fileID: 6473936116357676477}
   m_Layer: 6
   m_Name: Robo Baboon
   m_TagString: Enemy
@@ -259,7 +259,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.4641509, g: 0, b: 0, a: 1}
   m_FlipX: 0
@@ -343,6 +343,21 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1386342581099263643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4417765287982814885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12359f9e33238954cb90973a194c42a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saki: 0
+  health: 0
+  maxHealth: 8
 --- !u!114 &-5507830868273764942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -368,7 +383,7 @@ MonoBehaviour:
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
---- !u!114 &2568192586084889356
+--- !u!114 &6473936116357676477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -393,7 +408,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2507777603039288749}
   - component: {fileID: 7815402197195773465}
-  - component: {fileID: 4424772380761987839}
+  - component: {fileID: 1196662420909349833}
   m_Layer: 0
   m_Name: Detection Zone
   m_TagString: Untagged
@@ -461,7 +476,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6.8083167, y: 3.3772552}
   m_EdgeRadius: 0
---- !u!114 &4424772380761987839
+--- !u!114 &1196662420909349833
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -473,7 +488,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f91677836c379bb43994bdef9b4b0fc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  e_AI: {fileID: 0}
+  e_AI: {fileID: -5507830868273764942}
 --- !u!1 &7201045343303122398
 GameObject:
   m_ObjectHideFlags: 0

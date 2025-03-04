@@ -16,6 +16,10 @@ public class PlayerController : MonoBehaviour
     [Header("Health")]
     [SerializeField] private int maxHealth;
     private int health;
+    //BANANA SHIELD
+    [SerializeField] private bool hasBananaShield = false;
+    private bool banananaShieldActive = false;
+    [SerializeField] private GameObject shieldVisual;
     //HEALTH UI
     [SerializeField] private Image[] displayHealth = new Image[3];
 
@@ -31,7 +35,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float slowSpeed;
     [SerializeField] private float normalSpeed;
     private float currentSpeed;
-    [SerializeField] private float chargeSpeed;
     [SerializeField] private float jumpPower;
     private float horizontal;
     private float vertical;
@@ -48,7 +51,6 @@ public class PlayerController : MonoBehaviour
     private float boopTimer;
     private const float MAX_BOOP_TIME = .5f;
     public bool sakiBoost;
-    private bool secondJump;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -63,20 +65,25 @@ public class PlayerController : MonoBehaviour
     bool kickPowered;
     //Shadow Kick
     [SerializeField] private float shadowKickKnockback;
-    //How far the player will go with the shadow kick
-    [SerializeField] private float shadowKickDistance;
     [SerializeField] private bool hasShadowKick = false;
     private float shadowKickPower;
-    //Seconds needed to charge the kick
-    [SerializeField] private float shadowKickMaxCharge;
     private bool isChargingShadowKick;
-    [SerializeField] private float shadowKickChargeRate = 1f;
+    private bool isShadowKicking = false;
+    [SerializeField] private float baseChargeTime = 1f;
+    [SerializeField] private float maxChargeTime = 3f;
+    [SerializeField] private float baseKickSpeed = 40f;
+    [SerializeField] private float maxKickSpeed = 80f;
+    [SerializeField] private float baseKickDistance = 8f;
+    [SerializeField] private float maxKickDistance = 16f;
+
 
     [Header("Charge")]
     //Charge
-    private float chargePower;
-    [SerializeField]private float chargePowerMax;
-    private float chargePowerTimer;
+    [SerializeField] private float chargeDuration = 6f;
+    [SerializeField] private float boostSpeed = 24f;
+    [SerializeField] private bool hasCharge = false;
+    private bool isCharged = false;
+    private float chargeTimer;
     private bool aura;
     public SpriteRenderer sprite;
     private bool canCharge;
@@ -102,15 +109,25 @@ public class PlayerController : MonoBehaviour
     private ThrowableObject carriedObject;
     private bool isCarrying = false;
 
+    [Header("Weapon")]
+    [SerializeField] private Transform firePoint;
+    [SerializeField] private GameObject bulletprefab;
+    [SerializeField] private bool hasBananaGun = false;
+    [SerializeField] private bool isGunPulled = false;
+    [SerializeField] private float fireRate = 0.5f;
+    private float nextFireTime = 0f;
+    [SerializeField] private SpriteRenderer weaponSprite;
+    [SerializeField] private float gunDuration = 10f;
+    [SerializeField] private float gunTimer = 0f;
 
     void Awake()
    {
-      health = maxHealth;
-      bananaCount = maxBananas;
-      currentSpeed = normalSpeed;
+    health = maxHealth;
+    bananaCount = maxBananas;
+    currentSpeed = normalSpeed;
 
-      chargePowerTimer = 0;
-      camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+    camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+    weaponSprite.enabled = false;
    } 
 
    void Update()
@@ -175,34 +192,43 @@ public class PlayerController : MonoBehaviour
 
 
       //Punch
-      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Y))
+
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
       {
          BasicAttack();
       }
 
         //Regular Kick
-        if (Input.GetKeyDown(KeyCode.B) && IsGrounded())
+        if (Input.GetKeyDown(KeyCode.K) && IsGrounded())
         {
             BasicKick();
         }
 
         //Shadow kick charging
-        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.B) && hasShadowKick && IsGrounded())
+        if (Input.GetMouseButton(1) && hasShadowKick && IsGrounded() || Input.GetKey(KeyCode.K) && hasShadowKick && IsGrounded())
         {
             if (bananaCount > 0)
             {
                 isChargingShadowKick = true;
-                shadowKickPower += Time.deltaTime * shadowKickChargeRate;
-                powerSlider.value = shadowKickPower / shadowKickMaxCharge;
+                shadowKickPower += Time.deltaTime;
 
-                if (shadowKickPower >= shadowKickMaxCharge)
+                if (shadowKickPower >= maxChargeTime)
                 {
-                    shadowKickPower = shadowKickMaxCharge;
+                    shadowKickPower = maxChargeTime;
+                    powerSlider.value = 1f;
+                }
+                else if (shadowKickPower >= baseChargeTime)
+                {
+                    powerSlider.value = 0.5f;
+                }
+                else
+                {
+                    powerSlider.value = (shadowKickPower / baseChargeTime) * 0.5f;
                 }
             }
         }
 
-        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.B) && isChargingShadowKick)
+        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
         {
             ShadowKick();
             UseBanana(1);
@@ -212,7 +238,9 @@ public class PlayerController : MonoBehaviour
         }
 
         //Ground Pound
-        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.Y) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
+
+
+        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
             {
@@ -225,21 +253,36 @@ public class PlayerController : MonoBehaviour
       //Charge
 
 
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             if(bananaCount >= 3)
             {
                 UseBanana(3);
+                isCharged = true;
                 canCharge = true;
+                SetAura(true);
+                currentSpeed = boostSpeed;
+                chargeTimer = chargeDuration;
+                chargeBar.value = 1f;
             }
         }
 
-        if (Input.GetKey(KeyCode.X) && canCharge)
+        if (Input.GetKey(KeyCode.L) && canCharge)
         {
-            ChargeAttack();      
+            chargeTimer -= Time.deltaTime;
+            chargeBar.value = chargeTimer / chargeDuration;
+
+            if (chargeTimer <= 0)
+            {
+                currentSpeed = normalSpeed;
+                chargeBar.value = 0;
+                SetAura(false);
+                canCharge = false;
+                isCharged = false;
+            }
         }
 
-        if(Input.GetKeyUp(KeyCode.X))
+        if(Input.GetKeyUp(KeyCode.L))
         {
             chargePower = 0;
             chargePowerTimer = 0;
@@ -247,6 +290,46 @@ public class PlayerController : MonoBehaviour
             chargeBar.value = 0;
             SetAura(false);
             canCharge = false;
+        }
+
+        //Shooting Banana Gun
+
+        if (Input.GetKeyDown(KeyCode.H) && hasBananaGun && !isGunPulled) 
+        {
+            if (bananaCount >= 5)
+            {
+                isGunPulled = true;
+                weaponSprite.enabled = true;
+                UseBanana(5);
+                gunTimer = gunDuration;
+            }
+        }
+
+        if (isGunPulled)
+        {
+            gunTimer -= Time.deltaTime;
+            if (gunTimer < 0)
+            {
+                isGunPulled = false;
+                weaponSprite.enabled = false;
+            }
+            else if (Input.GetKey(KeyCode.L) || Input.GetKey(KeyCode.Mouse0))
+            {
+                Shoot();
+            }
+        }
+
+        //Banana shield handling
+        if (hasBananaShield && bananaCount >= maxBananas && !banananaShieldActive)
+        {
+            banananaShieldActive = true;
+            shieldVisual.SetActive(true);
+            Debug.Log("Banana Shield ON");
+        }
+        else if (bananaCount < maxBananas)
+        {
+            banananaShieldActive = false;
+            shieldVisual.SetActive(false);
         }
 
         //METHOD TO CHECK FOR THROWABLE OBJECTS
@@ -286,12 +369,25 @@ public class PlayerController : MonoBehaviour
         }
 
       Flip();
-   }
+
+        //Height check in map to kill the player if it goes below a specified height
+        if (transform.position.y <= -150)
+        {
+            for (int i = health - 1; i >= 0; i--)
+            {
+                displayHealth[i].enabled = false;
+            }
+
+            health = 0;
+            Debug.Log("You Are Dead");
+            Die();
+        }
+    }
 
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
    {
-        if (!boop)
+        if (!boop && !isShadowKicking)
         {
             if (groundPound)
             {
@@ -458,63 +554,82 @@ public class PlayerController : MonoBehaviour
     //Shadow Kick mechanic
     private void ShadowKick()
     {
-        if (shadowKickPower <= 0) return;
+        if (shadowKickPower < baseChargeTime) return;  
 
-        //Calculate charge ratio and movement distance
-        float chargeRatio = shadowKickPower / shadowKickMaxCharge;
-        float moveDistance = shadowKickDistance * chargeRatio;
-        Vector2 moveDirection = isFacingRight ? Vector2.right : Vector2.left;
-
-        Vector2 currentPos = transform.position;
-        Vector2 movement = moveDirection * moveDistance;
-        Vector2 intendedPos = currentPos + movement;
-
-        //Debug purposes
-        Debug.Log($"Starting ShadowKick - Current: {currentPos}, Intended: {intendedPos}, Distance: {moveDistance}");
-
-        //Create box for enemy detection
-        Vector2 boxSize = new Vector2(0.5f, 1f);
-        Vector2 boxCenter = currentPos + (moveDirection * (moveDistance / 2));
-
-        //Debug purposes
-        Debug.DrawLine(currentPos, intendedPos, Color.red, 1f);
-
-        //Check for enemies in the path
-        Collider2D hitCollider = Physics2D.OverlapBox(boxCenter, new Vector2(moveDistance, 1f), 0f, enemyLayer);
-
-        if (hitCollider != null)
+        //Determine the speed and distance based on charge level
+        float kickDistance;
+        float kickSpeed;
+        if (shadowKickPower >= maxChargeTime)
         {
-            Debug.Log($"Hit enemy: {hitCollider.name} at position: {hitCollider.transform.position}");
-
-            //Calculate distance to enemy
-            float distanceToEnemy = Vector2.Distance(currentPos, hitCollider.transform.position);
-            Vector2 finalPos = currentPos + (moveDirection * (distanceToEnemy - 1f));
-
-            Debug.Log($"Moving to position before enemy: {finalPos}");
-
-            //Handle enemy interaction
-            if (hitCollider.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
-            {
-                e_Ai.SetHit();
-                e_Ai.SetPatrol(false);
-                hitCollider.GetComponent<EnemyHealth>().Damage(4);
-
-                Vector2 kickForce = moveDirection * shadowKickKnockback * chargeRatio;
-                hitCollider.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
-            }
-
-            //Move player
-            transform.position = new Vector3(finalPos.x, finalPos.y, transform.position.z);
+            kickDistance = maxKickDistance;
+            kickSpeed = maxKickSpeed;
         }
         else
         {
-            //Debug purposes
-            Debug.Log("No enemy hit, moving full distance");
-            transform.position = new Vector3(intendedPos.x, intendedPos.y, transform.position.z);
+            kickDistance = baseKickDistance;
+            kickSpeed = baseKickSpeed;
         }
 
-        //Reset velocity
+        //Used to give omnidirectionality
+        Vector2 moveDirection = new Vector2(horizontal, vertical);
+
+        //Check to see if the kick is going to be used with "facing" value or omnidirectionality
+        if (moveDirection == Vector2.zero)
+        {
+            moveDirection = isFacingRight ? Vector2.right : Vector2.left;
+        }
+        else
+        {
+            moveDirection.Normalize();
+        }
+
+        isShadowKicking = true;
+
+        rb.velocity = moveDirection * kickSpeed;
+
+        //Courotine handles the kick movement
+        StartCoroutine(HandleShadowKickMovement(kickDistance));
+    }
+
+    private IEnumerator HandleShadowKickMovement(float kickDistance)
+    {
+        Vector2 startPos = transform.position;
+        float distanceTraveled = 0f;
+
+        //Used to keep track of enemies and not hit them multiple times
+        HashSet<Collider2D> hitEnemies = new HashSet<Collider2D>();
+
+        while (distanceTraveled < kickDistance)
+        {
+            //Check for enemies using the same method as other attacks
+            foreach (Collider2D col in HitRange())
+            {
+                if (hitEnemies.Contains(col)) continue;
+
+                if (col.TryGetComponent<BaseEnemy>(out BaseEnemy e_Ai))
+                {
+                    //Add enemy to hit list
+                    hitEnemies.Add(col);
+
+                    e_Ai.SetHit();
+                    e_Ai.SetPatrol(false);
+                    col.GetComponent<EnemyHealth>().Damage(4);
+
+                    //Apply knockback to enemy
+                    Vector2 kickForce = rb.velocity.normalized * shadowKickKnockback;
+                    col.GetComponent<Rigidbody2D>().AddForce(kickForce, ForceMode2D.Impulse);
+                }
+            }
+
+            //Update distance traveled
+            distanceTraveled = Vector2.Distance(startPos, transform.position);
+
+            yield return null;
+        }
+
         rb.velocity = Vector2.zero;
+
+        isShadowKicking = false;
     }
 
     //Method to enable and disable Shadow Kick
@@ -529,51 +644,40 @@ public class PlayerController : MonoBehaviour
         hasGroundPound = true;
     }
 
-    public void ChargeAttack()
-    { //Hold to charge dash
-        if (chargePower < chargePowerMax)
-        {
-            currentSpeed = 0;
-            chargePower += Time.deltaTime;
-            chargePowerTimer += Time.deltaTime;
-            chargeBar.value = chargePowerTimer / chargePowerMax;
-        }
-        else
-        {
-            if (chargePower >= chargePowerMax)
-            {
-                //Activate when fully charged
-                SetAura(true);
-                currentSpeed = chargeSpeed;
-                chargePowerTimer -= Time.deltaTime;
-                chargeBar.value = chargePowerTimer / chargePowerMax;
+    //Method to enable and disable Banana Shield
+    public void EnableBananaShield()
+    {
+        hasBananaShield = true;
+    }
 
-                if (chargePowerTimer <= 0)
-                {
-                    //if holding for longer than the allowed time use more banana shards to extend if no shards cancel ability
-                    if (chargePowerTimer <= -1)
-                    {
-                        if (bananaCount > 0)
-                        {
-                            UseBanana(1);
-                            chargePowerTimer = 0;
-                        }
-                        else
-                        {
-                            currentSpeed = normalSpeed;
-                            SetAura(false);
-                        }
-                    }
-                }
-            }
+    //Method to enable and disable Charge
+    public void EnableCharge()
+    {
+        hasCharge = true;
+    }
+
+    //Shoot method for Banana gun
+    private void Shoot()
+    {
+        if (Time.time >= nextFireTime)
+        {
+            Instantiate(bulletprefab, firePoint.position, firePoint.rotation);
+            nextFireTime = Time.time + fireRate;
         }
+        
+    }
+
+    //Method to activate the banana Gun
+    public void EnableBananaGun()
+    {
+        hasBananaGun = true;
     }
 
     //Throw Object Mechanic
     private void CheckPickupAndThrow()
     {
         //Throw
-        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.Y))
+        if (isCarrying && Input.GetMouseButtonDown(0) || isCarrying && Input.GetKeyDown(KeyCode.L))
         {
             ThrowObject();
         }
@@ -693,6 +797,16 @@ public class PlayerController : MonoBehaviour
     {
         if (!aura)
         {
+            //Check if banana shield is active and able to use
+            if (hasBananaShield && banananaShieldActive)
+            {
+                banananaShieldActive = false;
+                shieldVisual.SetActive(false);
+                UseBanana(2);
+                Debug.Log("BLOCKED BY JAMES");
+                return;
+            }
+
             health--;
 
             if (health > 0)
@@ -703,6 +817,7 @@ public class PlayerController : MonoBehaviour
             }
             else if (health == 0)
             {
+                Die();
                 Debug.Log("You Are Dead");
 
                 displayHealth[health].enabled = false;
@@ -725,6 +840,14 @@ public class PlayerController : MonoBehaviour
 
       displayHealth[health - 1].enabled = true;
    }
+
+    //Death management logic
+    public void Die()
+    {
+        gameObject.SetActive(false);
+
+        GameManager.Instance.OnPLayerDeath();
+    }
 
    //BANANA MANAGMENT
    private void UseBanana(int b)
