@@ -28,7 +28,7 @@ public class BFBGManager : MonoBehaviour
     public float speed;
 
     [Header("Phase Management")]
-    private int phase;
+    public int phase;
     public Transform[] cannonLocations;
     public GameObject[] Generators;
     public bool bananaDir;
@@ -41,7 +41,6 @@ public class BFBGManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        phase = 1;
         fireInterval = maxInterval;
         scaleChange.x = scaleRate;
         correction.x = correctionRate;
@@ -53,10 +52,10 @@ public class BFBGManager : MonoBehaviour
         //Location change
         switch (phase)
         {
-            case 1:
+            case 0:
                 this.transform.position = cannonLocations[0].position;
                 break;
-            case 2:
+            case 1:
                 this.transform.position = cannonLocations[1].position;
                 if (!flipped)
                 {
@@ -65,7 +64,7 @@ public class BFBGManager : MonoBehaviour
                     flipped = true;
                 }
                 break;
-            case 3:
+            case 2:
                 this.transform.position = cannonLocations[2].position;
                 if (flipped)
                 {
@@ -73,6 +72,11 @@ public class BFBGManager : MonoBehaviour
                     flipped = false;
                 }
                 break;
+            case 3:
+                Debug.Log("You Win");
+
+                break;
+             
         }
       
 
@@ -110,11 +114,6 @@ public class BFBGManager : MonoBehaviour
                     spawned = false;
                 }
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            phase++;
         }
     }
 

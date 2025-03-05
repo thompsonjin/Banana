@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class KillSwitch : MonoBehaviour
 {
+    public bool orangutan;
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player")
         {
             if (collision.gameObject.GetComponent<PlayerController>().GetGroundPound())
             {
-                transform.parent.gameObject.GetComponent<RoboOrangutan>().Die();
+                if (orangutan)
+                {
+                    transform.parent.gameObject.GetComponent<RoboOrangutan>().Die();
+                }
+                else
+                {
+                    GameObject.FindWithTag("BFBG").GetComponent<BFBGManager>().phase++;
+                    Destroy(transform.gameObject);
+                }
             }          
         }
     }
