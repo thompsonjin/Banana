@@ -952,6 +952,7 @@ public class PlayerController : MonoBehaviour
         coinImage.raycastTarget = false;
 
         displayBananas.Add(coinImage);
+        displayBananas[maxBananas - 1].enabled = false;
 
         GiveBanana(1);
     }

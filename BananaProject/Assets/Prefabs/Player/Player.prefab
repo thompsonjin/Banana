@@ -154,6 +154,9 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  bananacoinUIprefab: {fileID: 7255543909322334748, guid: 8999b4941a86a78458eb87343ddd0af8, type: 3}
+  emptyBananacoinPrefab: {fileID: 6005749004148531579, guid: cc620543e0f542942baaef29e541b097, type: 3}
+  bananaUIParent: {fileID: 0}
   chargeBar: {fileID: 8971623386080281610}
   powerSlider: {fileID: 991260835937992137}
   bananaRegen: 5

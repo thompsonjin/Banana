@@ -39,6 +39,9 @@ public class GameManager : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        SceneManager.LoadScene(nextSceneNum);
+        if(collision.gameObject.tag == "Player")
+        {
+            SceneManager.LoadScene(nextSceneNum);
+        }
     }
 }
