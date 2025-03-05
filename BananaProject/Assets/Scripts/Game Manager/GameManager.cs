@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
+//using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Scene = UnityEngine.SceneManagement.Scene;
@@ -12,16 +12,16 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //Code to make sure there are no Game manager duplicates as well as load it to other scenes
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        //////Code to make sure there are no Game manager duplicates as well as load it to other scenes
+        ////if (Instance == null)
+        ////{
+        ////    Instance = this;
+        ////    DontDestroyOnLoad(gameObject);
+        ////}
+        ////else
+        ////{
+        ////    Destroy(gameObject);
+        ////}
     }
 
     public void OnPLayerDeath()
