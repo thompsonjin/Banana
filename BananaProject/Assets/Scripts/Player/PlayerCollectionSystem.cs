@@ -16,7 +16,8 @@ public class PlayerCollectionSystem : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Banana Coin"))
         {
-            pControl.GiveBanana(1);
+            Debug.Log("Collected banana coin");
+            pControl.IncreaseMaxBananas();
             Destroy(collision.gameObject);
         }
 

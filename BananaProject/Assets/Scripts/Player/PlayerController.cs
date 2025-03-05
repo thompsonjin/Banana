@@ -25,7 +25,10 @@ public class PlayerController : MonoBehaviour
 
     [Header("Resources")]
     //BANANA UI
-    [SerializeField] private Image[] displayBananas = new Image[5];
+    [SerializeField] private List<Image> displayBananas = new List<Image>();
+    [SerializeField] private GameObject bananacoinUIprefab;
+    [SerializeField] private GameObject emptyBananacoinPrefab;
+    [SerializeField] private Transform bananaUIParent;
     [SerializeField] private Slider chargeBar;
     [SerializeField] private Slider powerSlider;
     private float bananaRegenTimer;
@@ -125,6 +128,10 @@ public class PlayerController : MonoBehaviour
     void Awake()
 
    {
+    maxBananas = BananaManager.MaxBananas;
+    bananaCount = maxBananas;
+    InitializeBananaUI();
+
     health = maxHealth;
     bananaCount = maxBananas;
     currentSpeed = normalSpeed;
@@ -805,6 +812,7 @@ public class PlayerController : MonoBehaviour
         return groundPound;
     }
 
+
     //HEALTH MANAGMENT
     public void TakeDamage()
     {
@@ -882,5 +890,69 @@ public class PlayerController : MonoBehaviour
         {
             displayBananas[bananaCount - 1].enabled = true;
         }
+    }
+
+    //Method to manage bananas
+    private void InitializeBananaUI()
+    {
+        if (bananacoinUIprefab == null || emptyBananacoinPrefab == null || bananaUIParent == null)
+        {
+            Debug.LogWarning("Missing UI references in PlayerController");
+            return;
+        }
+
+        foreach (Image img in displayBananas)
+        {
+            if (img != null)
+                Destroy(img.gameObject);
+        }
+        displayBananas.Clear();
+
+        float spacing = 40f;
+
+        //Create UI elements for current max bananas
+        for (int i = 0; i < maxBananas; i++)
+        {
+            //Empty banana slots
+            GameObject emptySlot = Instantiate(emptyBananacoinPrefab, bananaUIParent);
+            RectTransform emptyRect = emptySlot.GetComponent<RectTransform>();
+            emptyRect.anchoredPosition = new Vector2(i * spacing, 0);
+            emptySlot.GetComponent<Image>().raycastTarget = false;
+
+            //Banana coins
+            GameObject filledCoin = Instantiate(bananacoinUIprefab, bananaUIParent);
+            RectTransform filledRect = filledCoin.GetComponent<RectTransform>();
+            filledRect.anchoredPosition = new Vector2(i * spacing, 0);
+            Image coinImage = filledCoin.GetComponent<Image>();
+            coinImage.raycastTarget = false;
+
+            displayBananas.Add(coinImage);
+
+            coinImage.enabled = true;
+        }
+    }
+
+    //Increase banana capacity when picking up the coin
+    public void IncreaseMaxBananas()
+    {
+        BananaManager.IncreaseMaxBananas();
+        maxBananas = BananaManager.MaxBananas;
+
+        float spacing = 40f;
+
+        GameObject emptySlot = Instantiate(emptyBananacoinPrefab, bananaUIParent);
+        RectTransform emptyRect = emptySlot.GetComponent<RectTransform>();
+        emptyRect.anchoredPosition = new Vector2((maxBananas - 1) * spacing, 0);
+        emptySlot.GetComponent<Image>().raycastTarget = false;
+
+        GameObject filledCoin = Instantiate(bananacoinUIprefab, bananaUIParent);
+        RectTransform filledRect = filledCoin.GetComponent<RectTransform>();
+        filledRect.anchoredPosition = new Vector2((maxBananas - 1) * spacing, 0);
+        Image coinImage = filledCoin.GetComponent<Image>();
+        coinImage.raycastTarget = false;
+
+        displayBananas.Add(coinImage);
+
+        GiveBanana(1);
     }
 }
