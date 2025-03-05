@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Enemy
   - Vines
+  - GoliathOrangutan
   layers:
   - Default
   - TransparentFX
