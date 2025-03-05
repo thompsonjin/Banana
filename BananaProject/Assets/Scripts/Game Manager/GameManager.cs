@@ -8,6 +8,7 @@ using Scene = UnityEngine.SceneManagement.Scene;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public int nextSceneNum;
 
     private void Awake()
     {
@@ -34,5 +35,10 @@ public class GameManager : MonoBehaviour
 
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        SceneManager.LoadScene(nextSceneNum);
     }
 }
