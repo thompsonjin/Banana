@@ -13,7 +13,14 @@ public class BFBGPlatform : MonoBehaviour
     {
         b_Man = GameObject.FindWithTag("BFBG").GetComponent<BFBGManager>();
         speed = b_Man.speed;
-        rb.velocity = new Vector2(-1 * speed, 0);
+        if (b_Man.flipped)
+        {
+            rb.velocity = new Vector2(1 * speed, 0);
+        }
+        else
+        {
+            rb.velocity = new Vector2(-1 * speed, 0);
+        }         
     }
 
     // Update is called once per frame

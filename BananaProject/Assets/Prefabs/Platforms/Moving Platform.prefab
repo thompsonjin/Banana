@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 6488477541769612877}
   m_Layer: 0
   m_Name: Platform Surface
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -27,14 +27,21 @@ public class BFBGManager : MonoBehaviour
     [SerializeField]float maxInterval;
     public float speed;
 
+    [Header("Phase Management")]
+    private int phase;
+    public Transform[] cannonLocations;
+    public GameObject[] Generators;
+    public bool bananaDir;
+
     bool fireLaser = true;
     bool fireBanana;
     bool spawned;
-
+    public bool flipped;
 
     // Start is called before the first frame update
     void Start()
     {
+        phase = 1;
         fireInterval = maxInterval;
         scaleChange.x = scaleRate;
         correction.x = correctionRate;
@@ -43,8 +50,31 @@ public class BFBGManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //Laser Cycle
+        //Location change
+        switch (phase)
+        {
+            case 1:
+                this.transform.position = cannonLocations[0].position;
+                break;
+            case 2:
+                this.transform.position = cannonLocations[1].position;
+                if (!flipped)
+                {
+                    DestroyLasers();
+                    transform.localScale = -transform.localScale;
+                    flipped = true;
+                }
+                break;
+            case 3:
+                this.transform.position = cannonLocations[2].position;
+                if (flipped)
+                {
+                    transform.localScale = -transform.localScale;
+                    flipped = false;
+                }
+                break;
+        }
+      
 
         //Banana Cycle
 
@@ -55,30 +85,37 @@ public class BFBGManager : MonoBehaviour
             FireBananaPlatforms();
         }
 
-
-        if (!spawned)
+        //Laser Cycle
+        if(phase == 1)
         {
-            laserInterval -= Time.deltaTime;
-            if(laserInterval <= 0)
+            if (!spawned)
             {
-                Debug.Log("Spawn Laser");
-                SpawnLasers();
-                endLaser = false;
-                spawned = true;
+                laserInterval -= Time.deltaTime;
+                if (laserInterval <= 0)
+                {
+                    Debug.Log("Spawn Laser");
+                    SpawnLasers();
+                    endLaser = false;
+                    spawned = true;
+                }
+
             }
-           
-        }
-        else
-        {
-            FireLasers(scaleChange, correction, laserRange);
-            if (endLaser)
+            else
             {
-                DestroyLasers();
-                laserInterval = maxLaserInterval;
-                spawned = false;
+                FireLasers(scaleChange, correction, laserRange);
+                if (endLaser)
+                {
+                    DestroyLasers();
+                    laserInterval = maxLaserInterval;
+                    spawned = false;
+                }
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            phase++;
+        }
     }
 
     void SpawnLasers()
