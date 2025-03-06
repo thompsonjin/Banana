@@ -391,7 +391,7 @@ public class PlayerController : MonoBehaviour
         Flip();
 
         //Height check in map to kill the player if it goes below a specified height
-        if (transform.position.y <= -300)
+        if (transform.position.y <= -500)
 
         {
             for (int i = health - 1; i >= 0; i--)
@@ -836,14 +836,9 @@ public class PlayerController : MonoBehaviour
         }
         else if (health == 0)
         {
-            Die();
             Debug.Log("You Are Dead");
-
             displayHealth[health].enabled = false;
-        }
-        else
-        {
-            Debug.Log("You Are Dead");
+            Die();
         }
     }
 
@@ -862,9 +857,9 @@ public class PlayerController : MonoBehaviour
     //Death management logic
     public void Die()
     {
+        GameManager.Instance.OnPLayerDeath();
         gameObject.SetActive(false);
 
-        GameManager.Instance.OnPLayerDeath();
     }
 
    //BANANA MANAGMENT

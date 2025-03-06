@@ -3,25 +3,24 @@ using System.Collections.Generic;
 //using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Scene = UnityEngine.SceneManagement.Scene;
+//using Scene = UnityEngine.SceneManagement.Scene;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public int nextSceneNum;
 
     private void Awake()
     {
         //////Code to make sure there are no Game manager duplicates as well as load it to other scenes
-        ////if (Instance == null)
-        ////{
-        ////    Instance = this;
-        ////    DontDestroyOnLoad(gameObject);
-        ////}
-        ////else
-        ////{
-        ////    Destroy(gameObject);
-        ////}
+        if (Instance == null)
+        {
+            Instance = this;
+           DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     public void OnPLayerDeath()
@@ -41,7 +40,8 @@ public class GameManager : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            SceneManager.LoadScene(nextSceneNum);
-        }
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.buildIndex + 1);
+        };
     }
 }

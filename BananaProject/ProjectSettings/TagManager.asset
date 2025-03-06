@@ -18,6 +18,7 @@ TagManager:
   - Charge Shard
   - BFBG
   - Laser
+  - Elevator
   layers:
   - Default
   - TransparentFX
