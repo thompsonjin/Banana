@@ -14,7 +14,7 @@ public class SettingsManager : MonoBehaviour
     private float sfxVolume = 1.0f;
     private float musicVolume = 1.0f;
 
-    //PlayerPrefs keys
+    //Playerprefs keys
     private const string FULLSCREEN_KEY = "Fullscreen";
     private const string MASTER_VOLUME_KEY = "MasterVolume";
     private const string SFX_VOLUME_KEY = "SFXVolume";

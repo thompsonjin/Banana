@@ -3,7 +3,6 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    //Scene indices - update these to match your build settings
     [Header("Scene Indices")]
     [SerializeField] private int firstLevelIndex = 5;
     [SerializeField] private int savesMenuIndex = 2;
