@@ -9,6 +9,21 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/Scenes/UI/StartScreen.unity
+    guid: dd5857515c0f43340aff487baf39280a
+  - enabled: 1
+    path: Assets/Scenes/UI/MainMenu.unity
+    guid: b226f6aa633704448839a4cdf3e0269a
+  - enabled: 1
+    path: Assets/Scenes/UI/SavesScreen.unity
+    guid: 57d71fc03fb4ba84083f2cdeb8c0f26d
+  - enabled: 1
+    path: Assets/Scenes/UI/SettingsScreen.unity
+    guid: f6a9d2e04819959499636a40af50a402
+  - enabled: 1
+    path: Assets/Scenes/UI/CreditScreen.unity
+    guid: d2fe925a0d846a54b86b8bea6ad525b0
+  - enabled: 1
     path: Assets/Scenes/LVL 1.unity
     guid: 3351a734245b7824d8ca4bd03ce92ee3
   - enabled: 1
