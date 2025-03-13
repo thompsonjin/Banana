@@ -121,7 +121,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &3069054259231414762
 MonoBehaviour:
@@ -142,7 +142,7 @@ MonoBehaviour:
     m_Bits: 72
   cameraFollowTarget: {fileID: 0}
   maxHealth: 3
-  hasBananaShield: 0
+  hasBananaShield: 1
   shieldVisual: {fileID: 6176218626836076067}
   displayHealth:
   - {fileID: 0}
@@ -175,7 +175,7 @@ MonoBehaviour:
     m_Bits: 64
   kickPowerMax: 2
   shadowKickKnockback: 40
-  hasShadowKick: 0
+  hasShadowKick: 1
   baseChargeTime: 1
   maxChargeTime: 3
   baseKickSpeed: 60
@@ -184,9 +184,9 @@ MonoBehaviour:
   maxKickDistance: 16
   chargeDuration: 3
   boostSpeed: 35
-  hasCharge: 0
+  hasCharge: 1
   sprite: {fileID: 2127180801005447105}
-  hasGroundPound: 0
+  hasGroundPound: 1
   punchKnockback: 5
   uppercutKnockback: 10
   kickKnockback: 25
@@ -200,7 +200,7 @@ MonoBehaviour:
     m_Bits: 512
   firePoint: {fileID: 3001912954819293346}
   bulletprefab: {fileID: 2792605518736310862, guid: b54b55b3165d69b46848a17ecefb40b9, type: 3}
-  hasBananaGun: 0
+  hasBananaGun: 1
   isGunPulled: 0
   fireRate: 0.1
   weaponSprite: {fileID: 1412065979232524402}
