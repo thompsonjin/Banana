@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
@@ -63,7 +64,6 @@ public class PlayerController : MonoBehaviour
     public bool sakiBoost;
     public GameObject sakiBoostIndicator;
     public bool swim;
-    private bool jump;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -98,6 +98,8 @@ public class PlayerController : MonoBehaviour
     private bool aura;
     public SpriteRenderer sprite;
     private bool canCharge;
+    public CinemachineVirtualCamera v_Cam;
+    private float focus = 15;
 
     //GROUND POUND
     private bool groundPound;
@@ -132,19 +134,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gunTimer = 0f;
 
     void Awake()
+    {
+        maxBananas = BananaManager.MaxBananas;
+        bananaCount = maxBananas;
+        InitializeBananaUI();
 
-   {
-    maxBananas = BananaManager.MaxBananas;
-    bananaCount = maxBananas;
-    InitializeBananaUI();
+        health = maxHealth;
+        bananaCount = maxBananas;
+        currentSpeed = normalSpeed;
 
-    health = maxHealth;
-    bananaCount = maxBananas;
-    currentSpeed = normalSpeed;
-
-    camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-    weaponSprite.enabled = false;
-   } 
+        camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+       weaponSprite.enabled = false;
+    } 
 
    void Update()
    {
@@ -290,8 +291,15 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.L) && canCharge)
             {
+                focus += .1f;
+
+                if(focus >= 28)
+                {
+                    focus = 28;
+                }
                 chargeTimer -= Time.deltaTime;
                 chargeBar.value = chargeTimer / chargeDuration;
+                v_Cam.m_Lens.OrthographicSize = focus;
 
                 if (chargeTimer <= 0)
                 {
@@ -314,6 +322,8 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.L))
             {
+                focus = 15;
+                v_Cam.m_Lens.OrthographicSize = focus;
                 currentSpeed = normalSpeed;
                 chargeBar.value = 0;
                 SetAura(false);

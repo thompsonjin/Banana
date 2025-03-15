@@ -46877,6 +46877,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: v_Cam
+      value: 
+      objectReference: {fileID: 1349025215}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasCharge
       value: 0
       objectReference: {fileID: 0}

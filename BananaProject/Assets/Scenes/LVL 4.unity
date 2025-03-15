@@ -3370,6 +3370,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: v_Cam
+      value: 
+      objectReference: {fileID: 438503219}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasBananaGun
       value: 0
       objectReference: {fileID: 0}
@@ -12799,6 +12803,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89135e5f89d630a4fa9b8f89db8f82f2, type: 3}
+--- !u!4 &955012206 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8296401799365185856, guid: 89135e5f89d630a4fa9b8f89db8f82f2, type: 3}
+  m_PrefabInstance: {fileID: 955012205}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &955411410
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13714,6 +13723,7 @@ Transform:
   - {fileID: 246777698}
   - {fileID: 1127583128}
   - {fileID: 1407411127}
+  - {fileID: 955012206}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1051901117

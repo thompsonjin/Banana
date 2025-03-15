@@ -1546,6 +1546,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: v_Cam
+      value: 
+      objectReference: {fileID: 777098046}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasCharge
       value: 0
       objectReference: {fileID: 0}
@@ -1997,6 +2001,7 @@ Transform:
   - {fileID: 412779035}
   - {fileID: 1374083286}
   - {fileID: 892457440}
+  - {fileID: 1726816275}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &280834045
@@ -29122,7 +29127,7 @@ Transform:
   m_LocalScale: {x: 1.740131, y: 1.4963124, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1588318899}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1708560884
 MonoBehaviour:
@@ -66427,3 +66432,5 @@ SceneRoots:
   - {fileID: 1568724992}
   - {fileID: 838310721}
   - {fileID: 440417451}
+  - {fileID: 1699873643}
+  - {fileID: 1708560883}
