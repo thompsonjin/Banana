@@ -40,6 +40,7 @@ public class GameManager : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
+            CheckpointManager.CheckpointReset();
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.buildIndex + 1);
         }
