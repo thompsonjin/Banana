@@ -11,11 +11,11 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //////Code to make sure there are no Game manager duplicates as well as load it to other scenes
+        //Code to make sure there are no Game manager duplicates as well as load it to other scenes
         if (Instance == null)
         {
             Instance = this;
-           DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -42,6 +42,6 @@ public class GameManager : MonoBehaviour
         {
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.buildIndex + 1);
-        };
+        }
     }
 }

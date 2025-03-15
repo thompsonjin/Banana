@@ -145,7 +145,9 @@ public class PlayerController : MonoBehaviour
         currentSpeed = normalSpeed;
 
         camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-       weaponSprite.enabled = false;
+        weaponSprite.enabled = false;
+
+
     } 
 
    void Update()
