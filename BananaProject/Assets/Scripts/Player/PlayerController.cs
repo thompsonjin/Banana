@@ -134,6 +134,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float gunDuration = 10f;
     [SerializeField] private float gunTimer = 0f;
 
+    [Header("Checkpoint")]
+    public GameObject[] checkpoints;
+
     void Awake()
     {
         maxBananas = BananaManager.MaxBananas;
@@ -146,11 +149,15 @@ public class PlayerController : MonoBehaviour
 
         camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
         weaponSprite.enabled = false;
+    }
 
+    private void Start()
+    {
 
-    } 
+        transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
+    }
 
-   void Update()
+    void Update()
    {
       //Get the players left and right input to calculate the force that needs to be applied
       horizontal = Input.GetAxisRaw("Horizontal");
@@ -177,11 +184,6 @@ public class PlayerController : MonoBehaviour
       {
         jumpBufferCounter -= Time.deltaTime;
       }
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-
-        }
 
       if(jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
       {
