@@ -185,11 +185,6 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter -= Time.deltaTime;
       }
 
-        if (Input.GetKey(KeyCode.Space))
-        {
-
-        }
-
       if(jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
       {
          //if the player is allowed to jump apply jump power to the player's velocity
