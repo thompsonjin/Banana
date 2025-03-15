@@ -70,6 +70,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] private LayerMask enemyLayer;
     private int comboCount;
+    float reload;
+    public float reloadTime;
 
     [Header("Kick")]
     //Kick
@@ -93,7 +95,6 @@ public class PlayerController : MonoBehaviour
     //Charge
     [SerializeField] private float chargeDuration = 6f;
     [SerializeField] private float boostSpeed = 24f;
-    private bool isCharged = false;
     private float chargeTimer;
     private bool aura;
     public SpriteRenderer sprite;
@@ -214,12 +215,19 @@ public class PlayerController : MonoBehaviour
       }
 
 
-      //Punch
+        //Punch
+        reload -= Time.deltaTime;
+        if(reload <= 0)
+        {
+            reload = 0;
+        }
 
-      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
-      {
-         BasicAttack();
-      }
+        if (reload <= 0 && Input.GetKeyDown(KeyCode.J))
+        {
+           BasicAttack();
+            Debug.Log("Punch");
+            reload = reloadTime;
+        }
 
         //Regular Kick
         if (Input.GetKeyDown(KeyCode.K))
@@ -228,7 +236,7 @@ public class PlayerController : MonoBehaviour
         }
 
         //Shadow kick charging
-        if (Input.GetMouseButton(1) && hasShadowKick || Input.GetKey(KeyCode.K) && hasShadowKick)
+        if (Input.GetKey(KeyCode.K) && hasShadowKick)
         {
             if (bananaCount > 0)
             {
@@ -251,7 +259,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
+        if (Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
         {
             ShadowKick();
             UseBanana(1);
@@ -263,7 +271,7 @@ public class PlayerController : MonoBehaviour
         //Ground Pound
 
 
-        if (Input.GetMouseButtonDown(1) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound || Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
+        if (Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
             {
@@ -280,7 +288,6 @@ public class PlayerController : MonoBehaviour
                 if (bananaCount >= 3)
                 {
                     UseBanana(3);
-                    isCharged = true;
                     canCharge = true;
                     SetAura(true);
                     currentSpeed = boostSpeed;
@@ -309,25 +316,31 @@ public class PlayerController : MonoBehaviour
                         chargeBar.value = 0;
                         SetAura(false);
                         canCharge = false;
-                        isCharged = false;
                     }
                     else
                     {
                         UseBanana(1);
                         chargeTimer = chargeDuration;
                     }
-
                 }
             }
 
             if (Input.GetKeyUp(KeyCode.L))
             {
-                focus = 15;
-                v_Cam.m_Lens.OrthographicSize = focus;
                 currentSpeed = normalSpeed;
                 chargeBar.value = 0;
                 SetAura(false);
                 canCharge = false;
+            }
+
+            if (!canCharge)
+            {
+                focus -= .1f;
+                if (focus <= 15)
+                {
+                    focus = 15;
+                }
+                v_Cam.m_Lens.OrthographicSize = focus;
             }
         }
         
@@ -353,7 +366,7 @@ public class PlayerController : MonoBehaviour
                 isGunPulled = false;
                 weaponSprite.enabled = false;
             }
-            else if (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.Mouse0))
+            else if (Input.GetKey(KeyCode.J))
             {
                 Shoot();
             }

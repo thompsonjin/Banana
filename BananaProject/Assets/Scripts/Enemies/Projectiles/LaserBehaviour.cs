@@ -16,8 +16,12 @@ public class LaserBehaviour : MonoBehaviour
     void Start()
     {
         player = GameObject.Find("Player");
-        target = this.transform.position - player.transform.position;
-        target.Normalize();
+
+        if(player != null)
+        {
+            target = this.transform.position - player.transform.position;
+            target.Normalize();
+        }
     }
 
     // Update is called once per frame

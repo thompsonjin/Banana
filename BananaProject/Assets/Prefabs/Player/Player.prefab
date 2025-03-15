@@ -177,6 +177,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  reloadTime: 5
   kickPowerMax: 2
   shadowKickKnockback: 40
   baseChargeTime: 1
@@ -188,6 +189,7 @@ MonoBehaviour:
   chargeDuration: 3
   boostSpeed: 35
   sprite: {fileID: 2127180801005447105}
+  v_Cam: {fileID: 0}
   punchKnockback: 5
   uppercutKnockback: 10
   kickKnockback: 25
