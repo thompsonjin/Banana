@@ -6,6 +6,14 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("Powers")]
+    [SerializeField] private bool hasShadowKick = false;
+    [SerializeField] private bool hasCharge = false;
+    [SerializeField] bool hasGroundPound = false;
+    [SerializeField] private bool hasBananaGun = false;
+    [SerializeField] private bool hasBananaShield = false;
+
+
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
@@ -17,7 +25,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int maxHealth;
     private int health;
     //BANANA SHIELD
-    [SerializeField] private bool hasBananaShield = false;
     private bool banananaShieldActive = false;
     [SerializeField] private GameObject shieldVisual;
     //HEALTH UI
@@ -56,6 +63,7 @@ public class PlayerController : MonoBehaviour
     public bool sakiBoost;
     public GameObject sakiBoostIndicator;
     public bool swim;
+    private bool jump;
 
     [Header("Combat main stats")]
     [SerializeField] private Transform attackPoint;
@@ -70,7 +78,6 @@ public class PlayerController : MonoBehaviour
     bool kickPowered;
     //Shadow Kick
     [SerializeField] private float shadowKickKnockback;
-    [SerializeField] private bool hasShadowKick = false;
     private float shadowKickPower;
     private bool isChargingShadowKick;
     private bool isShadowKicking = false;
@@ -86,16 +93,15 @@ public class PlayerController : MonoBehaviour
     //Charge
     [SerializeField] private float chargeDuration = 6f;
     [SerializeField] private float boostSpeed = 24f;
-    [SerializeField] private bool hasCharge = false;
     private bool isCharged = false;
     private float chargeTimer;
     private bool aura;
     public SpriteRenderer sprite;
     private bool canCharge;
+
     //GROUND POUND
     private bool groundPound;
     private float recoverTime;
-    [SerializeField] bool hasGroundPound = false;
 
     [Header("Knockback stats")]
     //KNOCKBACK VALUES
@@ -113,11 +119,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask throwableLayer;
     private ThrowableObject carriedObject;
     private bool isCarrying = false;
+    [SerializeField] private Transform check;
 
     [Header("Weapon")]
     [SerializeField] private Transform firePoint;
     [SerializeField] private GameObject bulletprefab;
-    [SerializeField] private bool hasBananaGun = false;
     [SerializeField] private bool isGunPulled = false;
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
@@ -146,7 +152,7 @@ public class PlayerController : MonoBehaviour
       horizontal = Input.GetAxisRaw("Horizontal");
       vertical = Input.GetAxisRaw("Vertical");
 
-      //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
+        //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
       if (IsGrounded() || isClimbing)
       {
         coyoteTimeCounter = coyoteTime;
@@ -167,6 +173,11 @@ public class PlayerController : MonoBehaviour
       {
         jumpBufferCounter -= Time.deltaTime;
       }
+
+        if (Input.GetKey(KeyCode.Space))
+        {
+
+        }
 
       if(jumpBufferCounter > 0f && coyoteTimeCounter > 0f)
       {
@@ -191,11 +202,11 @@ public class PlayerController : MonoBehaviour
 
           jumpBufferCounter = 0f;
           sakiBoost = false;
-            sakiBoostIndicator.SetActive(false);
+          sakiBoostIndicator.SetActive(false);
       }
 
       //Climb
-      if(vines && Input.GetKeyDown(KeyCode.W))
+      if(vines && Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Space))
       {
          isClimbing = true;
          rb.gravityScale = 0;
@@ -332,7 +343,7 @@ public class PlayerController : MonoBehaviour
                 isGunPulled = false;
                 weaponSprite.enabled = false;
             }
-            else if (Input.GetKey(KeyCode.L) || Input.GetKey(KeyCode.Mouse0))
+            else if (Input.GetKey(KeyCode.J) || Input.GetKey(KeyCode.Mouse0))
             {
                 Shoot();
             }
@@ -711,7 +722,7 @@ public class PlayerController : MonoBehaviour
     private void TryPickupObject()
     {
         //Check for throwable objects in range
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, pickupRange, throwableLayer);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(check.position, pickupRange, throwableLayer);
 
         foreach (Collider2D collider in colliders)
         {
@@ -760,6 +771,9 @@ public class PlayerController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPoint.position, attackRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(check.position, pickupRange);
+
     }
 
     public void SetAura(bool a)

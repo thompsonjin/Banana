@@ -35,6 +35,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5519777832520509073}
+  - {fileID: 6038423125309872780}
   - {fileID: 280152045252730823}
   - {fileID: 8561812753874378413}
   - {fileID: 989249281021628823}
@@ -134,6 +135,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2f497f14255d548b05ab5481e75a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasShadowKick: 1
+  hasCharge: 1
+  hasGroundPound: 1
+  hasBananaGun: 1
+  hasBananaShield: 1
   rb: {fileID: 307851999158270081}
   groundCheck: {fileID: 5519777832520509073}
   groundLayer:
@@ -141,7 +147,6 @@ MonoBehaviour:
     m_Bits: 72
   cameraFollowTarget: {fileID: 0}
   maxHealth: 3
-  hasBananaShield: 1
   shieldVisual: {fileID: 6176218626836076067}
   displayHealth:
   - {fileID: 0}
@@ -168,13 +173,12 @@ MonoBehaviour:
   sakiBoostIndicator: {fileID: 7415199160903756195}
   swim: 0
   attackPoint: {fileID: 280152045252730823}
-  attackRange: 0.6
+  attackRange: 1.78
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
   kickPowerMax: 2
   shadowKickKnockback: 40
-  hasShadowKick: 1
   baseChargeTime: 1
   maxChargeTime: 3
   baseKickSpeed: 60
@@ -183,9 +187,7 @@ MonoBehaviour:
   maxKickDistance: 16
   chargeDuration: 3
   boostSpeed: 35
-  hasCharge: 1
   sprite: {fileID: 2127180801005447105}
-  hasGroundPound: 1
   punchKnockback: 5
   uppercutKnockback: 10
   kickKnockback: 25
@@ -197,9 +199,9 @@ MonoBehaviour:
   throwableLayer:
     serializedVersion: 2
     m_Bits: 512
+  check: {fileID: 6038423125309872780}
   firePoint: {fileID: 3001912954819293346}
   bulletprefab: {fileID: 2792605518736310862, guid: b54b55b3165d69b46848a17ecefb40b9, type: 3}
-  hasBananaGun: 1
   isGunPulled: 0
   fireRate: 0.1
   weaponSprite: {fileID: 1412065979232524402}
@@ -573,6 +575,37 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1 &5970971885983041219
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6038423125309872780}
+  m_Layer: 0
+  m_Name: Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6038423125309872780
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5970971885983041219}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.66, y: -1.67, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 649561680886051299}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6176218626836076067
 GameObject:
   m_ObjectHideFlags: 0
@@ -1091,7 +1124,7 @@ Transform:
   m_GameObject: {fileID: 7846753643878603546}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.137, y: -1.14, z: 0}
+  m_LocalPosition: {x: 0.5, y: -1.42, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
