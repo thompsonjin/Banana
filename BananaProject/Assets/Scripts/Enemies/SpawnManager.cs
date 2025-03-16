@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class SpawnManager : MonoBehaviour
 
     private float spawnTimer;
     public float spawnTimeMax;
+
+    public GameObject door;
+
+    public Text count;
+    private int enemiesLeft;
+    public LayerMask enemyLayer;
 
     // Start is called before the first frame update
     void Start()
@@ -29,6 +36,11 @@ public class SpawnManager : MonoBehaviour
                 Wave();
             }
 
+            if(waveNum == 4)
+            {
+                Destroy(door);
+            }
+
             if (GameObject.FindWithTag("Enemy") == null)
             {
                 waveNum++;
@@ -38,7 +50,12 @@ public class SpawnManager : MonoBehaviour
             {
                 canSpawn = false;
             }
-        }  
+        }
+
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(transform.position, 100, enemyLayer);
+        enemiesLeft = enemiesHit.Length;
+
+        count.text = enemiesLeft.ToString();
     }
 
     void Wave()
@@ -56,5 +73,11 @@ public class SpawnManager : MonoBehaviour
             spawnTimer = spawnTimeMax;
         }
        
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 100);
     }
 }
