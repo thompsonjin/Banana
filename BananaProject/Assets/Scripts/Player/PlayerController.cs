@@ -153,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-
         transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
     }
 
@@ -813,7 +812,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             aura = false;
-            sprite.color = Color.gray;
+            sprite.color = Color.white;
         }
     }
 
