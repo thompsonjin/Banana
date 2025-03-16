@@ -821,20 +821,25 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Enemy" && aura)
         {
             BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
-            EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+            //EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
             e_Ai.SetHit();
             e_Ai.SetPatrol(false);
-            if (groundPound)
-            {
-                e_Health.Damage(5);
-            }
-            else
-            {
-                e_Health.Damage(4);
-                recoverTime = 0;
-            }
+
+           if( col.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth h))
+           {
+                if (groundPound)
+                {
+                    h.Damage(5);
+                }
+                else
+                {
+                    h.Damage(4);
+                    recoverTime = 0;
+                }
+           }
+            
 
             //find the orientation of the hit enemy relative to the player
             Vector2 forceDir = this.transform.position - col.gameObject.transform.position;

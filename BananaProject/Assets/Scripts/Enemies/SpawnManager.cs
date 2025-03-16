@@ -22,23 +22,23 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(waveNum > 0 && canSpawn)
+        if(CheckpointManager.checkpointNum == 1)
         {
-            Wave();                 
-        }
+            if (waveNum > 0 && canSpawn)
+            {
+                Wave();
+            }
 
-        if (GameObject.FindWithTag("Enemy") == null)
-        {
-            waveNum++;
-            canSpawn = true;
-        }
-        else
-        {
-            canSpawn = false;
-        }
-
-
-
+            if (GameObject.FindWithTag("Enemy") == null)
+            {
+                waveNum++;
+                canSpawn = true;
+            }
+            else
+            {
+                canSpawn = false;
+            }
+        }  
     }
 
     void Wave()
@@ -47,15 +47,12 @@ public class SpawnManager : MonoBehaviour
 
         if (spawnTimer <= 0)
         {
-            for(int i = 0; i <= 3; i++)
+            for (int v = 0; v <= spawnPoints.Length - 1; v++)
             {
-                for (int v = 0; v <= spawnPoints.Length - 1; v++)
-                {
-                    spawn = spawnPoints[v].GetComponent<Spawn>();
-                    spawn.SpawnImmediate(waveNum, Random.Range(0, 3));
-                }
+                spawn = spawnPoints[v].GetComponent<Spawn>();
+                spawn.SpawnImmediate(waveNum, Random.Range(0, 3));
             }
-           
+
             spawnTimer = spawnTimeMax;
         }
        

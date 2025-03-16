@@ -144,7 +144,7 @@ MonoBehaviour:
   groundCheck: {fileID: 5519777832520509073}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 584
   cameraFollowTarget: {fileID: 0}
   maxHealth: 3
   shieldVisual: {fileID: 6176218626836076067}
@@ -209,6 +209,7 @@ MonoBehaviour:
   weaponSprite: {fileID: 1412065979232524402}
   gunDuration: 10
   gunTimer: 0
+  checkpoints: []
 --- !u!114 &622046107485541659
 MonoBehaviour:
   m_ObjectHideFlags: 0
