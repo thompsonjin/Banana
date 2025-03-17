@@ -19,7 +19,8 @@ public class MechaHarambe : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] Transform projectilePoint;
-    [SerializeField] GameObject projectile;
+    [SerializeField] GameObject trackingLaser;
+    [SerializeField] GameObject randomLaser;
     [SerializeField] float reloadTime;
     float reload;
     [SerializeField] float fireTime;
@@ -27,6 +28,7 @@ public class MechaHarambe : MonoBehaviour
     [SerializeField] float waitTime;
     float wait;
     [SerializeField] GameObject risingLava;
+    bool attackType;
 
 
 
@@ -49,7 +51,7 @@ public class MechaHarambe : MonoBehaviour
         {
             distance = Vector3.Distance(player.transform.position, boss.transform.position);
 
-            if (distance > 40)
+            if (distance > 45)
             {
                 if(b_Man.phase == 0 || b_Man.phase == 2)
                 {
@@ -60,7 +62,7 @@ public class MechaHarambe : MonoBehaviour
                     boss.transform.Translate(new Vector2(1, 0) * (Time.deltaTime * speed));
                 }                      
             }
-            else if(distance < 23)
+            else if(distance < 25)
             {
                 if (b_Man.phase == 0 || b_Man.phase == 2)
                 {
@@ -79,7 +81,15 @@ public class MechaHarambe : MonoBehaviour
                 reload -= Time.deltaTime;
                 if (reload <= 0)
                 {
-                    Instantiate(projectile, projectilePoint.position, Quaternion.identity);
+                    if (attackType)
+                    {
+                        Instantiate(trackingLaser, projectilePoint.position, Quaternion.identity);
+                    }
+                    else
+                    {
+                        Instantiate(randomLaser, projectilePoint.position, Quaternion.identity);
+                    }
+
                     reload = reloadTime;
                 }
 
@@ -90,6 +100,7 @@ public class MechaHarambe : MonoBehaviour
                 wait -= Time.deltaTime;
                 if(wait <= 0)
                 {
+                    attackType = !attackType;
                     fire = fireTime;
                 }
             }

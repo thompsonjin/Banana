@@ -7,20 +7,18 @@ public class LaserBehaviour : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] float speed;
     private Vector3 target;
-    private GameObject player;
-
-
-
+    public bool tracking;
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player");
-
-        if(player != null)
+        if (tracking)
         {
-            target = this.transform.position - player.transform.position;
-            target.Normalize();
+            SetTargetPlayer();
+        }
+        else
+        {
+            SetRandomTarget();
         }
     }
 
@@ -43,5 +41,24 @@ public class LaserBehaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
         
+    }
+
+    public void SetRandomTarget()
+    {
+        float x = Random.Range(-1, 1);
+        int y = Random.Range(-1, 1);
+
+        target = new Vector3(x,y,0);
+    }
+
+    public void SetTargetPlayer()
+    {
+        GameObject player = GameObject.Find("Player");
+
+        if (player != null)
+        {
+            target = this.transform.position - player.transform.position;
+            target.Normalize();
+        }
     }
 }

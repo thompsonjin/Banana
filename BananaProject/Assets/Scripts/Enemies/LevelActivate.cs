@@ -9,6 +9,10 @@ public class LevelActivate : MonoBehaviour
 
     public Collider2D col;
 
+    private void Start()
+    {
+        music.clip.LoadAudioData();
+    }
     private void Update()
     {
         if(col == null)
