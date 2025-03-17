@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BFBGManager : MonoBehaviour
 {
     public Transform[] spawnPos;
+    [SerializeField] MechaHarambe m_Ham;
 
     [Header("Laser Attributes")]
     public GameObject laser;
@@ -18,6 +19,7 @@ public class BFBGManager : MonoBehaviour
     private Vector3 scaleChange;
     private Vector3 correction;
     public bool endLaser;
+    public GameObject warning;
 
     [Header("Banana Platform Attributes")]
     public GameObject bananaPlatform;
@@ -36,7 +38,6 @@ public class BFBGManager : MonoBehaviour
     bool spawned;
     public bool flipped;
 
-    public GameObject warning;
 
     // Start is called before the first frame update
     void Start()
@@ -44,6 +45,16 @@ public class BFBGManager : MonoBehaviour
         fireInterval = maxInterval;
         scaleChange.x = scaleRate;
         correction.x = correctionRate;
+
+        if(CheckpointManager.checkpointNum != 0)
+        {
+            phase = CheckpointManager.checkpointNum - 1;
+
+            for(int i = 0; i == phase - 1; i++)
+            {
+                Destroy(Generators[i]);
+            }
+        }       
     }
 
     // Update is called once per frame
@@ -163,5 +174,11 @@ public class BFBGManager : MonoBehaviour
     {
         Instantiate(bananaPlatform, spawnPos[Random.Range(0, spawnPos.Length)].position, Quaternion.identity);
         fireInterval = maxInterval;
+    }
+
+    public void NextPhase()
+    {
+        phase++;
+        m_Ham.NextPhase(phase);
     }
 }

@@ -8,9 +8,10 @@ public class MechaHarambe : MonoBehaviour
     [Header("References")]
     GameObject player;
     [SerializeField] GameObject boss;
+    [SerializeField] BFBGManager b_Man;
     
     [Header("Movement")]
-    [SerializeField] Transform[] movePos;
+    [SerializeField] Transform[] phasePos;
     [SerializeField] float speed;
     [SerializeField] float distance;
     public int posNum;
@@ -25,16 +26,21 @@ public class MechaHarambe : MonoBehaviour
     float fire;
     [SerializeField] float waitTime;
     float wait;
+    [SerializeField] GameObject risingLava;
+    bool lava;
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        b_Man = GameObject.FindWithTag("BFBG").GetComponent<BFBGManager>();
         player = GameObject.FindWithTag("Player");
         reload = reloadTime;
         wait = waitTime;
         fire = fireTime;
+
+        NextPhase(b_Man.phase);
     }
 
     // Update is called once per frame
@@ -46,16 +52,28 @@ public class MechaHarambe : MonoBehaviour
 
             if (distance > 40)
             {
-                boss.transform.Translate(new Vector2(-1, 0) * (Time.deltaTime * speed));              
+                if(b_Man.phase == 0 || b_Man.phase == 2)
+                {
+                    boss.transform.Translate(new Vector2(-1, 0) * (Time.deltaTime * speed));
+                }
+                else
+                {
+                    boss.transform.Translate(new Vector2(1, 0) * (Time.deltaTime * speed));
+                }                      
             }
             else if(distance < 23)
             {
-                boss.transform.Translate(new Vector2(1, 0) * (Time.deltaTime * speed));
+                if (b_Man.phase == 0 || b_Man.phase == 2)
+                {
+                    boss.transform.Translate(new Vector2(1, 0) * (Time.deltaTime * speed));
+                }
+                else
+                {
+                    boss.transform.Translate(new Vector2(-1, 0) * (Time.deltaTime * speed));
+                }         
             }
 
-            
-
-            
+                      
             if(fire >= 0)
             {
                 wait = waitTime;
@@ -76,6 +94,30 @@ public class MechaHarambe : MonoBehaviour
                     fire = fireTime;
                 }
             }
+
+            if(b_Man.phase == 2)
+            {
+                if (lava)
+                {
+                    risingLava.SetActive(true);
+                    lava = true;
+                }
+            }
         }
+    }
+
+    public void NextPhase(int p)
+    {
+        boss.transform.position = phasePos[p].position;
+
+        if (p == 0 || p == 2)
+        {
+            boss.transform.localScale = new Vector3(-1, 1, 1);
+        }
+        else
+        {
+            boss.transform.localScale = new Vector3(1, 1, 1);
+        }
+            
     }
 }
