@@ -44,7 +44,7 @@ public class MechaHarambe : MonoBehaviour
         {
             distance = Vector3.Distance(player.transform.position, boss.transform.position);
 
-            if (distance > 35)
+            if (distance > 40)
             {
                 boss.transform.Translate(new Vector2(-1, 0) * (Time.deltaTime * speed));              
             }

@@ -36,7 +36,7 @@ public class BFBGManager : MonoBehaviour
     bool spawned;
     public bool flipped;
 
-    public Text displayTime;
+    public GameObject warning;
 
     // Start is called before the first frame update
     void Start()
@@ -57,7 +57,7 @@ public class BFBGManager : MonoBehaviour
                 break;
             case 1:
                 this.transform.position = cannonLocations[1].position;
-                Destroy(displayTime);
+                warning.SetActive(false);
                 if (!flipped)
                 {
                     if (!CheckLasers())
@@ -83,17 +83,6 @@ public class BFBGManager : MonoBehaviour
              
         }
 
-        if(laserInterval > 0)
-        {
-            displayTime.text = Mathf.Round(laserInterval).ToString();
-        }
-        else if(laserInterval <= 0)
-        {
-            displayTime.text = "0";
-        }
-
-
-
             //Banana Cycle
 
             fireInterval -= Time.deltaTime;
@@ -111,6 +100,7 @@ public class BFBGManager : MonoBehaviour
                 laserInterval -= Time.deltaTime;
                 if (laserInterval <= 0)
                 {
+                    warning.SetActive(true);
                     Debug.Log("Spawn Laser");
                     SpawnLasers();
                     endLaser = false;
@@ -123,6 +113,7 @@ public class BFBGManager : MonoBehaviour
                 FireLasers(scaleChange, correction, laserRange);
                 if (endLaser)
                 {
+                    warning.SetActive(false);
                     DestroyLasers();
                     laserInterval = maxLaserInterval;
                     spawned = false;
