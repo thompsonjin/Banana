@@ -11,16 +11,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        //////Code to make sure there are no Game manager duplicates as well as load it to other scenes
+        //Code to make sure there are no Game manager duplicates as well as load it to other scenes
         if (Instance == null)
         {
             Instance = this;
-           DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
         }
+
+        BananaCoinCheck();
     }
 
     public void OnPLayerDeath()
@@ -40,8 +42,42 @@ public class GameManager : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
+            CheckpointManager.CheckpointReset();
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.buildIndex + 1);
-        };
+        }
+    }
+
+    void BananaCoinCheck()
+    {
+        if(GetScene() == 5 && BananaManager.one)
+        {
+            Destroy(GameObject.FindWithTag("Banana Coin"));
+        }
+
+        if (GetScene() == 6 && BananaManager.two)
+        {
+            Destroy(GameObject.FindWithTag("Banana Coin"));
+        }
+
+        if (GetScene() == 7 && BananaManager.three)
+        {
+            Destroy(GameObject.FindWithTag("Banana Coin"));
+        }
+
+        if (GetScene() == 8 && BananaManager.four)
+        {
+            Destroy(GameObject.FindWithTag("Banana Coin"));
+        }
+
+        if (GetScene() == 9 && BananaManager.five)
+        {
+            Destroy(GameObject.FindWithTag("Banana Coin"));
+        }
+    }
+
+    public int GetScene()
+    {
+        return SceneManager.GetActiveScene().buildIndex;
     }
 }
