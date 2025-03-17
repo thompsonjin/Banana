@@ -29,7 +29,7 @@ public class BananaScore : MonoBehaviour
         
         if (Random.Range(0,1f)>0.5f)
         {
-           
+            //…˙≥…œ„Ω∂
             Instantiate(bananaPrefab, new Vector3(Random.Range(-11.8f,11.9f),12.7f+Random.Range(0f,3f),0f), Quaternion.identity);
         }
         else
@@ -57,7 +57,7 @@ public class BananaScore : MonoBehaviour
 
         if (duringTime<0f)
         {
-            if (bananaScore>=25)
+            if (bananaScore>=24)
             {
                 //success
                 Time.timeScale = 0;
