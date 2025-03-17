@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class BFBGManager : MonoBehaviour
 {
@@ -33,10 +33,10 @@ public class BFBGManager : MonoBehaviour
     public GameObject[] Generators;
     public bool bananaDir;
 
-    bool fireLaser = true;
-    bool fireBanana;
     bool spawned;
     public bool flipped;
+
+    public Text displayTime;
 
     // Start is called before the first frame update
     void Start()
@@ -57,9 +57,13 @@ public class BFBGManager : MonoBehaviour
                 break;
             case 1:
                 this.transform.position = cannonLocations[1].position;
+                Destroy(displayTime);
                 if (!flipped)
                 {
-                    DestroyLasers();
+                    if (!CheckLasers())
+                    {
+                        DestroyLasers();
+                    }     
                     transform.localScale = -transform.localScale;
                     flipped = true;
                 }
@@ -78,11 +82,21 @@ public class BFBGManager : MonoBehaviour
                 break;
              
         }
-      
 
-        //Banana Cycle
+        if(laserInterval > 0)
+        {
+            displayTime.text = Mathf.Round(laserInterval).ToString();
+        }
+        else if(laserInterval <= 0)
+        {
+            displayTime.text = "0";
+        }
 
-        fireInterval -= Time.deltaTime;
+
+
+            //Banana Cycle
+
+            fireInterval -= Time.deltaTime;
 
         if (fireInterval <= 0)
         {
@@ -90,7 +104,7 @@ public class BFBGManager : MonoBehaviour
         }
 
         //Laser Cycle
-        if(phase == 1)
+        if(phase == 0)
         {
             if (!spawned)
             {
@@ -139,6 +153,19 @@ public class BFBGManager : MonoBehaviour
         {
             Destroy(t.GetChild(0).gameObject);
         }
+    }
+
+    bool CheckLasers()
+    {
+        if(GameObject.FindWithTag("Laser") != null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+        
     }
 
     void FireBananaPlatforms()
