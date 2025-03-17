@@ -27,7 +27,6 @@ public class MechaHarambe : MonoBehaviour
     [SerializeField] float waitTime;
     float wait;
     [SerializeField] GameObject risingLava;
-    bool lava;
 
 
 
@@ -94,15 +93,6 @@ public class MechaHarambe : MonoBehaviour
                     fire = fireTime;
                 }
             }
-
-            if(b_Man.phase == 2)
-            {
-                if (lava)
-                {
-                    risingLava.SetActive(true);
-                    lava = true;
-                }
-            }
         }
     }
 
@@ -117,6 +107,12 @@ public class MechaHarambe : MonoBehaviour
         else
         {
             boss.transform.localScale = new Vector3(1, 1, 1);
+        }
+
+        if(p == 2)
+        {
+            risingLava.SetActive(true);
+            risingLava.GetComponent<HarmingLiquid>().Restart();
         }
             
     }

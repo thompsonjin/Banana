@@ -88,8 +88,7 @@ public class BFBGManager : MonoBehaviour
                 }
                 break;
             case 3:
-                Debug.Log("You Win");
-
+                GameObject.Find("Game Manager").GetComponent<GameManager>().NextScene();
                 break;
              
         }

@@ -20,7 +20,7 @@ public class HarmingLiquid : MonoBehaviour
 
     bool up = true;
 
-
+  
     private void Update()
     {
         if (rising)
@@ -60,5 +60,10 @@ public class HarmingLiquid : MonoBehaviour
             }
         }
         
+    }
+
+    public void Restart()
+    {
+        liquid.transform.position = startPos.position;
     }
 }
