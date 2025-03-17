@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Enemy
   - Vines
+<<<<<<< Updated upstream
+=======
+  - GoliathOrangutan
+  - Ground
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
