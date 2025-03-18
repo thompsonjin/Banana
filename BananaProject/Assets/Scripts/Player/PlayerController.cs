@@ -436,6 +436,16 @@ public class PlayerController : MonoBehaviour
             Debug.Log("You Are Dead");
             Die();
         }
+
+        //DEV TOOL GOD MODE
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            if (SettingsManager.Instance != null)
+            {
+                SettingsManager.Instance.ToggleGodMode();
+                Debug.Log("God Mode: " + (SettingsManager.Instance.GodModeEnabled ? "Enabled" : "Disabled"));
+            }
+        }
     }
 
    //MOVEMENT FUNCTIONS
@@ -857,6 +867,12 @@ public class PlayerController : MonoBehaviour
     //HEALTH MANAGMENT
     public void TakeDamage()
     {
+        if (SettingsManager.Instance != null && SettingsManager.Instance.GodModeEnabled)
+        {
+            Debug.Log("God Mode: Damage prevented");
+            return;
+        }
+
         //Check if banana shield is active and able to use
         if (hasBananaShield && banananaShieldActive)
         {
@@ -906,6 +922,19 @@ public class PlayerController : MonoBehaviour
    //BANANA MANAGMENT
    private void UseBanana(int b)
    {
+        //Infinite bananas if gode mode is active DEV TOOL
+        if (SettingsManager.Instance != null && SettingsManager.Instance.GodModeEnabled)
+        {
+            for (int i = 0; i < b; i++)
+            {
+                displayBananas[bananaCount - 1 - i].enabled = false;
+            }
+
+            StartCoroutine(RefillBananaUI(b));
+            return;
+        }
+
+
         bananaCount -= b;
 
         for (int i = 0; i < b; i++)
@@ -925,6 +954,18 @@ public class PlayerController : MonoBehaviour
         else
         {
             displayBananas[bananaCount - 1].enabled = true;
+        }
+    }
+
+    //DEV TOOL used to refill bananas
+    private IEnumerator RefillBananaUI(int count)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        for (int i = 0; i < count; i++)
+        {
+            if (bananaCount - 1 - i >= 0 && bananaCount - 1 - i < displayBananas.Count)
+                displayBananas[bananaCount - 1 - i].enabled = true;
         }
     }
 
