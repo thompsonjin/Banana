@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+//using UnityEditor.PackageManager;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
     [SerializeField] float shotSpeed = 20f;
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private int damage = 4;
+    [SerializeField] private int damage = 6;
 
 
     private void Update()
@@ -19,20 +20,21 @@ public class Bullet : MonoBehaviour
         rb.velocity = transform.right * shotSpeed;
     }
 
-    private void OnTriggerEnter2D(Collider2D hitInfo)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        BaseEnemy e_Ai = hitInfo.GetComponent<BaseEnemy>();
-        EnemyHealth e_Health = hitInfo.GetComponent<EnemyHealth>();
+        BaseEnemy e_Ai = collision.gameObject.GetComponent<BaseEnemy>();
+        EnemyHealth e_Health = collision.gameObject.GetComponent<EnemyHealth>();
 
         if (e_Health != null && e_Ai != null)
         {
             e_Ai.SetHit();
             e_Ai.SetPatrol(false);
             e_Health.Damage(damage);
-            Destroy(gameObject);
         }
+
+        Destroy(gameObject);
     }
-    
+
     private IEnumerator Countdown(int seconds)
     {
         int counter = seconds;

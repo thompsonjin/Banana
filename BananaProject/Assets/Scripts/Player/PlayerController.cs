@@ -153,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-
         transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
     }
 
@@ -351,7 +350,7 @@ public class PlayerController : MonoBehaviour
 
         //Shooting Banana Gun
 
-        if (Input.GetKeyDown(KeyCode.H) && hasBananaGun && !isGunPulled) 
+        if (Input.GetKeyDown(KeyCode.I) && hasBananaGun && !isGunPulled) 
         {
             if (bananaCount >= 5)
             {
@@ -383,11 +382,7 @@ public class PlayerController : MonoBehaviour
             shieldVisual.SetActive(true);
             Debug.Log("Banana Shield ON");
         }
-        else if (bananaCount < maxBananas)
-        {
-            banananaShieldActive = false;
-            shieldVisual.SetActive(false);
-        }
+        
 
         //METHOD TO CHECK FOR THROWABLE OBJECTS
         CheckPickupAndThrow();
@@ -813,7 +808,7 @@ public class PlayerController : MonoBehaviour
         else
         {
             aura = false;
-            sprite.color = Color.gray;
+            sprite.color = Color.white;
         }
     }
 
@@ -822,20 +817,25 @@ public class PlayerController : MonoBehaviour
         if (col.gameObject.tag == "Enemy" && aura)
         {
             BaseEnemy e_Ai = col.gameObject.GetComponent<BaseEnemy>();
-            EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
+            //EnemyHealth e_Health = col.gameObject.GetComponent<EnemyHealth>();
             Rigidbody2D e_Rigid = col.gameObject.GetComponent<Rigidbody2D>();
 
             e_Ai.SetHit();
             e_Ai.SetPatrol(false);
-            if (groundPound)
-            {
-                e_Health.Damage(5);
-            }
-            else
-            {
-                e_Health.Damage(4);
-                recoverTime = 0;
-            }
+
+           if( col.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth h))
+           {
+                if (groundPound)
+                {
+                    h.Damage(5);
+                }
+                else
+                {
+                    h.Damage(4);
+                    recoverTime = 0;
+                }
+           }
+            
 
             //find the orientation of the hit enemy relative to the player
             Vector2 forceDir = this.transform.position - col.gameObject.transform.position;

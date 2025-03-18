@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1451892871570818829}
   - component: {fileID: 4663954302397911971}
   - component: {fileID: 426683819660192408}
-  - component: {fileID: 3687646618152026844}
   m_Layer: 6
   m_Name: Robo Orangutan
   m_TagString: Enemy
@@ -30,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1012250637571269806}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 21.65, y: -0.84, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.5, y: 1.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -182,25 +181,9 @@ MonoBehaviour:
   turnCheck: {fileID: 2355270145038951818}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 520
   patrolSpeed: 1.5
   chaseSpeed: 3
-  shield: {fileID: 0}
---- !u!114 &3687646618152026844
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012250637571269806}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12359f9e33238954cb90973a194c42a3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  saki: 0
-  health: 0
-  maxHealth: 8
 --- !u!1 &5998106175139969668
 GameObject:
   m_ObjectHideFlags: 0
@@ -510,7 +493,7 @@ GameObject:
   - component: {fileID: 1261946755382692436}
   - component: {fileID: 2327909433811154774}
   - component: {fileID: 3203702937111889816}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}

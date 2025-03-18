@@ -23,9 +23,12 @@ public class Checkpoint : MonoBehaviour
 
     public void ActivatedCheck()
     {
-        if(CheckpointManager.checkpointNum == order)
+        if(CheckpointManager.checkpointNum >= order)
         {
-            Destroy(transform.gameObject.GetComponent<BoxCollider2D>());
+            if(transform.gameObject.GetComponent<BoxCollider2D>() != null)
+            {
+                Destroy(transform.gameObject.GetComponent<BoxCollider2D>());
+            }
         }
     }
 }

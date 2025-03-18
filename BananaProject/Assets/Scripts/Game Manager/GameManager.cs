@@ -80,4 +80,11 @@ public class GameManager : MonoBehaviour
     {
         return SceneManager.GetActiveScene().buildIndex;
     }
+
+    public void NextScene()
+    {
+        CheckpointManager.CheckpointReset();
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex + 1);
+    }
 }

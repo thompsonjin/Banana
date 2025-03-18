@@ -45,7 +45,10 @@ public class ThrowableObject : MonoBehaviour
             {
                 e_Ai.SetHit();
                 e_Ai.SetPatrol(false);
-                collision.gameObject.GetComponent<EnemyHealth>().Damage((int)damage);
+                if(collision.gameObject.GetComponent<EnemyHealth>() != null)
+                {
+                    collision.gameObject.GetComponent<EnemyHealth>().Damage((int)damage);
+                }
 
                 Vector2 knockbackDir = (collision.transform.position - transform.position).normalized;
                 collision.gameObject.GetComponent<Rigidbody2D>().AddForce(knockbackDir * knockbackForce, ForceMode2D.Impulse);

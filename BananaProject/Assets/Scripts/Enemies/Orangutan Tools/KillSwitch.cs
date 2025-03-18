@@ -17,7 +17,7 @@ public class KillSwitch : MonoBehaviour
                 }
                 else
                 {
-                    GameObject.FindWithTag("BFBG").GetComponent<BFBGManager>().phase++;
+                    GameObject.FindWithTag("BFBG").GetComponent<BFBGManager>().NextPhase();
                     Destroy(transform.gameObject);
                 }
             }          
