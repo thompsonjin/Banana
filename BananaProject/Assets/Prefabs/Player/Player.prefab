@@ -163,7 +163,7 @@ MonoBehaviour:
   bananaUIParent: {fileID: 0}
   chargeBar: {fileID: 8971623386080281610}
   powerSlider: {fileID: 991260835937992137}
-  bananaRegen: 5
+  bananaRegen: 4
   slowSpeed: 0
   normalSpeed: 12
   jumpPower: 25

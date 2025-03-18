@@ -45,8 +45,17 @@ public class LaserBehaviour : MonoBehaviour
 
     public void SetRandomTarget()
     {
-        float x = Random.Range(-1, 1);
-        int y = Random.Range(-1, 1);
+        float x = Random.Range(-1, 2);
+        float y = Random.Range(-1, 2);
+
+        if(x == 0)
+        {
+            x += .5f;
+        }
+        if(y == 0)
+        {
+            y += .5f;
+        }
 
         target = new Vector3(x,y,0);
     }

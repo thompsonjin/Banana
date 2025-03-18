@@ -40,6 +40,7 @@ public class MechaHarambe : MonoBehaviour
         reload = reloadTime;
         wait = waitTime;
         fire = fireTime;
+        attackType = true;
 
         NextPhase(b_Man.phase);
     }
@@ -84,13 +85,15 @@ public class MechaHarambe : MonoBehaviour
                     if (attackType)
                     {
                         Instantiate(trackingLaser, projectilePoint.position, Quaternion.identity);
+                        reload = reloadTime;
                     }
                     else
                     {
                         Instantiate(randomLaser, projectilePoint.position, Quaternion.identity);
+                        reload = reloadTime / 2;
                     }
 
-                    reload = reloadTime;
+                    
                 }
 
                 fire -= Time.deltaTime;
