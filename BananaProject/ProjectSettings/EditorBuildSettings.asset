@@ -45,8 +45,14 @@ EditorBuildSettings:
     path: Assets/Scenes/LVL 4.unity
     guid: a2504299a77bb5843ac09a79cc8e961b
   - enabled: 1
+    path: Assets/Scenes/LVL 4.5.unity
+    guid: 97939cd2097390342882e61098148149
+  - enabled: 1
     path: Assets/Scenes/LVL 5.unity
     guid: 219f3ba593b8c5f429e1a1329c53e738
+  - enabled: 1
+    path: Assets/Scenes/LVL 5.5.unity
+    guid: f12bfbf2a4afdf34da94ad0848d2caba
   - enabled: 1
     path: Assets/Scenes/Boss Fight.unity
     guid: 388e2e8d96ba6bd43a50555669de1278
