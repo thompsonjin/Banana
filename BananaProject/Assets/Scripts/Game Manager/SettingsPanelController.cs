@@ -1,4 +1,7 @@
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsPanelController : MonoBehaviour
@@ -11,6 +14,14 @@ public class SettingsPanelController : MonoBehaviour
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider sfxVolumeSlider;
     [SerializeField] private Slider musicVolumeSlider;
+
+    [Header("Dev Tools")]
+    [SerializeField] private Toggle godModeToggle;
+    [SerializeField] private GameObject devToolsContainer;
+    [SerializeField] private TMP_Dropdown levelSelectDropdown;
+    [SerializeField] private Button loadLevelButton;
+    [SerializeField] private int[] levelSceneIndices = { 5, 6, 7, 8, 9, 10 };
+    [SerializeField] private string[] levelNames = { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Boss Level" };
 
     [Header("References")]
     [SerializeField] private PauseMenuManager pauseMenuManager;
@@ -29,8 +40,30 @@ public class SettingsPanelController : MonoBehaviour
 
         if (settingsManager != null)
         {
+            settingsManager.ValidateAudioMixer();
+
+            fullscreenToggle.isOn = settingsManager.IsFullscreen;
+            windowedToggle.isOn = !settingsManager.IsFullscreen;
+
+            //Remove existing listeners
+            masterVolumeSlider.onValueChanged.RemoveAllListeners();
+            sfxVolumeSlider.onValueChanged.RemoveAllListeners();
+            musicVolumeSlider.onValueChanged.RemoveAllListeners();
+            fullscreenToggle.onValueChanged.RemoveAllListeners();
+            windowedToggle.onValueChanged.RemoveAllListeners();
+
+            //Add listeners
+            masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
+            sfxVolumeSlider.onValueChanged.AddListener(OnSFXVolumeChanged);
+            musicVolumeSlider.onValueChanged.AddListener(OnMusicVolumeChanged);
+            fullscreenToggle.onValueChanged.AddListener(OnFullscreenToggleChanged);
+            windowedToggle.onValueChanged.AddListener(OnWindowedToggleChanged);
+
             UpdateUI();
         }
+
+
+
         else
         {
             Debug.LogError("SettingsManager not found!");
@@ -39,12 +72,30 @@ public class SettingsPanelController : MonoBehaviour
 
     private void UpdateUI()
     {
-        fullscreenToggle.isOn = settingsManager.IsFullscreen;
-        windowedToggle.isOn = !settingsManager.IsFullscreen;
+        masterVolumeSlider.minValue = 0.001f;
+        sfxVolumeSlider.minValue = 0.001f;
+        musicVolumeSlider.minValue = 0.001f;
 
         masterVolumeSlider.value = settingsManager.MasterVolume;
         sfxVolumeSlider.value = settingsManager.SFXVolume;
         musicVolumeSlider.value = settingsManager.MusicVolume;
+
+        //Update DEV TOOLS
+        if (godModeToggle != null)
+            godModeToggle.isOn = settingsManager.GodModeEnabled;
+
+        if (levelSelectDropdown != null)
+        {
+            levelSelectDropdown.ClearOptions();
+            List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
+
+            for (int i = 0; i < levelNames.Length; i++)
+            {
+                options.Add(new TMP_Dropdown.OptionData(levelNames[i]));
+            }
+
+            levelSelectDropdown.AddOptions(options);
+        }
     }
 
     //Handle UI events
@@ -52,17 +103,51 @@ public class SettingsPanelController : MonoBehaviour
     {
         if (isOn)
         {
+            windowedToggle.onValueChanged.RemoveAllListeners();
             windowedToggle.isOn = false;
+            windowedToggle.onValueChanged.AddListener(OnWindowedToggleChanged);
+
             settingsManager.SetFullscreen(true);
+            settingsManager.ForceScreenMode(true);
+
+            Debug.Log("Pause Menu: Changed to Fullscreen");
+        }
+        else if (!windowedToggle.isOn)
+        {
+            fullscreenToggle.isOn = true;
         }
     }
-
     public void OnWindowedToggleChanged(bool isOn)
     {
         if (isOn)
         {
+            fullscreenToggle.onValueChanged.RemoveAllListeners();
             fullscreenToggle.isOn = false;
+            fullscreenToggle.onValueChanged.AddListener(OnFullscreenToggleChanged);
+
             settingsManager.SetFullscreen(false);
+            settingsManager.ForceScreenMode(false);
+
+            Debug.Log("Pause Menu: Changed to Windowed");
+        }
+        else if (!fullscreenToggle.isOn)
+        {
+            windowedToggle.isOn = true;
+        }
+    }
+
+    private void EnsureOneToggleSelected()
+    {
+        if (!fullscreenToggle.isOn && !windowedToggle.isOn)
+        {
+            fullscreenToggle.isOn = settingsManager.IsFullscreen;
+            windowedToggle.isOn = !settingsManager.IsFullscreen;
+        }
+        else if (fullscreenToggle.isOn && windowedToggle.isOn)
+        {
+            bool current = settingsManager.IsFullscreen;
+            fullscreenToggle.isOn = current;
+            windowedToggle.isOn = !current;
         }
     }
 
@@ -83,13 +168,55 @@ public class SettingsPanelController : MonoBehaviour
 
     public void ApplySettings()
     {
+        EnsureOneToggleSelected();
+
+        settingsManager.SetMasterVolume(masterVolumeSlider.value);
+        settingsManager.SetSFXVolume(sfxVolumeSlider.value);
+        settingsManager.SetMusicVolume(musicVolumeSlider.value);
+
         settingsManager.ApplySettings();
         settingsManager.SaveSettings();
+    }
+
+    public void ResetAudioSettings()
+    {
+        if (settingsManager != null)
+        {
+            settingsManager.SetDefaultVolumes();
+
+            masterVolumeSlider.value = settingsManager.MasterVolume;
+            sfxVolumeSlider.value = settingsManager.SFXVolume;
+            musicVolumeSlider.value = settingsManager.MusicVolume;
+        }
+    }
+
+    public void OnGodModeToggleChanged(bool isOn)
+    {
+        if (settingsManager != null)
+        {
+            settingsManager.SetGodMode(isOn);
+        }
+    }
+
+    public void LoadSelectedLevel()
+    {
+        if (levelSelectDropdown != null && levelSceneIndices.Length > levelSelectDropdown.value)
+        {
+            int selectedLevelIndex = levelSceneIndices[levelSelectDropdown.value];
+            Time.timeScale = 1f;
+            SceneManager.LoadScene(selectedLevelIndex);
+        }
     }
 
     //Back button handler
     public void OnBackButton()
     {
+        EnsureOneToggleSelected();
+
+        settingsManager.SetMasterVolume(masterVolumeSlider.value);
+        settingsManager.SetSFXVolume(sfxVolumeSlider.value);
+        settingsManager.SetMusicVolume(musicVolumeSlider.value);
+
         ApplySettings();
         if (pauseMenuManager != null)
         {
