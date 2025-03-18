@@ -184,7 +184,6 @@ MonoBehaviour:
     m_Bits: 520
   patrolSpeed: 1.5
   chaseSpeed: 3
-  shield: {fileID: 3203702937111889816}
 --- !u!1 &5998106175139969668
 GameObject:
   m_ObjectHideFlags: 0
@@ -494,7 +493,7 @@ GameObject:
   - component: {fileID: 1261946755382692436}
   - component: {fileID: 2327909433811154774}
   - component: {fileID: 3203702937111889816}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}

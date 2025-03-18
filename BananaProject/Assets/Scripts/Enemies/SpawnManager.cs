@@ -20,6 +20,12 @@ public class SpawnManager : MonoBehaviour
     private int enemiesLeft;
     public LayerMask enemyLayer;
 
+    public AudioSource music;
+
+    public AudioClip first;
+    public AudioClip second;
+    public AudioClip third;
+
     // Start is called before the first frame update
     void Start()
     {

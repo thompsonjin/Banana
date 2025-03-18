@@ -350,7 +350,7 @@ public class PlayerController : MonoBehaviour
 
         //Shooting Banana Gun
 
-        if (Input.GetKeyDown(KeyCode.H) && hasBananaGun && !isGunPulled) 
+        if (Input.GetKeyDown(KeyCode.I) && hasBananaGun && !isGunPulled) 
         {
             if (bananaCount >= 5)
             {
