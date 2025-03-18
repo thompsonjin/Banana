@@ -25,12 +25,12 @@ public class WaterBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(transform.localScale.x <= 20)
         {
-            transform.localScale += scaleChange;
-            transform.position += correction;
+            transform.localScale += scaleChange * 3;
+            transform.position += correction * 3;
         }  
     }
 

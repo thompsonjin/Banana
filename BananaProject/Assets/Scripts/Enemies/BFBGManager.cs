@@ -102,12 +102,17 @@ public class BFBGManager : MonoBehaviour
             FireBananaPlatforms();
         }
 
+        
+    }
+
+    private void FixedUpdate()
+    {
         //Laser Cycle
-        if(phase == 0)
+        if (phase == 0)
         {
             if (!spawned)
             {
-                laserInterval -= Time.deltaTime;
+                laserInterval -= Time.fixedDeltaTime;
                 if (laserInterval <= 0)
                 {
                     warning.SetActive(true);
