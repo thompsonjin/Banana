@@ -382,11 +382,7 @@ public class PlayerController : MonoBehaviour
             shieldVisual.SetActive(true);
             Debug.Log("Banana Shield ON");
         }
-        else if (bananaCount < maxBananas)
-        {
-            banananaShieldActive = false;
-            shieldVisual.SetActive(false);
-        }
+        
 
         //METHOD TO CHECK FOR THROWABLE OBJECTS
         CheckPickupAndThrow();
