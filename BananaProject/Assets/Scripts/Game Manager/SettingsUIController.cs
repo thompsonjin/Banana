@@ -172,7 +172,7 @@ public class SettingsUIController : MonoBehaviour
         if (levelSelectDropdown != null && levelSceneIndices.Length > levelSelectDropdown.value)
         {
             int selectedLevelIndex = levelSceneIndices[levelSelectDropdown.value];
-            Time.timeScale = 1f; // Ensure time scale is reset when loading a new level
+            Time.timeScale = 1f;
             SceneManager.LoadScene(selectedLevelIndex);
         }
     }
