@@ -55,7 +55,7 @@ public class SpawnManager : MonoBehaviour
         Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(transform.position, 100, enemyLayer);
         enemiesLeft = enemiesHit.Length;
 
-        count.text = enemiesLeft.ToString();
+        count.text = "Enemies Left: " + enemiesLeft.ToString();
     }
 
     void Wave()
