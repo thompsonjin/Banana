@@ -11,6 +11,11 @@ public class Elevator : MonoBehaviour
     public GameObject door;
     public GameObject buttonPrompt;
 
+    [Header("Outside Graphic")]
+    public GameObject outside;
+    public Transform startPos;
+    public Transform endPos;
+
     // Start is called before the first frame update
     void Start()
     {
