@@ -21,16 +21,12 @@ public class RoboOrangutan : BaseEnemy
 
     [Header("Combat")]
     private const float PLAYER_HIT_TIME = .8f;
-    private float playerHitTimer;
-    [SerializeField] private Shield shield;
 
     // Start is called before the first frame update
     void Awake()
     {
-        playerHitTimer = PLAYER_HIT_TIME;
         player = GameObject.Find("Player");
         p_Con = player.GetComponent<PlayerController>();
-        shield = transform.GetChild(3).gameObject.GetComponent<Shield>();
         patrol = true;
     }
 
@@ -61,8 +57,6 @@ public class RoboOrangutan : BaseEnemy
             moveDir.Normalize();           
         }
 
-
-        Attack();
         Flip();
     }
 
@@ -110,17 +104,6 @@ public class RoboOrangutan : BaseEnemy
         if (collision.gameObject.tag == "Enemy" || collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Throwable")
         {
             turn = !turn;
-        }
-    }
-
-    private void Attack()
-    {
-        playerHitTimer -= Time.deltaTime;
-
-        if (playerHitTimer <= 0)
-        {
-            shield.SetHit(true);
-            playerHitTimer = PLAYER_HIT_TIME;
         }
     }
 

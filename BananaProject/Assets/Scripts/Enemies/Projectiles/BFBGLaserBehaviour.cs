@@ -19,8 +19,8 @@ public class BFBGLaserBehaviour : MonoBehaviour
     {
         if (transform.localScale.x > -range && !stop)
         {
-            transform.localScale -= scale;
-            transform.position -= cor;
+            transform.localScale -= scale * 3;
+            transform.position -= cor * 3;
         }
 
         if(transform.localScale.x <= -range)
