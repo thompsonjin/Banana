@@ -22,7 +22,7 @@ public class SettingsUIController : MonoBehaviour
     [SerializeField] private Button loadLevelButton;
 
     [Header("Level Information")]
-    [SerializeField] private int[] levelSceneIndices = { 5, 6, 7, 8, 9, 10 };
+    [SerializeField] private int[] levelSceneIndices = { 5, 7, 9, 11, 13, 15 };
     [SerializeField] private string[] levelNames = { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Boss Level" };
 
     [Header("Scene Navigation")]
