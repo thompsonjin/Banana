@@ -20,7 +20,7 @@ public class SettingsPanelController : MonoBehaviour
     [SerializeField] private GameObject devToolsContainer;
     [SerializeField] private TMP_Dropdown levelSelectDropdown;
     [SerializeField] private Button loadLevelButton;
-    [SerializeField] private int[] levelSceneIndices = { 5, 6, 7, 8, 9, 10 };
+    [SerializeField] private int[] levelSceneIndices = { 5, 7, 9, 11, 13, 15 };
     [SerializeField] private string[] levelNames = { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Boss Level" };
 
     [Header("References")]
