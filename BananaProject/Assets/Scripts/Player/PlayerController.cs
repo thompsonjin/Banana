@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private GameObject cameraFollowTarget;
     private CameraFollowTarget camFT;
+    [SerializeField]private Animator anim;
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -149,6 +150,8 @@ public class PlayerController : MonoBehaviour
 
         camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
         weaponSprite.enabled = false;
+
+       // anim = this.gameObject.GetComponent<Animator>();
     }
 
     private void Start()
@@ -157,10 +160,12 @@ public class PlayerController : MonoBehaviour
     }
 
     void Update()
-   {
+    {
       //Get the players left and right input to calculate the force that needs to be applied
       horizontal = Input.GetAxisRaw("Horizontal");
       vertical = Input.GetAxisRaw("Vertical");
+
+        Debug.Log(horizontal);
 
         //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
       if (IsGrounded() || isClimbing)
@@ -178,6 +183,7 @@ public class PlayerController : MonoBehaviour
 
         isClimbing = false;
         rb.gravityScale = 7;
+        anim.SetBool("Climbing", false);
       }
       else
       {
@@ -210,12 +216,22 @@ public class PlayerController : MonoBehaviour
           sakiBoostIndicator.SetActive(false);
       }
 
+        if (!IsGrounded())
+        {
+            anim.SetBool("Jump", true);
+        }
+        else
+        {
+            anim.SetBool("Jump", false);
+        }
+
       //Climb
-      if(vines && Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Space))
-      {
-         isClimbing = true;
-         rb.gravityScale = 0;
-      }
+      if (vines && Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.Space))
+        {
+            isClimbing = true;
+            rb.gravityScale = 0;
+            anim.SetBool("Climbing", true);
+        }
 
 
         //Punch
@@ -227,15 +243,24 @@ public class PlayerController : MonoBehaviour
 
         if (reload <= 0 && Input.GetKeyDown(KeyCode.J))
         {
-           BasicAttack();
-            Debug.Log("Punch");
+            BasicAttack();
+            anim.SetBool("Punch", true);
             reload = reloadTime;
+        }
+        else
+        {
+            anim.SetBool("Punch", false);
         }
 
         //Regular Kick
         if (Input.GetKeyDown(KeyCode.K))
         {
             BasicKick();
+            anim.SetBool("Kick", true);
+        }
+        else
+        {
+            anim.SetBool("Kick", false);
         }
 
         //Shadow kick charging
@@ -264,6 +289,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
         {
+
             ShadowKick();
             UseBanana(1);
             isChargingShadowKick = false;
@@ -272,13 +298,12 @@ public class PlayerController : MonoBehaviour
         }
 
         //Ground Pound
-
-
         if (Input.GetKeyDown(KeyCode.J) && Input.GetKey(KeyCode.S) && !IsGrounded() && hasGroundPound)
         {
             if (bananaCount > 0)
             {
                 groundPound = true;
+                anim.SetBool("Ground Pound", true);
                 SetAura(true);
                 UseBanana(1);
             }
@@ -301,6 +326,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.L) && canCharge)
             {
+                anim.SetBool("Charge", true);
                 focus += .1f;
 
                 if(focus >= 28)
@@ -319,6 +345,7 @@ public class PlayerController : MonoBehaviour
                         chargeBar.value = 0;
                         SetAura(false);
                         canCharge = false;
+                        anim.SetBool("Charge", false);
                     }
                     else
                     {
@@ -334,6 +361,7 @@ public class PlayerController : MonoBehaviour
                 chargeBar.value = 0;
                 SetAura(false);
                 canCharge = false;
+                anim.SetBool("Charge", false);
             }
 
             if (!canCharge)
@@ -355,6 +383,7 @@ public class PlayerController : MonoBehaviour
             if (bananaCount >= 5)
             {
                 isGunPulled = true;
+                anim.SetBool("Gun", true);
                 weaponSprite.enabled = true;
                 UseBanana(5);
                 gunTimer = gunDuration;
@@ -366,6 +395,7 @@ public class PlayerController : MonoBehaviour
             gunTimer -= Time.deltaTime;
             if (gunTimer < 0)
             {
+                anim.SetBool("Gun", false);
                 isGunPulled = false;
                 weaponSprite.enabled = false;
             }
@@ -466,6 +496,7 @@ public class PlayerController : MonoBehaviour
                         recoverTime = 0;
                         groundPound = false;
                     }
+                    anim.SetBool("Ground Pound", false);
                 }
             }
             else if (isClimbing)
@@ -475,8 +506,18 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
+                Vector2 move = new Vector2(horizontal * currentSpeed, rb.velocity.y);
                 //apply the product of horizontal and speed to the players current velocity
-                rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
+                rb.velocity = move;
+
+                if (move.x != 0)
+                {
+                    anim.SetBool("Walking", true);
+                }
+                else
+                {
+                    anim.SetBool("Walking", false);
+                }
             }
         }
     }
@@ -516,6 +557,7 @@ public class PlayerController : MonoBehaviour
             vines = false;
 
             isClimbing = false;
+            anim.SetBool("Climbing", false);
         }
     }
 
@@ -647,6 +689,7 @@ public class PlayerController : MonoBehaviour
         }
 
         isShadowKicking = true;
+        anim.SetBool("Shadow Lunge", true);
 
         rb.velocity = moveDirection * kickSpeed;
 
@@ -693,6 +736,7 @@ public class PlayerController : MonoBehaviour
         rb.velocity = Vector2.zero;
 
         isShadowKicking = false;
+        anim.SetBool("Shadow Lunge", false);
     }
 
     //Method to enable and disable Shadow Kick
@@ -813,12 +857,10 @@ public class PlayerController : MonoBehaviour
         if (a)
         {
             aura = true;
-            sprite.color = Color.blue;
         }
         else
         {
             aura = false;
-            sprite.color = Color.white;
         }
     }
 

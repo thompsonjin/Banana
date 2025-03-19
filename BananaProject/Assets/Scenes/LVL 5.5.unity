@@ -2072,11 +2072,27 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 247727046482411407, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 247727046482411407, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 247727046482411407, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1845959244899247493, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1845959244899247493, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2441655213699369460, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMax.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2441655213699369460, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
@@ -2096,7 +2112,15 @@ PrefabInstance:
       value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 4505997496644498675, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505997496644498675, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4505997496644498675, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5445779668107416554, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
@@ -2188,7 +2212,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8486180916904057834, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486180916904057834, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8486180916904057834, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8885582533904356524, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
@@ -2202,6 +2234,10 @@ PrefabInstance:
     - target: {fileID: 8910329843505125901, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
       propertyPath: m_SortingOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9100131842915292021, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9100131842915292021, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3573,7 +3609,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasBananaGun
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasShadowKick
@@ -3593,7 +3629,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasBananaShield
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: bananacoinUIprefab
@@ -4417,6 +4453,9 @@ MonoBehaviour:
   elevatorTime: 20
   door: {fileID: 1467760578}
   buttonPrompt: {fileID: 321610090}
+  outside: {fileID: 0}
+  startPos: {fileID: 0}
+  endPos: {fileID: 0}
 --- !u!212 &1579139772
 SpriteRenderer:
   m_ObjectHideFlags: 0
