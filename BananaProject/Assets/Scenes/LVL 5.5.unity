@@ -3097,7 +3097,7 @@ MonoBehaviour:
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.8
+  m_SoftZoneWidth: 0.09
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
@@ -4454,8 +4454,8 @@ MonoBehaviour:
   door: {fileID: 1467760578}
   buttonPrompt: {fileID: 321610090}
   outside: {fileID: 0}
-  startPos: {fileID: 0}
   endPos: {fileID: 0}
+  speed: 0
 --- !u!212 &1579139772
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Timeline;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -150,8 +151,6 @@ public class PlayerController : MonoBehaviour
 
         camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
         weaponSprite.enabled = false;
-
-       // anim = this.gameObject.GetComponent<Animator>();
     }
 
     private void Start()
@@ -336,7 +335,7 @@ public class PlayerController : MonoBehaviour
                 chargeTimer -= Time.deltaTime;
                 chargeBar.value = chargeTimer / chargeDuration;
                 v_Cam.m_Lens.OrthographicSize = focus;
-
+;
                 if (chargeTimer <= 0)
                 {
                     if (bananaCount == 0)
