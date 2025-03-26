@@ -164,8 +164,6 @@ public class PlayerController : MonoBehaviour
       horizontal = Input.GetAxisRaw("Horizontal");
       vertical = Input.GetAxisRaw("Vertical");
 
-        Debug.Log(horizontal);
-
         //Manage coyote and jump buffer timers to give the player some leeway with jump inputs
       if (IsGrounded() || isClimbing)
       {
