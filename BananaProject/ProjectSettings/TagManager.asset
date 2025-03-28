@@ -19,6 +19,8 @@ TagManager:
   - BFBG
   - Laser
   - Elevator
+  - Ground
+  - Score
   layers:
   - Default
   - TransparentFX
