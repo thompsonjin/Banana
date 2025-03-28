@@ -640,6 +640,85 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72cdcf1703a5e91408fc630cf183995d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &108688804
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 108688807}
+  - component: {fileID: 108688806}
+  - component: {fileID: 108688805}
+  m_Layer: 5
+  m_Name: Count
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &108688805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108688804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.85638046, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_FontSize: 40
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 52
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 0
+--- !u!222 &108688806
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108688804}
+  m_CullTransparentMesh: 1
+--- !u!224 &108688807
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 108688804}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 934519929}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.90750957, y: 0.81500006}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.020019531, y: 0.14996338}
+  m_SizeDelta: {x: 0.04269409, y: 0.51}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &118553659
 GameObject:
   m_ObjectHideFlags: 0
@@ -15072,7 +15151,7 @@ MonoBehaviour:
   canSpawn: 1
   spawnTimeMax: 0
   door: {fileID: 862837910}
-  count: {fileID: 1716860513}
+  count: {fileID: 108688805}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -18059,6 +18138,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5434256551266559964, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1716860512}
+    - targetCorrespondingSourceObject: {fileID: 5434256551266559964, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 108688807}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
 --- !u!4 &1534070726 stripped
@@ -19966,7 +20048,7 @@ GameObject:
   - component: {fileID: 1716860514}
   - component: {fileID: 1716860513}
   m_Layer: 5
-  m_Name: Enemy Count
+  m_Name: Enemy Count TXT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19986,10 +20068,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 934519929}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.7421569, y: 0.81500006}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.6129761, y: 0.1499939}
-  m_SizeDelta: {x: -0.37409973, y: 0.51000977}
+  m_AnchorMin: {x: 0.71500003, y: 0.81500006}
+  m_AnchorMax: {x: 0.97250956, y: 1}
+  m_AnchoredPosition: {x: 0.4000244, y: 0.14996338}
+  m_SizeDelta: {x: 0.62590027, y: 0.51000977}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1716860513
 MonoBehaviour:
@@ -20012,7 +20094,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
     m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
@@ -20024,7 +20106,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 'Enemies Left:'
 --- !u!222 &1716860514
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20295,7 +20377,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
     m_FontSize: 3
     m_FontStyle: 1
     m_BestFit: 1
