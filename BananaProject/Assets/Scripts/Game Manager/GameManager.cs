@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public bool transition;
 
     private void Awake()
     {
@@ -44,7 +45,15 @@ public class GameManager : MonoBehaviour
         {
             CheckpointManager.CheckpointReset();
             Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.buildIndex + 1);
+            if(currentScene.buildIndex == 5 || currentScene.buildIndex == 7|| currentScene.buildIndex == 9|| currentScene.buildIndex == 11|| currentScene.buildIndex == 13)
+            {
+                SceneManager.LoadScene(17);
+            }
+            else
+            {
+                SceneManager.LoadScene(currentScene.buildIndex + 1);
+            }
+                
         }
     }
 
@@ -87,4 +96,6 @@ public class GameManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex + 1);
     }
+
+   
 }
