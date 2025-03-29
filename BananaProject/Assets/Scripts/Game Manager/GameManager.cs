@@ -45,9 +45,16 @@ public class GameManager : MonoBehaviour
         {
             CheckpointManager.CheckpointReset();
             Scene currentScene = SceneManager.GetActiveScene();
-            if(currentScene.buildIndex == 5 || currentScene.buildIndex == 7|| currentScene.buildIndex == 9|| currentScene.buildIndex == 11|| currentScene.buildIndex == 13)
+            if(currentScene.buildIndex == 5 || currentScene.buildIndex == 7|| currentScene.buildIndex == 9|| currentScene.buildIndex == 11|| currentScene.buildIndex == 13 || currentScene.buildIndex == 15)
             {
                 SceneManager.LoadScene(17);
+                ScoreTracker s_Track = GameObject.FindWithTag("Score").GetComponent<ScoreTracker>();
+                s_Track.UpdateScore();
+
+                if (currentScene.buildIndex == 15)
+                {
+                    s_Track.SetBossWin();
+                }
             }
             else
             {

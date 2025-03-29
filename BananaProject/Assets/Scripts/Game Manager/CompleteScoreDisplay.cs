@@ -4,7 +4,8 @@ using UnityEngine;
 
 public static class CompleteScoreDisplay
 {
-    public static int score;
+    public static float score;
+    public static float time;
 
-    public static int time;
+    public static bool boss;
 }

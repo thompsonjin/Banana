@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,5 +29,16 @@ public class ScoreTracker : MonoBehaviour
     {
         score += s;
         scoreText.text = score.ToString();
+    }
+
+    public void UpdateScore()
+    {
+        CompleteScoreDisplay.score = score;
+        CompleteScoreDisplay.time = lvlTimer;
+    }
+
+    public void SetBossWin()
+    {
+        CompleteScoreDisplay.boss = true;
     }
 }

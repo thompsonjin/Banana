@@ -57,9 +57,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Boss Fight.unity
     guid: 388e2e8d96ba6bd43a50555669de1278
   - enabled: 1
-    path: Assets/Scenes/Win Screen.unity
+    path: Assets/Scenes/UI/Win Screen.unity
     guid: d577da89d152f704d9debf28ccfde956
   - enabled: 1
-    path: Assets/Scenes/Scoreboard.unity
+    path: Assets/Scenes/UI/Scoreboard.unity
     guid: 3cf4e3830ce6fc84e8670930f82407f5
   m_configObjects: {}
