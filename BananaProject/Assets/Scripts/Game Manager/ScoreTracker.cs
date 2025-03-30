@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class ScoreTracker : MonoBehaviour
 {
-    float score;
-    float lvlTimer;
 
     public Text scoreText;
     public Text timerText;
@@ -15,27 +13,20 @@ public class ScoreTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        score = CompleteScoreDisplay.score;
-        lvlTimer = CompleteScoreDisplay.time;
+        scoreText.text = CompleteScoreDisplay.score.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
-        lvlTimer += Time.deltaTime;
-        timerText.text = Mathf.RoundToInt(lvlTimer).ToString();
+        CompleteScoreDisplay.time += Time.deltaTime;
+        timerText.text = Mathf.RoundToInt(CompleteScoreDisplay.time).ToString();
     }
 
     public void IncreaceScore(int s)
     {
-        score += s;
-        scoreText.text = score.ToString();
-    }
-
-    public void UpdateScore()
-    {
-        CompleteScoreDisplay.score = score;
-        CompleteScoreDisplay.time = lvlTimer;
+        CompleteScoreDisplay.score += s;
+        scoreText.text = CompleteScoreDisplay.score.ToString();
     }
 
     public void ResetScore()

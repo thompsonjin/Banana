@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
     private IEnumerator HandlePlayerDeath()
     {
         yield return new WaitForSeconds(2);
-        s_Track.UpdateScore();
 
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
@@ -52,8 +51,6 @@ public class GameManager : MonoBehaviour
             if(currentScene.buildIndex == 5 || currentScene.buildIndex == 7|| currentScene.buildIndex == 9|| currentScene.buildIndex == 11|| currentScene.buildIndex == 13 || currentScene.buildIndex == 15)
             {
                 SceneManager.LoadScene(17);
-               
-                s_Track.UpdateScore();
 
                 if (currentScene.buildIndex == 15)
                 {

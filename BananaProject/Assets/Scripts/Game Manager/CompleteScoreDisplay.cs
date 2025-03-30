@@ -6,6 +6,5 @@ public static class CompleteScoreDisplay
 {
     public static float score;
     public static float time;
-
     public static bool boss;
 }
