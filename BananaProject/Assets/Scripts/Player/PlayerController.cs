@@ -701,12 +701,38 @@ public class PlayerController : MonoBehaviour
     {
         Vector2 startPos = transform.position;
         float distanceTraveled = 0f;
+        float duration = 0f;
+        float maxDuration = 0.5f;
 
         //Used to keep track of enemies and not hit them multiple times
         HashSet<Collider2D> hitEnemies = new HashSet<Collider2D>();
 
-        while (distanceTraveled < kickDistance)
+        //We store the last position to check if the player is stuck
+        Vector2 lastPosition = transform.position;
+        float stuckThreshold = 0.1f;
+        float stuckTimer = 0f;
+        float stuckTimeLimit = 0.1f;
+
+        while (distanceTraveled < kickDistance && isShadowKicking && duration < maxDuration)
         {
+            //Used to determine if the player is stuck in the shadow kick
+            float movedSinceLastFrame = Vector2.Distance(lastPosition, transform.position);
+            if (movedSinceLastFrame < stuckThreshold)
+            {
+                stuckTimer += Time.deltaTime;
+                if (stuckTimer > stuckTimeLimit)
+                {
+                    Debug.Log("Shadow kick interrupted - hit obstacle");
+                    break;
+                }
+            }
+            else
+            {
+                stuckTimer = 0f;
+            }
+
+            lastPosition = transform.position;
+
             //Check for enemies using the same method as other attacks
             foreach (Collider2D col in HitRange())
             {
@@ -729,6 +755,7 @@ public class PlayerController : MonoBehaviour
 
             //Update distance traveled
             distanceTraveled = Vector2.Distance(startPos, transform.position);
+            duration += Time.deltaTime;
 
             yield return null;
         }
@@ -923,6 +950,13 @@ public class PlayerController : MonoBehaviour
             UseBanana(2);
             Debug.Log("BLOCKED BY JAMES");
             return;
+        }
+
+        if (isShadowKicking)
+        {
+            isShadowKicking = false;
+            anim.SetBool("Shadow Lunge", false);
+            rb.velocity = Vector2.zero;
         }
 
         health--;

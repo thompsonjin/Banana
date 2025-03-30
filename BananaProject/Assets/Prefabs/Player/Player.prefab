@@ -136,16 +136,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2f497f14255d548b05ab5481e75a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasShadowKick: 1
-  hasCharge: 1
-  hasGroundPound: 1
-  hasBananaGun: 1
-  hasBananaShield: 1
+  hasShadowKick: 0
+  hasCharge: 0
+  hasGroundPound: 0
+  hasBananaGun: 0
+  hasBananaShield: 0
   rb: {fileID: 307851999158270081}
   groundCheck: {fileID: 5519777832520509073}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 584
+    m_Bits: 72
   cameraFollowTarget: {fileID: 0}
   anim: {fileID: 1698043844708476649}
   maxHealth: 3
@@ -211,7 +211,10 @@ MonoBehaviour:
   weaponSprite: {fileID: 1412065979232524402}
   gunDuration: 10
   gunTimer: 0
-  checkpoints: []
+  checkpoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!114 &622046107485541659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,7 +539,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3743698653758972147}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.022316407, y: 0.022316407, z: 0.022316407}
   m_ConstrainProportionsScale: 0
@@ -544,10 +547,10 @@ RectTransform:
   - {fileID: 5594150860320354201}
   - {fileID: 8997137566088625134}
   m_Father: {fileID: 8561812753874378413}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.64, y: 0.23}
+  m_AnchoredPosition: {x: -0.17, y: 5.91}
   m_SizeDelta: {x: 357.3636, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &991260835937992137
@@ -1286,7 +1289,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8707950073496744950}
-  m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.022316407, y: 0.022316407, z: 0.022316407}
   m_ConstrainProportionsScale: 0
@@ -1294,10 +1297,10 @@ RectTransform:
   - {fileID: 5481079285357096525}
   - {fileID: 8960520461273815733}
   m_Father: {fileID: 8561812753874378413}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.55, y: 0.17637467}
+  m_AnchoredPosition: {x: -0.16, y: 5.29}
   m_SizeDelta: {x: 361.9318, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &8971623386080281610

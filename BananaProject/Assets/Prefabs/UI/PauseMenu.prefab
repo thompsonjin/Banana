@@ -5461,14 +5461,20 @@ MonoBehaviour:
   devToolsContainer: {fileID: 8961320222056971653}
   levelSelectDropdown: {fileID: 6861190926438866606}
   loadLevelButton: {fileID: 603732406709762204}
-  levelSceneIndices: 05000000060000000700000008000000090000000a000000
-  levelNames:
+  levelSceneNames:
+  - LVL 1
+  - LVL 2
+  - LVL 3
+  - LVL 4
+  - LVL 5
+  - Boss Fight
+  displayLevelNames:
   - Level 1
   - Level 2
   - Level 3
   - Level 4
   - Level 5
-  - Boss Level
+  - Boss Fight
   pauseMenuManager: {fileID: 6452919279573053683}
 --- !u!1 &8961320222056971653
 GameObject:

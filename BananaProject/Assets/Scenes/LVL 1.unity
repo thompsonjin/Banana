@@ -9177,6 +9177,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 845822780345688414, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: levelSceneNames.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 845822780345688414, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
+      propertyPath: displayLevelNames.Array.size
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 1845959244899247493, guid: bb5d5dfdb77d66142a50bfbc8e4d443d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -49503,10 +49511,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 307851999158270081, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 649561680886051299, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -328.8
@@ -49556,53 +49560,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1349025215}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasCharge
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasBananaGun
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasShadowKick
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: bananaUIParent
       value: 
       objectReference: {fileID: 63540500}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasGroundPound
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: chargeKnockback
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasBananaShield
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: bananacoinUIprefab
-      value: 
-      objectReference: {fileID: 7255543909322334748, guid: 8999b4941a86a78458eb87343ddd0af8, type: 3}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: cameraFollowTarget
       value: 
       objectReference: {fileID: 1563266117}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: groundLayer.m_Bits
-      value: 72
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: emptyBananacoinPrefab
-      value: 
-      objectReference: {fileID: 6005749004148531579, guid: cc620543e0f542942baaef29e541b097, type: 3}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: checkpoints.Array.size
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: checkpoints.Array.data[0]
       value: 
@@ -49627,26 +49591,6 @@ PrefabInstance:
       propertyPath: displayHealth.Array.data[2]
       value: 
       objectReference: {fileID: 6135651227021049340}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[4]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7562123748791680290, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
