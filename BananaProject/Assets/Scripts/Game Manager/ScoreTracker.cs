@@ -15,7 +15,8 @@ public class ScoreTracker : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        score = CompleteScoreDisplay.score;
+        lvlTimer = CompleteScoreDisplay.time;
     }
 
     // Update is called once per frame
@@ -35,6 +36,12 @@ public class ScoreTracker : MonoBehaviour
     {
         CompleteScoreDisplay.score = score;
         CompleteScoreDisplay.time = lvlTimer;
+    }
+
+    public void ResetScore()
+    {
+        CompleteScoreDisplay.score = 0;
+        CompleteScoreDisplay.time = 0;
     }
 
     public void SetBossWin()
