@@ -5,6 +5,7 @@ using UnityEngine;
 public static class CheckpointManager
 {
     public static int checkpointNum;
+    public static int lastLevel = 6;
 
     public static void NextCheckpoint()
     {

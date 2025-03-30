@@ -19,8 +19,9 @@ public class MechaHarambe : MonoBehaviour
 
     [Header("Attack")]
     [SerializeField] Transform projectilePoint;
-    [SerializeField] GameObject trackingLaser;
+    [SerializeField] GameObject normalLaser;
     [SerializeField] GameObject randomLaser;
+    [SerializeField] GameObject trackingLaser;
     [SerializeField] float reloadTime;
     float reload;
     [SerializeField] float fireTime;
@@ -28,7 +29,7 @@ public class MechaHarambe : MonoBehaviour
     [SerializeField] float waitTime;
     float wait;
     [SerializeField] GameObject risingLava;
-    bool attackType;
+    int attackType;
 
 
 
@@ -40,7 +41,7 @@ public class MechaHarambe : MonoBehaviour
         reload = reloadTime;
         wait = waitTime;
         fire = fireTime;
-        attackType = true;
+        attackType = 0;
 
         NextPhase(b_Man.phase);
     }
@@ -82,15 +83,20 @@ public class MechaHarambe : MonoBehaviour
                 reload -= Time.deltaTime;
                 if (reload <= 0)
                 {
-                    if (attackType)
+                    if (attackType == 0)
                     {
-                        Instantiate(trackingLaser, projectilePoint.position, Quaternion.identity);
+                        Instantiate(normalLaser, projectilePoint.position, Quaternion.identity);
                         reload = reloadTime;
                     }
-                    else
+                    else if (attackType == 1)
                     {
                         Instantiate(randomLaser, projectilePoint.position, Quaternion.identity);
                         reload = reloadTime / 2;
+                    }
+                    else if (attackType == 2)
+                    {
+                        Instantiate(trackingLaser, projectilePoint.position, Quaternion.identity);
+                        reload = reloadTime * 3;
                     }
 
                     
@@ -103,7 +109,11 @@ public class MechaHarambe : MonoBehaviour
                 wait -= Time.deltaTime;
                 if(wait <= 0)
                 {
-                    attackType = !attackType;
+                    attackType++;
+                    if(attackType > 2)
+                    {
+                        attackType = 0;
+                    }
                     fire = fireTime;
                 }
             }

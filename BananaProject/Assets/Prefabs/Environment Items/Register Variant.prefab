@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3697074609619538976, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
+      propertyPath: knockbackForce
+      value: 150
+      objectReference: {fileID: 0}
     - target: {fileID: 6796415406043212771, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.23114
