@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,11 +21,10 @@ public class SpawnManager : MonoBehaviour
     private int enemiesLeft;
     public LayerMask enemyLayer;
 
-    public AudioSource music;
+    public AudioSource first;
+    public AudioSource second;
+    public AudioSource third;
 
-    public AudioClip first;
-    public AudioClip second;
-    public AudioClip third;
 
     // Start is called before the first frame update
     void Start()
@@ -35,16 +35,17 @@ public class SpawnManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(waveNum);
         if(CheckpointManager.checkpointNum == 1)
         {
+            if (!first.isPlaying && waveNum == 1)
+            {
+                first.Play();
+            }
+
             if (waveNum > 0 && canSpawn)
             {
                 Wave();
-            }
-
-            if(waveNum == 4)
-            {
-                Destroy(door);
             }
 
             if (GameObject.FindWithTag("Enemy") == null)
@@ -61,7 +62,33 @@ public class SpawnManager : MonoBehaviour
         Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(transform.position, 100, enemyLayer);
         enemiesLeft = enemiesHit.Length;
 
-        count.text = "Enemies Left: " + enemiesLeft.ToString();
+        count.text = enemiesLeft.ToString();
+
+        switch (waveNum)
+        {
+            case 2:
+                if (!second.isPlaying)
+                {
+                    first.Stop();
+                    second.Play();
+                }         
+                break;
+            case 3:
+                if (!third.isPlaying)
+                {
+                    second.Stop();
+                    third.Play();
+                }                    
+                break;
+            case 4:
+                if (!first.isPlaying)
+                {
+                    third.Stop();
+                    first.Play();
+                    Destroy(door);
+                }               
+                break;
+        }
     }
 
     void Wave()
