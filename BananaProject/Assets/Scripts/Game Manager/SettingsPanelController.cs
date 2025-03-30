@@ -20,8 +20,10 @@ public class SettingsPanelController : MonoBehaviour
     [SerializeField] private GameObject devToolsContainer;
     [SerializeField] private TMP_Dropdown levelSelectDropdown;
     [SerializeField] private Button loadLevelButton;
-    [SerializeField] private int[] levelSceneIndices = { 5, 7, 9, 11, 13, 15 };
-    [SerializeField] private string[] levelNames = { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Boss Level" };
+    [SerializeField] private string[] levelSceneNames = { "LVL 1", "LVL 2", "LVL 3", "LVL 4", "LVL 5", "Boss Fight" };
+    [SerializeField] private string[] displayLevelNames = { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Boss Fight" };
+    //[SerializeField] private int[] levelSceneIndices = { 5, 7, 9, 11, 13, 15 };
+    //[SerializeField] private string[] levelNames = { "Level 1", "Level 2", "Level 3", "Level 4", "Level 5", "Boss Level" };
 
     [Header("References")]
     [SerializeField] private PauseMenuManager pauseMenuManager;
@@ -89,9 +91,9 @@ public class SettingsPanelController : MonoBehaviour
             levelSelectDropdown.ClearOptions();
             List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
 
-            for (int i = 0; i < levelNames.Length; i++)
+            for (int i = 0; i < displayLevelNames.Length; i++)
             {
-                options.Add(new TMP_Dropdown.OptionData(levelNames[i]));
+                options.Add(new TMP_Dropdown.OptionData(displayLevelNames[i]));
             }
 
             levelSelectDropdown.AddOptions(options);
@@ -200,11 +202,11 @@ public class SettingsPanelController : MonoBehaviour
 
     public void LoadSelectedLevel()
     {
-        if (levelSelectDropdown != null && levelSceneIndices.Length > levelSelectDropdown.value)
+        if (levelSelectDropdown != null && levelSceneNames.Length > levelSelectDropdown.value)
         {
-            int selectedLevelIndex = levelSceneIndices[levelSelectDropdown.value];
+            string selectedLevelName = levelSceneNames[levelSelectDropdown.value];
             Time.timeScale = 1f;
-            SceneManager.LoadScene(selectedLevelIndex);
+            settingsManager.LoadLevel(selectedLevelName);
         }
     }
 

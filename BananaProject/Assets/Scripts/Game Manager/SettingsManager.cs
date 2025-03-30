@@ -210,6 +210,11 @@ public class SettingsManager : MonoBehaviour
         godModeEnabled = value;
     }
 
+    public void LoadLevel(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
     public void LoadLevel(int levelIndex)
     {
         SceneManager.LoadScene(levelIndex);
