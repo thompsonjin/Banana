@@ -188,8 +188,12 @@ public class PlayerController : MonoBehaviour
 
         isClimbing = false;
         rb.gravityScale = 7;
-        walk.clip = clips[0];
-        walk.Play();
+        if (IsGrounded() && !ability.isPlaying)
+        {    
+            ability.clip = clips[0];
+            ability.Play();
+        }
+        
         anim.SetBool("Climbing", false);
       }
       else
@@ -264,12 +268,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //Regular Kick
-        if (Input.GetKeyDown(KeyCode.K))
+        if (reload <= 0 && Input.GetKeyDown(KeyCode.K))
         {
             BasicKick();
             combat.clip = clips[1];
             combat.Play();
             anim.SetBool("Kick", true);
+            reload = reloadTime;
         }
         else
         {
@@ -329,7 +334,7 @@ public class PlayerController : MonoBehaviour
             {
                 if (bananaCount >= 3)
                 {
-                    ability.clip = clips[5];
+                    ability.clip = clips[6];
                     ability.Play();
                     UseBanana(3);
                     canCharge = true;
@@ -342,11 +347,6 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.L) && canCharge)
             {
-                if (!ability.isPlaying)
-                {
-                    ability.clip = clips[6];
-                    ability.Play();
-                }
                 anim.SetBool("Charge", true);
                 focus += .1f;
 
@@ -367,6 +367,7 @@ public class PlayerController : MonoBehaviour
                         SetAura(false);
                         canCharge = false;
                         anim.SetBool("Charge", false);
+                        ability.Stop();
                     }
                     else
                     {

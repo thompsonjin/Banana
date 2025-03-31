@@ -179,7 +179,7 @@ MonoBehaviour:
   sakiBoostIndicator: {fileID: 7415199160903756195}
   swim: 0
   attackPoint: {fileID: 280152045252730823}
-  attackRange: 1.78
+  attackRange: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -497,7 +497,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -873,7 +873,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0

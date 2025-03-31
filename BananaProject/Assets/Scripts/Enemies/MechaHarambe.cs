@@ -18,7 +18,8 @@ public class MechaHarambe : MonoBehaviour
     public bool start;
 
     [Header("Attack")]
-    [SerializeField] Transform projectilePoint;
+    [SerializeField] Transform projectilePointOne;
+    [SerializeField] Transform projectilePointTwo;
     [SerializeField] GameObject normalLaser;
     [SerializeField] GameObject randomLaser;
     [SerializeField] GameObject trackingLaser;
@@ -85,17 +86,20 @@ public class MechaHarambe : MonoBehaviour
                 {
                     if (attackType == 0)
                     {
-                        Instantiate(normalLaser, projectilePoint.position, Quaternion.identity);
+                        Instantiate(normalLaser, projectilePointOne.position, Quaternion.identity);
+                        Instantiate(normalLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime;
                     }
                     else if (attackType == 1)
                     {
-                        Instantiate(randomLaser, projectilePoint.position, Quaternion.identity);
+                        Instantiate(randomLaser, projectilePointOne.position, Quaternion.identity);
+                        Instantiate(randomLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime / 2;
                     }
                     else if (attackType == 2)
                     {
-                        Instantiate(trackingLaser, projectilePoint.position, Quaternion.identity);
+                        Instantiate(trackingLaser, projectilePointOne.position, Quaternion.identity);
+                        Instantiate(trackingLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime * 3;
                     }
 
