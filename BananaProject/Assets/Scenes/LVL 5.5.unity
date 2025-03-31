@@ -15865,10 +15865,6 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: reloadTime
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasBananaGun
       value: 1
       objectReference: {fileID: 0}
