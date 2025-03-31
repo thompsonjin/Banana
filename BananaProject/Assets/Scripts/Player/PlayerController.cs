@@ -143,7 +143,9 @@ public class PlayerController : MonoBehaviour
     //0 Jump,1 Attack,2 Heal,3 Damage,4 Pickup,5 Charge Up,6 Charge Hum,7 GP Breath,8 GP Impact,9 Gun,10 Shield Activate,11 Shield Break,12 Death,13 walk,14 climb
 
     [SerializeField] private AudioSource walk;
-    [SerializeField] private AudioSource clipPlay;
+    [SerializeField] private AudioSource combat;
+    [SerializeField] private AudioSource ability;
+    [SerializeField] private AudioSource damage;
 
 
     void Awake()
@@ -186,8 +188,8 @@ public class PlayerController : MonoBehaviour
 
         isClimbing = false;
         rb.gravityScale = 7;
-        clipPlay.clip = clips[0];
-        clipPlay.Play();
+        walk.clip = clips[0];
+        walk.Play();
         anim.SetBool("Climbing", false);
       }
       else
@@ -216,8 +218,8 @@ public class PlayerController : MonoBehaviour
           //if the player is allowed to jump apply jump power to the player's velocity
           rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
 
-            clipPlay.clip = clips[0];
-            clipPlay.Play();
+            walk.clip = clips[0];
+            walk.Play();
             jumpBufferCounter = 0f;
           sakiBoost = false;
           sakiBoostIndicator.SetActive(false);
@@ -251,8 +253,8 @@ public class PlayerController : MonoBehaviour
         if (reload <= 0 && Input.GetKeyDown(KeyCode.J))
         {
             BasicAttack();
-            clipPlay.clip = clips[1];
-            clipPlay.Play();
+            combat.clip = clips[1];
+            combat.Play();
             anim.SetBool("Punch", true);
             reload = reloadTime;
         }
@@ -265,8 +267,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             BasicKick();
-            clipPlay.clip = clips[1];
-            clipPlay.Play();
+            combat.clip = clips[1];
+            combat.Play();
             anim.SetBool("Kick", true);
         }
         else
@@ -313,8 +315,8 @@ public class PlayerController : MonoBehaviour
             if (bananaCount > 0)
             {
                 groundPound = true;
-                clipPlay.clip = clips[7];
-                clipPlay.Play();
+                ability.clip = clips[7];
+                ability.Play();
                 anim.SetBool("Ground Pound", true);
                 SetAura(true);
                 UseBanana(1);
@@ -327,8 +329,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (bananaCount >= 3)
                 {
-                    clipPlay.clip = clips[5];
-                    clipPlay.Play();
+                    ability.clip = clips[5];
+                    ability.Play();
                     UseBanana(3);
                     canCharge = true;
                     SetAura(true);
@@ -340,10 +342,10 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.L) && canCharge)
             {
-                if (!clipPlay.isPlaying)
+                if (!ability.isPlaying)
                 {
-                    clipPlay.clip = clips[6];
-                    clipPlay.Play();
+                    ability.clip = clips[6];
+                    ability.Play();
                 }
                 anim.SetBool("Charge", true);
                 focus += .1f;
@@ -376,7 +378,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.L))
             {
-                clipPlay.Stop();
+                ability.Stop();
                 currentSpeed = normalSpeed;
                 chargeBar.value = 0;
                 SetAura(false);
@@ -419,10 +421,10 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.J))
             {
-                if (!clipPlay.isPlaying)
+                if (!combat.isPlaying)
                 {
-                    clipPlay.clip = clips[9];
-                    clipPlay.Play();
+                    combat.clip = clips[9];
+                    combat.Play();
                 }
 
                 
@@ -435,8 +437,8 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = true;
             shieldVisual.SetActive(true);
-            clipPlay.clip = clips[10];
-            clipPlay.Play();
+            ability.clip = clips[10];
+            ability.Play();
             Debug.Log("Banana Shield ON");
         }
         
@@ -519,8 +521,8 @@ public class PlayerController : MonoBehaviour
                     recoverTime += Time.deltaTime;
                     if (recoverTime > .5f)
                     {
-                        clipPlay.clip = clips[8];
-                        clipPlay.Play();
+                        ability.clip = clips[8];
+                        ability.Play();
                         SetAura(false);
                         recoverTime = 0;
                         groundPound = false;
@@ -1002,8 +1004,8 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = false;
             shieldVisual.SetActive(false);
-            clipPlay.clip = clips[11];
-            clipPlay.Play();
+            ability.clip = clips[11];
+            ability.Play();
             return;
         }
 
@@ -1019,15 +1021,15 @@ public class PlayerController : MonoBehaviour
         if (health > 0)
         {
             Debug.Log("DAMAGE");
-            clipPlay.clip = clips[3];
-            clipPlay.Play();
+            damage.clip = clips[3];
+            damage.Play();
             displayHealth[health].enabled = false;
 
         }
         else if (health == 0)
         {
             Debug.Log("You Are Dead");
-            clipPlay.clip = clips[12];
+            damage.clip = clips[12];
             displayHealth[health].enabled = false;
             Die();
         }
@@ -1043,8 +1045,8 @@ public class PlayerController : MonoBehaviour
         }
 
         displayHealth[health - 1].enabled = true;
-        clipPlay.clip = clips[2];
-        clipPlay.Play();
+        damage.clip = clips[2];
+        damage.Play();
     }
 
     //Death management logic
@@ -1171,7 +1173,7 @@ public class PlayerController : MonoBehaviour
 
     public void PlayPickup()
     {
-        clipPlay.clip = clips[4];
-        clipPlay.Play();
+        ability.clip = clips[4];
+        ability.Play();
     }
 }
