@@ -140,6 +140,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip[] clips;
+    //0 Jump,1 Attack,2 Heal,3 Damage,4 Pickup,5 Charge Up,6 Charge Hum,7 GP Breath,8 GP Impact,9 Gun,10 Shield Activate,11 Shield Break,12 Death,13 walk,14 climb
+
     [SerializeField] private AudioSource walk;
     [SerializeField] private AudioSource clipPlay;
 
@@ -184,6 +186,8 @@ public class PlayerController : MonoBehaviour
 
         isClimbing = false;
         rb.gravityScale = 7;
+        clipPlay.clip = clips[0];
+        clipPlay.Play();
         anim.SetBool("Climbing", false);
       }
       else
@@ -502,6 +506,21 @@ public class PlayerController : MonoBehaviour
             {
                 //apply the product of horizontal and speed to the players current velocity
                 rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
+
+                if(horizontal != 0 && vertical != 0 && !walk.isPlaying)
+                {
+                    walk.clip = clips[14];
+                    walk.Play();
+                }
+
+                if (horizontal == 0 && vertical == 0)
+                {
+                    anim.speed = 0;
+                }
+                else
+                {
+                    anim.speed = 1;
+                }
             }
             else
             {
@@ -511,9 +530,11 @@ public class PlayerController : MonoBehaviour
 
                 if (IsGrounded() && horizontal != 0 && !walk.isPlaying)
                 {
+                    walk.clip = clips[13];
                     walk.Play();
                 }
-                else
+                
+                if(!IsGrounded() || horizontal == 0)
                 {
                     walk.Stop();
                 }

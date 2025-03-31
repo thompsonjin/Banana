@@ -5711,7 +5711,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!82 &838658000
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5724,7 +5724,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3025309675662910544, guid: 2ec53b635d0804e46af85c3f0f7af216, type: 2}
   m_audioClip: {fileID: 8300000, guid: 40aeb641a408ea94a9faa1aef3e5881a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -68952,6 +68952,10 @@ PrefabInstance:
       propertyPath: v_Cam
       value: 
       objectReference: {fileID: 1349025215}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: maxKickSpeed
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: bananaUIParent
       value: 
