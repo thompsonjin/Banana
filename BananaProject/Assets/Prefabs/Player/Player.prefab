@@ -145,7 +145,7 @@ MonoBehaviour:
   groundCheck: {fileID: 5519777832520509073}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 584
   cameraFollowTarget: {fileID: 0}
   anim: {fileID: 1698043844708476649}
   maxHealth: 3
@@ -179,7 +179,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  reloadTime: 0.5
+  reloadTime: 0.3
   kickPowerMax: 2
   shadowKickKnockback: 40
   baseChargeTime: 1
