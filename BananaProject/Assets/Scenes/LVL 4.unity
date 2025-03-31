@@ -716,7 +716,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.9213812, y: 0.81500006}
   m_AnchorMax: {x: 1, y: 0.873}
-  m_AnchoredPosition: {x: -0.01449585, y: -0.12199402}
+  m_AnchoredPosition: {x: -0.014465332, y: -0.12199402}
   m_SizeDelta: {x: 0.031999588, y: -0.24500275}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &118553659
@@ -749,6 +749,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f33fa88f1f521ba4e9f7ce08e5eab393, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  transition: 0
 --- !u!4 &118553661
 Transform:
   m_ObjectHideFlags: 0
@@ -15388,11 +15389,11 @@ MonoBehaviour:
   m_ScreenX: 0.5
   m_ScreenY: 0.64
   m_CameraDistance: 10
-  m_DeadZoneWidth: 0
+  m_DeadZoneWidth: 0.1
   m_DeadZoneHeight: 0
   m_DeadZoneDepth: 0
   m_UnlimitedSoftZone: 0
-  m_SoftZoneWidth: 0.09
+  m_SoftZoneWidth: 0.1
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
   m_BiasY: 0
@@ -16617,7 +16618,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.4339623, g: 0.32273617, b: 0.3201495, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

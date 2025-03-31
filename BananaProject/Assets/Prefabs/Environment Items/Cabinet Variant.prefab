@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cabinet Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5751655237834659848, guid: 581300f54edae344b91ad197f5ef5d9f, type: 3}
+      propertyPath: knockbackForce
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 6863861231144267813, guid: 581300f54edae344b91ad197f5ef5d9f, type: 3}
       propertyPath: m_Size.x
       value: 1.4167175

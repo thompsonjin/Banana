@@ -132,7 +132,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isGunPulled = false;
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
-    [SerializeField] private SpriteRenderer weaponSprite;
     [SerializeField] private float gunDuration = 10f;
     [SerializeField] private float gunTimer = 0f;
 
@@ -150,7 +149,6 @@ public class PlayerController : MonoBehaviour
         currentSpeed = normalSpeed;
 
         camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-        weaponSprite.enabled = false;
     }
 
     private void Start()
@@ -380,8 +378,7 @@ public class PlayerController : MonoBehaviour
             if (bananaCount >= 5)
             {
                 isGunPulled = true;
-                anim.SetBool("Gun", true);
-                weaponSprite.enabled = true;
+                anim.SetBool("Gun", true);               
                 UseBanana(5);
                 gunTimer = gunDuration;
             }
@@ -394,7 +391,6 @@ public class PlayerController : MonoBehaviour
             {
                 anim.SetBool("Gun", false);
                 isGunPulled = false;
-                weaponSprite.enabled = false;
             }
             else if (Input.GetKey(KeyCode.J))
             {
@@ -944,8 +940,6 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = false;
             shieldVisual.SetActive(false);
-            UseBanana(2);
-            Debug.Log("BLOCKED BY JAMES");
             return;
         }
 

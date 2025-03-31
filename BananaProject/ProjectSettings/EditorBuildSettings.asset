@@ -62,4 +62,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/UI/Scoreboard.unity
     guid: 3cf4e3830ce6fc84e8670930f82407f5
+  - enabled: 1
+    path: Assets/Scenes/ScrectLVL.unity
+    guid: dec42b2ee8105a84b8b067e463d3d7aa
   m_configObjects: {}
