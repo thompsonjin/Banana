@@ -138,6 +138,12 @@ public class PlayerController : MonoBehaviour
     [Header("Checkpoint")]
     public GameObject[] checkpoints;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip[] clips;
+    [SerializeField] private AudioSource walk;
+    [SerializeField] private AudioSource clipPlay;
+
+
     void Awake()
     {
         maxBananas = BananaManager.MaxBananas;
@@ -502,6 +508,15 @@ public class PlayerController : MonoBehaviour
                 Vector2 move = new Vector2(horizontal * currentSpeed, rb.velocity.y);
                 //apply the product of horizontal and speed to the players current velocity
                 rb.velocity = move;
+
+                if (IsGrounded() && horizontal != 0 && !walk.isPlaying)
+                {
+                    walk.Play();
+                }
+                else
+                {
+                    walk.Stop();
+                }
 
                 if (move.x != 0)
                 {
