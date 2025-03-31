@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+    public bool transition;
+    ScoreTracker s_Track;
 
     private void Awake()
     {
@@ -21,6 +23,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        s_Track = GameObject.FindWithTag("Score").GetComponent<ScoreTracker>();
 
         BananaCoinCheck();
     }
@@ -44,7 +48,21 @@ public class GameManager : MonoBehaviour
         {
             CheckpointManager.CheckpointReset();
             Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.buildIndex + 1);
+            if(currentScene.buildIndex == 5 || currentScene.buildIndex == 7|| currentScene.buildIndex == 9|| currentScene.buildIndex == 11|| currentScene.buildIndex == 13 || currentScene.buildIndex == 15)
+            {
+                SceneManager.LoadScene(17);
+
+                if (currentScene.buildIndex == 15)
+                {
+                    s_Track.SetBossWin();
+                }
+            }
+            else
+            {
+                SceneManager.LoadScene(currentScene.buildIndex + 1);
+                s_Track.ResetScore();
+            }
+                
         }
     }
 
@@ -87,4 +105,6 @@ public class GameManager : MonoBehaviour
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex + 1);
     }
+
+   
 }

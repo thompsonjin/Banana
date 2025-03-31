@@ -13,8 +13,8 @@ public class Elevator : MonoBehaviour
 
     [Header("Outside Graphic")]
     public GameObject outside;
-    public Transform startPos;
     public Transform endPos;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -31,6 +31,15 @@ public class Elevator : MonoBehaviour
         {
             Destroy(door);
         }
+
+
+        if(outside.transform.position.y > endPos.position.y)
+        {
+            outside.transform.Translate(new Vector3(0, -1 * speed, 0));
+        }
+       
+
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)

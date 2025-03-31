@@ -8,24 +8,30 @@ public class LaserBehaviour : MonoBehaviour
     [SerializeField] float speed;
     private Vector3 target;
     public bool tracking;
+    public bool random;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (tracking)
-        {
-            SetTargetPlayer();
-        }
-        else
+        if (random)
         {
             SetRandomTarget();
         }
+        else
+        {
+            SetTargetPlayer();
+        }         
     }
 
     // Update is called once per frame
     void Update()
     {
-         rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
+        if (tracking)
+        {
+            SetTargetPlayer();
+        }
+   
+        rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

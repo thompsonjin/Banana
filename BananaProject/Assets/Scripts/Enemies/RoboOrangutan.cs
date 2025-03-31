@@ -11,6 +11,7 @@ public class RoboOrangutan : BaseEnemy
     [SerializeField] private LayerMask groundLayer;
     private GameObject player;
     private PlayerController p_Con;
+    private ScoreTracker score;
 
     [Header("Movement")]
     [SerializeField] private float patrolSpeed;
@@ -25,6 +26,7 @@ public class RoboOrangutan : BaseEnemy
     // Start is called before the first frame update
     void Awake()
     {
+        score = GameObject.FindWithTag("Score").GetComponent<ScoreTracker>();
         player = GameObject.Find("Player");
         p_Con = player.GetComponent<PlayerController>();
         patrol = true;
@@ -109,6 +111,7 @@ public class RoboOrangutan : BaseEnemy
 
     public void Die()
     {
+        score.IncreaceScore(300);
         Destroy(this.gameObject);
     }
 }
