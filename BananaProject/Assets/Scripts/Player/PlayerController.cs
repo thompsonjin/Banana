@@ -216,7 +216,9 @@ public class PlayerController : MonoBehaviour
           //if the player is allowed to jump apply jump power to the player's velocity
           rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
 
-          jumpBufferCounter = 0f;
+            clipPlay.clip = clips[0];
+            clipPlay.Play();
+            jumpBufferCounter = 0f;
           sakiBoost = false;
           sakiBoostIndicator.SetActive(false);
       }
@@ -249,6 +251,8 @@ public class PlayerController : MonoBehaviour
         if (reload <= 0 && Input.GetKeyDown(KeyCode.J))
         {
             BasicAttack();
+            clipPlay.clip = clips[1];
+            clipPlay.Play();
             anim.SetBool("Punch", true);
             reload = reloadTime;
         }
@@ -261,6 +265,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.K))
         {
             BasicKick();
+            clipPlay.clip = clips[1];
+            clipPlay.Play();
             anim.SetBool("Kick", true);
         }
         else
@@ -294,7 +300,6 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
         {
-
             ShadowKick();
             UseBanana(1);
             isChargingShadowKick = false;
@@ -308,6 +313,8 @@ public class PlayerController : MonoBehaviour
             if (bananaCount > 0)
             {
                 groundPound = true;
+                clipPlay.clip = clips[7];
+                clipPlay.Play();
                 anim.SetBool("Ground Pound", true);
                 SetAura(true);
                 UseBanana(1);
@@ -320,6 +327,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (bananaCount >= 3)
                 {
+                    clipPlay.clip = clips[5];
+                    clipPlay.Play();
                     UseBanana(3);
                     canCharge = true;
                     SetAura(true);
@@ -331,6 +340,11 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.L) && canCharge)
             {
+                if (!clipPlay.isPlaying)
+                {
+                    clipPlay.clip = clips[6];
+                    clipPlay.Play();
+                }
                 anim.SetBool("Charge", true);
                 focus += .1f;
 
@@ -362,6 +376,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.L))
             {
+                clipPlay.Stop();
                 currentSpeed = normalSpeed;
                 chargeBar.value = 0;
                 SetAura(false);
@@ -404,6 +419,13 @@ public class PlayerController : MonoBehaviour
             }
             else if (Input.GetKey(KeyCode.J))
             {
+                if (!clipPlay.isPlaying)
+                {
+                    clipPlay.clip = clips[9];
+                    clipPlay.Play();
+                }
+
+                
                 Shoot();
             }
         }
@@ -413,6 +435,8 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = true;
             shieldVisual.SetActive(true);
+            clipPlay.clip = clips[10];
+            clipPlay.Play();
             Debug.Log("Banana Shield ON");
         }
         
@@ -495,6 +519,8 @@ public class PlayerController : MonoBehaviour
                     recoverTime += Time.deltaTime;
                     if (recoverTime > .5f)
                     {
+                        clipPlay.clip = clips[8];
+                        clipPlay.Play();
                         SetAura(false);
                         recoverTime = 0;
                         groundPound = false;
@@ -976,6 +1002,8 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = false;
             shieldVisual.SetActive(false);
+            clipPlay.clip = clips[11];
+            clipPlay.Play();
             return;
         }
 
@@ -991,12 +1019,15 @@ public class PlayerController : MonoBehaviour
         if (health > 0)
         {
             Debug.Log("DAMAGE");
-
+            clipPlay.clip = clips[3];
+            clipPlay.Play();
             displayHealth[health].enabled = false;
+
         }
         else if (health == 0)
         {
             Debug.Log("You Are Dead");
+            clipPlay.clip = clips[12];
             displayHealth[health].enabled = false;
             Die();
         }
@@ -1012,6 +1043,8 @@ public class PlayerController : MonoBehaviour
         }
 
         displayHealth[health - 1].enabled = true;
+        clipPlay.clip = clips[2];
+        clipPlay.Play();
     }
 
     //Death management logic
@@ -1019,7 +1052,6 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.Instance.OnPLayerDeath();
         gameObject.SetActive(false);
-
     }
 
    //BANANA MANAGMENT
@@ -1135,5 +1167,11 @@ public class PlayerController : MonoBehaviour
         displayBananas[maxBananas - 1].enabled = false;
 
         GiveBanana(1);
+    }
+
+    public void PlayPickup()
+    {
+        clipPlay.clip = clips[4];
+        clipPlay.Play();
     }
 }
