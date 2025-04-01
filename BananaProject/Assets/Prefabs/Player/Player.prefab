@@ -136,8 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2f497f14255d548b05ab5481e75a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasShadowKick: 1
-  hasCharge: 1
+  hasShadowKick: 0
+  hasCharge: 0
   hasGroundPound: 0
   hasBananaGun: 0
   hasBananaShield: 0
