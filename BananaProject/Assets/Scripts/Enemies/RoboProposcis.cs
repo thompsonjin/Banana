@@ -21,6 +21,7 @@ public class RoboProposcis : BaseEnemy
     private float playerHitTimer;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform projectileSpawn;
+    float dist;
 
     [Header("Sound")]
     [SerializeField] private AudioSource blast;
@@ -36,6 +37,7 @@ public class RoboProposcis : BaseEnemy
     // Update is called once per frame
     void Update()
     {
+        dist = Vector3.Distance(transform.position, player.transform.position);
 
         if (!patrol)
         {
@@ -69,6 +71,11 @@ public class RoboProposcis : BaseEnemy
         }
 
         Flip();
+
+        if(dist > 40)
+        {
+            patrol = true;
+        }
     }
 
     private void Flip()
