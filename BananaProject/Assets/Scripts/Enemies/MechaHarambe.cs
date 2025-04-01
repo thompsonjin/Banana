@@ -17,9 +17,16 @@ public class MechaHarambe : MonoBehaviour
     public int posNum;
     public bool start;
 
-    [Header("Attack")]
+    [Header("Guns")]
     [SerializeField] Transform projectilePointOne;
     [SerializeField] Transform projectilePointTwo;
+    [SerializeField] GameObject gunOne;
+    [SerializeField] GameObject gunTwo;
+    [SerializeField] GameObject gunPivot;
+    private Quaternion rotationTargetOne;
+    public float gunSpeed;
+
+    [Header("Laser")]
     [SerializeField] GameObject normalLaser;
     [SerializeField] GameObject randomLaser;
     [SerializeField] GameObject trackingLaser;
@@ -43,6 +50,7 @@ public class MechaHarambe : MonoBehaviour
         wait = waitTime;
         fire = fireTime;
         attackType = 0;
+        rotationTargetOne = new Quaternion(90, 0, 0, 0);
 
         NextPhase(b_Man.phase);
     }
@@ -77,8 +85,19 @@ public class MechaHarambe : MonoBehaviour
                 }         
             }
 
-                      
-            if(fire >= 0)
+            
+
+            if (attackType == 1)
+            {
+                SpinGun();
+            }
+            else
+            {
+
+            }
+
+
+            if (fire >= 0)
             {
                 wait = waitTime;
                 reload -= Time.deltaTime;
@@ -103,18 +122,18 @@ public class MechaHarambe : MonoBehaviour
                         reload = reloadTime * 3;
                     }
 
-                    
+
                 }
 
                 fire -= Time.deltaTime;
             }
-            else if(fire < 0)
+            else if (fire < 0)
             {
                 wait -= Time.deltaTime;
-                if(wait <= 0)
+                if (wait <= 0)
                 {
                     attackType++;
-                    if(attackType > 2)
+                    if (attackType > 2)
                     {
                         attackType = 0;
                     }
@@ -141,7 +160,21 @@ public class MechaHarambe : MonoBehaviour
         {
             risingLava.SetActive(true);
             risingLava.GetComponent<HarmingLiquid>().Restart();
+        }          
+    }
+
+    void SpinGun()
+    {
+        if (gunOne.transform.rotation.z > -0.7f)
+        {
+            Debug.Log(gunOne.transform.rotation.z);
+            gunOne.transform.Rotate(0, 0, -1, Space.World);
         }
-            
+
+        if (gunTwo.transform.rotation.z < 0.7f)
+        {
+            Debug.Log(gunTwo.transform.rotation.z);
+            gunTwo.transform.Rotate(0, 0, 1, Space.World);
+        }
     }
 }
