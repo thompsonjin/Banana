@@ -11,6 +11,7 @@ public class Elevator : MonoBehaviour
     private float timer;
     public GameObject door;
     public GameObject buttonPrompt;
+    bool canSkip;
 
     [Header("Outside Graphic")]
     public GameObject outside;
@@ -28,18 +29,23 @@ public class Elevator : MonoBehaviour
     {
         timer -= Time.deltaTime;
 
-        if(timer <= 0)
+        if(door != null)
         {
-            Destroy(door);
+            if (timer <= 0)
+            {
+                Destroy(door);
+            }
         }
-
 
         if(outside.transform.position.y > endPos.position.y)
         {
             outside.transform.Translate(new Vector3(0, -1 * speed, 0));
         }
-       
 
+        if (Input.GetKeyDown(KeyCode.E) && canSkip)
+        {
+            Destroy(door);
+        }
 
     }
 
@@ -47,10 +53,7 @@ public class Elevator : MonoBehaviour
     {
         if(collision.gameObject.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                timer = 0;
-            }
+           
         }
     }
 
@@ -59,6 +62,7 @@ public class Elevator : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             buttonPrompt.SetActive(true);
+            canSkip = true;
         }
            
     }
@@ -68,6 +72,7 @@ public class Elevator : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             buttonPrompt.SetActive(false);
+            canSkip = false;
         }
     }
 }
