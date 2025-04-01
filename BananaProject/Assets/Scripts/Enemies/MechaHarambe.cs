@@ -25,6 +25,7 @@ public class MechaHarambe : MonoBehaviour
     [SerializeField] GameObject gunPivot;
     private Quaternion rotationTargetOne;
     public float gunSpeed;
+    bool ready;
 
     [Header("Laser")]
     [SerializeField] GameObject normalLaser;
@@ -53,6 +54,8 @@ public class MechaHarambe : MonoBehaviour
         rotationTargetOne = new Quaternion(90, 0, 0, 0);
 
         NextPhase(b_Man.phase);
+
+        Debug.Log(gunPivot.transform.rotation.z);
     }
 
     // Update is called once per frame
@@ -89,11 +92,13 @@ public class MechaHarambe : MonoBehaviour
 
             if (attackType == 1)
             {
+                Debug.Log(gunPivot.transform.eulerAngles);
                 SpinGun();
             }
-            else
+            else if(attackType == 2)
             {
-
+                
+                ResetGun();
             }
 
 
@@ -113,7 +118,7 @@ public class MechaHarambe : MonoBehaviour
                     {
                         Instantiate(randomLaser, projectilePointOne.position, Quaternion.identity);
                         Instantiate(randomLaser, projectilePointTwo.position, Quaternion.identity);
-                        reload = reloadTime / 2;
+                        reload = reloadTime;
                     }
                     else if (attackType == 2)
                     {
@@ -165,16 +170,42 @@ public class MechaHarambe : MonoBehaviour
 
     void SpinGun()
     {
-        if (gunOne.transform.rotation.z > -0.7f)
+        if (!ready)
         {
-            Debug.Log(gunOne.transform.rotation.z);
-            gunOne.transform.Rotate(0, 0, -1, Space.World);
+            if (gunOne.transform.eulerAngles.z > 270 || gunOne.transform.eulerAngles.z == 0)
+            {              
+                gunOne.transform.Rotate(0, 0, 200 * Time.deltaTime);
+                gunTwo.transform.Rotate(0, 0, -200 * Time.deltaTime);
+            }
+            else
+            {
+                ready = true;
+            }
+        }
+        else
+        {
+            if(gunPivot.transform.eulerAngles.z > 1 || gunPivot.transform.eulerAngles.z == 0)
+            {
+                gunPivot.transform.Rotate(0, 0, 200 * Time.deltaTime);
+            }         
+        }
+    }
+
+    void ResetGun()
+    {
+        if (gunOne.transform.eulerAngles.z < 359 || gunOne.transform.eulerAngles.z == 270)
+        {
+            gunOne.transform.Rotate(0, 0, -200 * Time.deltaTime);
+            gunTwo.transform.Rotate(0, 0, 200 * Time.deltaTime);
+        }
+        else
+        {
+            ready = false;
         }
 
-        if (gunTwo.transform.rotation.z < 0.7f)
+        if (gunPivot.transform.eulerAngles.z < 1 || gunPivot.transform.eulerAngles.z > 0)
         {
-            Debug.Log(gunTwo.transform.rotation.z);
-            gunTwo.transform.Rotate(0, 0, 1, Space.World);
+            gunPivot.transform.Rotate(0, 0, 0.5f * Time.deltaTime);
         }
     }
 }

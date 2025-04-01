@@ -1005,6 +1005,10 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = false;
             shieldVisual.SetActive(false);
+            if(bananaCount > 1)
+            {
+                UseBanana(2);
+            }
             ability.clip = clips[11];
             ability.Play();
             return;
