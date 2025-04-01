@@ -116,9 +116,19 @@ public class MechaHarambe : MonoBehaviour
                     }
                     else if (attackType == 1)
                     {
-                        Instantiate(randomLaser, projectilePointOne.position, Quaternion.identity);
-                        Instantiate(randomLaser, projectilePointTwo.position, Quaternion.identity);
-                        reload = reloadTime;
+                        if(b_Man.phase == 1)
+                        {
+                            Instantiate(normalLaser, projectilePointOne.position, Quaternion.identity);
+                            Instantiate(normalLaser, projectilePointTwo.position, Quaternion.identity);
+                            reload = reloadTime;
+                        }
+                        else
+                        {
+                            Instantiate(randomLaser, projectilePointOne.position, Quaternion.identity);
+                            Instantiate(randomLaser, projectilePointTwo.position, Quaternion.identity);
+                            reload = reloadTime / 2.5f;
+                        }
+                            
                     }
                     else if (attackType == 2)
                     {

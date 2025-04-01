@@ -438,8 +438,8 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = true;
             shieldVisual.SetActive(true);
-            ability.clip = clips[10];
-            ability.Play();
+            damage.clip = clips[10];
+            damage.Play();
             Debug.Log("Banana Shield ON");
         }
         
@@ -1009,8 +1009,8 @@ public class PlayerController : MonoBehaviour
             {
                 UseBanana(2);
             }
-            ability.clip = clips[11];
-            ability.Play();
+            damage.clip = clips[11];
+            damage.Play();
             return;
         }
 

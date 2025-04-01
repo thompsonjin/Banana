@@ -22,6 +22,9 @@ public class RoboProposcis : BaseEnemy
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform projectileSpawn;
 
+    [Header("Sound")]
+    [SerializeField] private AudioSource blast;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -43,6 +46,7 @@ public class RoboProposcis : BaseEnemy
 
             if(playerHitTimer <= 0)
             {
+                blast.Play();
                 Instantiate(projectile, projectileSpawn.position, Quaternion.identity);
                 playerHitTimer = PLAYER_HIT_TIME;
             }
