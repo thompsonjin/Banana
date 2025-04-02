@@ -12,6 +12,7 @@ public class RoboSaki : BaseEnemy
     [SerializeField] private LayerMask groundLayer;
     private GameObject player;
     private PlayerController p_Con;
+    public Animator anim;
 
     [Header("Movement")]
     [SerializeField] private float patrolSpeed;
@@ -81,6 +82,7 @@ public class RoboSaki : BaseEnemy
         //give a grace period then attempt to damage the player if they are still within range if not reset
         if (inRange)
         {
+            anim.SetBool("Shoot", true);
             if(!soundSpawn && reloadTimer <= 0)
             {
                 playerHitTimer = PLAYER_HIT_TIME;
@@ -94,6 +96,7 @@ public class RoboSaki : BaseEnemy
 
         if(playerHitTimer <= 0)
         {
+            anim.SetBool("Shoot", false);
             if (soundSpawn)
             {
                 Destroy(attackPoint.GetChild(0).gameObject);

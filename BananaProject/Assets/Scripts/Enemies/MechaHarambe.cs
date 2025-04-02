@@ -26,6 +26,8 @@ public class MechaHarambe : MonoBehaviour
     private Quaternion rotationTargetOne;
     public float gunSpeed;
     bool ready;
+    [SerializeField] Animator animOne;
+    [SerializeField] Animator animTwo;
 
     [Header("Laser")]
     [SerializeField] GameObject normalLaser;
@@ -39,6 +41,8 @@ public class MechaHarambe : MonoBehaviour
     float wait;
     [SerializeField] GameObject risingLava;
     int attackType;
+
+
 
 
 
@@ -108,8 +112,10 @@ public class MechaHarambe : MonoBehaviour
                 reload -= Time.deltaTime;
                 if (reload <= 0)
                 {
+                    animOne.SetBool("Fire", true);
+                    animTwo.SetBool("Fire", true);
                     if (attackType == 0)
-                    {
+                    {               
                         Instantiate(normalLaser, projectilePointOne.position, Quaternion.identity);
                         Instantiate(normalLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime;
@@ -144,6 +150,8 @@ public class MechaHarambe : MonoBehaviour
             }
             else if (fire < 0)
             {
+                animOne.SetBool("Fire", false);
+                animTwo.SetBool("Fire", false);
                 wait -= Time.deltaTime;
                 if (wait <= 0)
                 {

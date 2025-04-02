@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 501720850088936775}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.58, y: -3.32, z: 0}
+  m_LocalPosition: {x: 0.89, y: -1.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -147,7 +147,7 @@ Transform:
   m_GameObject: {fileID: 5554430584943107376}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.35, z: 0}
+  m_LocalPosition: {x: -0.18, y: -1.53, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -178,7 +178,7 @@ Transform:
   m_GameObject: {fileID: 7671884533182396379}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.17, y: -1.65, z: -0.030505084}
+  m_LocalPosition: {x: 0.66, y: -0.28, z: -0.030505084}
   m_LocalScale: {x: 1, y: 0.53856856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 5476207649128049458}
   - component: {fileID: 6292489306893372428}
   - component: {fileID: 8072669275438082387}
+  - component: {fileID: 6704553089033344029}
   m_Layer: 6
   m_Name: Tiny Robo Monkey
   m_TagString: Enemy
@@ -265,7 +266,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1278867793, guid: 116082a73c1ec4b4386c8c5daeee2ed5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b2a7ab640490612468bce63bc70bc8da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -308,18 +309,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.08900833, y: -1.362505}
+  m_Offset: {x: -0.41974258, y: -0.028751373}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2.88, y: 6.4}
+    oldSize: {x: 3, y: 3.2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.8353043, y: 3.72501}
+  m_Size: {x: 1.8353043, y: 2.8725052}
   m_EdgeRadius: 0
 --- !u!50 &5476207649128049458
 Rigidbody2D:
@@ -366,10 +367,11 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 520
+  anim: {fileID: 6704553089033344029}
   patrolSpeed: 6
   chaseSpeed: 12
   attackPoint: {fileID: 2676764780782043787}
-  attackRange: 0.5
+  attackRange: 0.85
   playerLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -388,3 +390,24 @@ MonoBehaviour:
   type: 3
   health: 0
   maxHealth: 2
+--- !u!95 &6704553089033344029
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8267496545744331273}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 96bba41fc1c2b2a45bb45005d3480435, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
