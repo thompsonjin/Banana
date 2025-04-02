@@ -11,6 +11,7 @@ public class RoboBaboon : BaseEnemy
     [SerializeField] private LayerMask groundLayer;
     private GameObject player;
     private PlayerController p_Con;
+    public Animator anim;
 
     [Header("Movement")]
     [SerializeField] private float patrolSpeed;
@@ -62,35 +63,44 @@ public class RoboBaboon : BaseEnemy
 
         //give a grace period then attempt to damage the player if they are still within range if not reset
         if (inRange)
-      {
-        playerHitTimer -= Time.deltaTime;
+        {          
+            playerHitTimer -= Time.deltaTime;
 
-        if(playerHitTimer <= 0)
-        {
-          if(HitRange())
-          {
-            p_Con.TakeDamage();
-            playerHitTimer = PLAYER_HIT_TIME;
-          }
-          else
-          {
-            playerHitTimer = PLAYER_HIT_TIME;
-            inRange = false;
-          }
+            if(playerHitTimer <= .4f)
+            {
+                anim.SetBool("Punch", true);
+            }
+
+            if(playerHitTimer <= 0)
+            {
+                if (HitRange())
+                {
+                    p_Con.TakeDamage();
+                    playerHitTimer = PLAYER_HIT_TIME;
+                   
+                }
+                else
+                {
+                    playerHitTimer = PLAYER_HIT_TIME;
+                    inRange = false;
+                }
+            }     
         }
-        
-      }
+        else
+        {
+            anim.SetBool("Punch", false);
+        }
 
       //track how long the enemy is stunned by the hit 
-      if(hit)
-      {
-        hitTimer -= Time.deltaTime;
-
-        if(hitTimer <= 0)
+      if (hit)
         {
-          hit = false;     
+            hitTimer -= Time.deltaTime;
+
+            if (hitTimer <= 0)
+            {
+                hit = false;
+            }
         }
-      }
 
       Flip();
     }
