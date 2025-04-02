@@ -13,6 +13,8 @@ public class PauseMenuManager : MonoBehaviour
     [SerializeField] private int mainMenuIndex = 1;
     [SerializeField] private int savesMenuIndex = 2;
 
+    [SerializeField] private InventoryUIManager inventoryUIManager;
+
     private bool isPaused = false;
 
     private void Start()
@@ -72,6 +74,26 @@ public class PauseMenuManager : MonoBehaviour
         pauseMenuPanel.SetActive(false);
         settingsPanel.SetActive(false);
         inventoryPanel.SetActive(true);
+
+        if (inventoryUIManager != null)
+        {
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                Debug.Log("Found player controller for inventory");
+                inventoryUIManager.SetPlayerController(player);
+                inventoryUIManager.UpdateInventoryUI();
+            }
+            else
+            {
+                Debug.LogWarning("Could not find PlayerController for inventory!");
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No InventoryUIManager assigned to PauseMenuManager!");
+        }
+
         Debug.Log("Inventory active state: " + inventoryPanel.activeInHierarchy);
     }
 

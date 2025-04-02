@@ -906,6 +906,31 @@ public class PlayerController : MonoBehaviour
         hasBananaGun = true;
     }
 
+    public void DisableShadowKick()
+    {
+        hasShadowKick = false;
+    }
+
+    public void DisableCharge()
+    {
+        hasCharge = false;
+    }
+
+    public void DisableGroundPound()
+    {
+        hasGroundPound = false;
+    }
+
+    public void DisableBananaGun()
+    {
+        hasBananaGun = false;
+    }
+
+    public void DisableBananaShield()
+    {
+        hasBananaShield = false;
+    }
+
     //Throw Object Mechanic
     private void CheckPickupAndThrow()
     {
