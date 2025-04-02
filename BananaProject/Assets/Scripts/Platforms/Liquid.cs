@@ -28,7 +28,11 @@ public class Liquid : MonoBehaviour
 
         if (collision.gameObject.tag == "Enemy" && enemyKill)
         {
-            collision.gameObject.GetComponent<EnemyHealth>().Damage(10);
+            
+            if(collision.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth component))
+            {
+                collision.gameObject.GetComponent<EnemyHealth>().Damage(10);
+            }
         }
     }
 

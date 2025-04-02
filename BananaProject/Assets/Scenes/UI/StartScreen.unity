@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6000091905c360441bca3b8859a42ed8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mainMenuSceneIndex: 1
+  mainMenuSceneIndex: 19
 --- !u!4 &998901788
 Transform:
   m_ObjectHideFlags: 0
