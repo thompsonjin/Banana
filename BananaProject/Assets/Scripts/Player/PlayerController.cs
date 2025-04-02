@@ -22,7 +22,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private GameObject cameraFollowTarget;
     private CameraFollowTarget camFT;
-    [SerializeField]private Animator anim;
+    [SerializeField] private Animator anim;
+    [SerializeField] private GameObject powerBarUI;
+    [SerializeField] private GameObject chargeBarUI;
+    [SerializeField] private Transform barsCanvasObject;
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -159,6 +162,9 @@ public class PlayerController : MonoBehaviour
         currentSpeed = normalSpeed;
 
         camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+
+        if (powerBarUI != null) powerBarUI.SetActive(false);
+        if (chargeBarUI != null ) chargeBarUI.SetActive(false);
     }
 
     private void Start()
@@ -286,6 +292,9 @@ public class PlayerController : MonoBehaviour
         {
             if (bananaCount > 0)
             {
+                if (powerBarUI != null && !powerBarUI.activeSelf)
+                    powerBarUI.SetActive(true);
+
                 isChargingShadowKick = true;
                 shadowKickPower += .01f + Time.deltaTime;
 
@@ -305,13 +314,27 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
+        else if (Input.GetKeyUp(KeyCode.K) && isChargingShadowKick) 
         {
-            ShadowKick();
-            UseBanana(1);
+            if (shadowKickPower >= baseChargeTime)
+            {
+                ShadowKick();
+                UseBanana(1);
+            }
+            else
+            {
+                if (powerBarUI != null)
+                    powerBarUI.SetActive(false);
+            }
+
             isChargingShadowKick = false;
             shadowKickPower = 0;
             powerSlider.value = 0;
+        }
+        
+        else if (powerBarUI != null && powerBarUI.activeSelf && !isShadowKicking && !isChargingShadowKick)
+        {
+            powerBarUI.SetActive(false);
         }
 
         //Ground Pound
@@ -342,6 +365,9 @@ public class PlayerController : MonoBehaviour
                     currentSpeed = boostSpeed;
                     chargeTimer = chargeDuration;
                     chargeBar.value = 1f;
+
+                    if (chargeBarUI != null)
+                        chargeBarUI.SetActive(true);
                 }
             }
 
@@ -368,6 +394,9 @@ public class PlayerController : MonoBehaviour
                         canCharge = false;
                         anim.SetBool("Charge", false);
                         ability.Stop();
+
+                        if (chargeBarUI != null)
+                            chargeBarUI.SetActive(false);
                     }
                     else
                     {
@@ -385,6 +414,9 @@ public class PlayerController : MonoBehaviour
                 SetAura(false);
                 canCharge = false;
                 anim.SetBool("Charge", false);
+
+                if (chargeBarUI != null)
+                    chargeBarUI.SetActive(false);
             }
 
             if (!canCharge)
@@ -593,6 +625,12 @@ public class PlayerController : MonoBehaviour
         {
             isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
+
+            //Keeps UI bars from rotating
+            if (barsCanvasObject != null)
+            {
+                barsCanvasObject.Rotate(0f, 180f, 0f);
+            }
 
             camFT.CallTurn();
         }
@@ -822,6 +860,9 @@ public class PlayerController : MonoBehaviour
 
         isShadowKicking = false;
         anim.SetBool("Shadow Lunge", false);
+
+        if (powerBarUI != null)
+            powerBarUI.SetActive(false);
     }
 
     //Method to enable and disable Shadow Kick
@@ -1019,6 +1060,9 @@ public class PlayerController : MonoBehaviour
             isShadowKicking = false;
             anim.SetBool("Shadow Lunge", false);
             rb.velocity = Vector2.zero;
+
+            if (powerBarUI != null)
+                powerBarUI.SetActive(false);
         }
 
         health--;
