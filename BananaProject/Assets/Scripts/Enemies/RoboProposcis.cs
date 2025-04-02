@@ -21,6 +21,10 @@ public class RoboProposcis : BaseEnemy
     private float playerHitTimer;
     [SerializeField] private GameObject projectile;
     [SerializeField] private Transform projectileSpawn;
+    float dist;
+
+    [Header("Sound")]
+    [SerializeField] private AudioSource blast;
 
     // Start is called before the first frame update
     void Awake()
@@ -33,6 +37,7 @@ public class RoboProposcis : BaseEnemy
     // Update is called once per frame
     void Update()
     {
+        dist = Vector3.Distance(transform.position, player.transform.position);
 
         if (!patrol)
         {
@@ -43,6 +48,7 @@ public class RoboProposcis : BaseEnemy
 
             if(playerHitTimer <= 0)
             {
+                blast.Play();
                 Instantiate(projectile, projectileSpawn.position, Quaternion.identity);
                 playerHitTimer = PLAYER_HIT_TIME;
             }
@@ -65,6 +71,11 @@ public class RoboProposcis : BaseEnemy
         }
 
         Flip();
+
+        if(dist > 40)
+        {
+            patrol = true;
+        }
     }
 
     private void Flip()

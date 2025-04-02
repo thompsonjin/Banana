@@ -17,8 +17,17 @@ public class MechaHarambe : MonoBehaviour
     public int posNum;
     public bool start;
 
-    [Header("Attack")]
-    [SerializeField] Transform projectilePoint;
+    [Header("Guns")]
+    [SerializeField] Transform projectilePointOne;
+    [SerializeField] Transform projectilePointTwo;
+    [SerializeField] GameObject gunOne;
+    [SerializeField] GameObject gunTwo;
+    [SerializeField] GameObject gunPivot;
+    private Quaternion rotationTargetOne;
+    public float gunSpeed;
+    bool ready;
+
+    [Header("Laser")]
     [SerializeField] GameObject normalLaser;
     [SerializeField] GameObject randomLaser;
     [SerializeField] GameObject trackingLaser;
@@ -42,8 +51,11 @@ public class MechaHarambe : MonoBehaviour
         wait = waitTime;
         fire = fireTime;
         attackType = 0;
+        rotationTargetOne = new Quaternion(90, 0, 0, 0);
 
         NextPhase(b_Man.phase);
+
+        Debug.Log(gunPivot.transform.rotation.z);
     }
 
     // Update is called once per frame
@@ -76,8 +88,21 @@ public class MechaHarambe : MonoBehaviour
                 }         
             }
 
-                      
-            if(fire >= 0)
+            
+
+            if (attackType == 1)
+            {
+                Debug.Log(gunPivot.transform.eulerAngles);
+                SpinGun();
+            }
+            else if(attackType == 2)
+            {
+                
+                ResetGun();
+            }
+
+
+            if (fire >= 0)
             {
                 wait = waitTime;
                 reload -= Time.deltaTime;
@@ -85,32 +110,45 @@ public class MechaHarambe : MonoBehaviour
                 {
                     if (attackType == 0)
                     {
-                        Instantiate(normalLaser, projectilePoint.position, Quaternion.identity);
+                        Instantiate(normalLaser, projectilePointOne.position, Quaternion.identity);
+                        Instantiate(normalLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime;
                     }
                     else if (attackType == 1)
                     {
-                        Instantiate(randomLaser, projectilePoint.position, Quaternion.identity);
-                        reload = reloadTime / 2;
+                        if(b_Man.phase == 1)
+                        {
+                            Instantiate(normalLaser, projectilePointOne.position, Quaternion.identity);
+                            Instantiate(normalLaser, projectilePointTwo.position, Quaternion.identity);
+                            reload = reloadTime;
+                        }
+                        else
+                        {
+                            Instantiate(randomLaser, projectilePointOne.position, Quaternion.identity);
+                            Instantiate(randomLaser, projectilePointTwo.position, Quaternion.identity);
+                            reload = reloadTime / 2.5f;
+                        }
+                            
                     }
                     else if (attackType == 2)
                     {
-                        Instantiate(trackingLaser, projectilePoint.position, Quaternion.identity);
+                        Instantiate(trackingLaser, projectilePointOne.position, Quaternion.identity);
+                        Instantiate(trackingLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime * 3;
                     }
 
-                    
+
                 }
 
                 fire -= Time.deltaTime;
             }
-            else if(fire < 0)
+            else if (fire < 0)
             {
                 wait -= Time.deltaTime;
-                if(wait <= 0)
+                if (wait <= 0)
                 {
                     attackType++;
-                    if(attackType > 2)
+                    if (attackType > 2)
                     {
                         attackType = 0;
                     }
@@ -137,7 +175,47 @@ public class MechaHarambe : MonoBehaviour
         {
             risingLava.SetActive(true);
             risingLava.GetComponent<HarmingLiquid>().Restart();
+        }          
+    }
+
+    void SpinGun()
+    {
+        if (!ready)
+        {
+            if (gunOne.transform.eulerAngles.z > 270 || gunOne.transform.eulerAngles.z == 0)
+            {              
+                gunOne.transform.Rotate(0, 0, 200 * Time.deltaTime);
+                gunTwo.transform.Rotate(0, 0, -200 * Time.deltaTime);
+            }
+            else
+            {
+                ready = true;
+            }
         }
-            
+        else
+        {
+            if(gunPivot.transform.eulerAngles.z > 1 || gunPivot.transform.eulerAngles.z == 0)
+            {
+                gunPivot.transform.Rotate(0, 0, 200 * Time.deltaTime);
+            }         
+        }
+    }
+
+    void ResetGun()
+    {
+        if (gunOne.transform.eulerAngles.z < 359 || gunOne.transform.eulerAngles.z == 270)
+        {
+            gunOne.transform.Rotate(0, 0, -200 * Time.deltaTime);
+            gunTwo.transform.Rotate(0, 0, 200 * Time.deltaTime);
+        }
+        else
+        {
+            ready = false;
+        }
+
+        if (gunPivot.transform.eulerAngles.z < 1 || gunPivot.transform.eulerAngles.z > 0)
+        {
+            gunPivot.transform.Rotate(0, 0, 0.5f * Time.deltaTime);
+        }
     }
 }
