@@ -34,7 +34,10 @@ public class PlayerController : MonoBehaviour
     private bool banananaShieldActive = false;
     [SerializeField] private GameObject shieldVisual;
     //HEALTH UI
-    [SerializeField] private Image[] displayHealth = new Image[3];
+    [SerializeField] private List<Image> displayHearts = new List<Image>();
+    [SerializeField] private GameObject heartUIprefab;
+    [SerializeField] private GameObject emptyHeartPrefab;
+    [SerializeField] private Transform heartUIParent;
 
     [Header("Resources")]
     //BANANA UI
@@ -157,7 +160,10 @@ public class PlayerController : MonoBehaviour
         bananaCount = maxBananas;
         InitializeBananaUI();
 
+        maxHealth = HeartManager.MaxHearts;
         health = maxHealth;
+        InitializeHeartUI();
+
         bananaCount = maxBananas;
         currentSpeed = normalSpeed;
 
@@ -521,7 +527,7 @@ public class PlayerController : MonoBehaviour
         {
             for (int i = health - 1; i >= 0; i--)
             {
-                displayHealth[i].enabled = false;
+                displayHearts[i].enabled = false;
             }
 
             health = 0;
@@ -1058,6 +1064,45 @@ public class PlayerController : MonoBehaviour
 
 
     //HEALTH MANAGMENT
+
+    //Handle heart UI
+    private void InitializeHeartUI()
+    {
+        if (heartUIprefab == null || emptyHeartPrefab == null || heartUIParent == null)
+        {
+            Debug.LogWarning("Missing heart UI references in PlayerController");
+            return;
+        }
+
+        foreach (Image img in displayHearts)
+        {
+            if (img != null)
+                Destroy(img.gameObject);
+        }
+        displayHearts.Clear();
+
+        float spacing = 80f;
+
+        for (int i = 0; i < maxHealth; i++)
+        {
+            //Empty heart slots
+            GameObject emptySlot = Instantiate(emptyHeartPrefab, heartUIParent);
+            RectTransform emptyRect = emptySlot.GetComponent<RectTransform>();
+            emptyRect.anchoredPosition = new Vector2(i * spacing, 0);
+            emptySlot.GetComponent<Image>().raycastTarget = false;
+
+            //Filled hearts
+            GameObject filledHeart = Instantiate(heartUIprefab, heartUIParent);
+            RectTransform filledRect = filledHeart.GetComponent<RectTransform>();
+            filledRect.anchoredPosition = new Vector2(i * spacing, 0);
+            Image heartImage = filledHeart.GetComponent<Image>();
+            heartImage.raycastTarget = false;
+
+            displayHearts.Add(heartImage);
+            heartImage.enabled = true;
+        }
+    }
+
     public void TakeDamage()
     {
         if (SettingsManager.Instance != null && SettingsManager.Instance.GodModeEnabled)
@@ -1097,14 +1142,14 @@ public class PlayerController : MonoBehaviour
             Debug.Log("DAMAGE");
             damage.clip = clips[3];
             damage.Play();
-            displayHealth[health].enabled = false;
+            displayHearts[health].enabled = false;
 
         }
         else if (health == 0)
         {
             Debug.Log("You Are Dead");
             damage.clip = clips[12];
-            displayHealth[health].enabled = false;
+            displayHearts[health].enabled = false;
             Die();
         }
     }
@@ -1118,9 +1163,38 @@ public class PlayerController : MonoBehaviour
             health = maxHealth;
         }
 
-        displayHealth[health - 1].enabled = true;
+        for (int i = 0; i < h; i++)
+        {
+            int heartIndex = health - 1 - i;
+            if (heartIndex >= 0 && heartIndex < displayHearts.Count)
+                displayHearts[heartIndex].enabled = true;
+        }
         damage.clip = clips[2];
         damage.Play();
+    }
+
+    //Method to increase the max health if needed
+    public void IncreaseMaxHealth()
+    {
+        HeartManager.IncreaseMaxHearts();
+        maxHealth = HeartManager.MaxHearts;
+
+        float spacing = 80f;
+
+        GameObject emptySlot = Instantiate(emptyHeartPrefab, heartUIParent);
+        RectTransform emptyRect = emptySlot.GetComponent<RectTransform>();
+        emptyRect.anchoredPosition = new Vector2((maxHealth - 1) * spacing, 0);
+        emptySlot.GetComponent<Image>().raycastTarget = false;
+
+        GameObject filledHeart = Instantiate(heartUIprefab, heartUIParent);
+        RectTransform filledRect = filledHeart.GetComponent<RectTransform>();
+        filledRect.anchoredPosition = new Vector2((maxHealth - 1) * spacing, 0);
+        Image heartImage = filledHeart.GetComponent<Image>();
+        heartImage.raycastTarget = false;
+
+        displayHearts.Add(heartImage);
+
+        health++;
     }
 
     //Death management logic
