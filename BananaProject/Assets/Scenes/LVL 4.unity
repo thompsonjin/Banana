@@ -5828,6 +5828,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: heartUIParent
+      value: 
+      objectReference: {fileID: 1534070729}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: bananaUIParent
       value: 
       objectReference: {fileID: 1534070726}
@@ -5839,6 +5843,10 @@ PrefabInstance:
       propertyPath: hasBananaShield
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: barsCanvasObject
+      value: 
+      objectReference: {fileID: 512854158}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: cameraFollowTarget
       value: 
@@ -5862,15 +5870,15 @@ PrefabInstance:
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: displayHealth.Array.data[0]
       value: 
-      objectReference: {fileID: 1534070733}
+      objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: displayHealth.Array.data[1]
       value: 
-      objectReference: {fileID: 1534070732}
+      objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: displayHealth.Array.data[2]
       value: 
-      objectReference: {fileID: 1534070731}
+      objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: displayBananas.Array.data[0]
       value: 
@@ -5989,6 +5997,11 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!224 &512854158 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8561812753874378413, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+  m_PrefabInstance: {fileID: 512854156}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &525350343 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8193408000786947159, guid: cd09e11b6c6957b4da855fe077275bdf, type: 3}
@@ -26843,39 +26856,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1534070731 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3084125220374575544, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
+--- !u!224 &1534070729 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7965611729664649575, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
   m_PrefabInstance: {fileID: 1534070725}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1534070732 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2834769521528901028, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
-  m_PrefabInstance: {fileID: 1534070725}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1534070733 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1328516264037786012, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
-  m_PrefabInstance: {fileID: 1534070725}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1545594952
 GameObject:
   m_ObjectHideFlags: 0

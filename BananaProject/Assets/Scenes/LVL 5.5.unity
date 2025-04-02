@@ -14088,39 +14088,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
---- !u!114 &329260214 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3084125220374575544, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
+--- !u!224 &329260214 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 7965611729664649575, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
   m_PrefabInstance: {fileID: 329260213}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &329260215 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2834769521528901028, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
-  m_PrefabInstance: {fileID: 329260213}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &329260216 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1328516264037786012, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
-  m_PrefabInstance: {fileID: 329260213}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &329260217 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 467894981511429599, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
@@ -15808,10 +15780,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 307851999158270081, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: m_ExcludeLayers.m_Bits
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 649561680886051299, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -53.3
@@ -15861,93 +15829,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1082908378}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasCharge
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasBananaGun
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasShadowKick
-      value: 1
-      objectReference: {fileID: 0}
+      propertyPath: heartUIParent
+      value: 
+      objectReference: {fileID: 329260214}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: bananaUIParent
       value: 
       objectReference: {fileID: 329260217}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasGroundPound
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: chargeKnockback
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: hasBananaShield
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: bananacoinUIprefab
+      propertyPath: barsCanvasObject
       value: 
-      objectReference: {fileID: 7255543909322334748, guid: 8999b4941a86a78458eb87343ddd0af8, type: 3}
+      objectReference: {fileID: 1042812957}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: cameraFollowTarget
       value: 
       objectReference: {fileID: 1548158014}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: emptyBananacoinPrefab
-      value: 
-      objectReference: {fileID: 6005749004148531579, guid: cc620543e0f542942baaef29e541b097, type: 3}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: checkpoints.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: checkpoints.Array.data[0]
       value: 
       objectReference: {fileID: 338630624}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: checkpoints.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: checkpoints.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayHealth.Array.data[0]
-      value: 
-      objectReference: {fileID: 329260216}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayHealth.Array.data[1]
-      value: 
-      objectReference: {fileID: 329260215}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayHealth.Array.data[2]
-      value: 
-      objectReference: {fileID: 329260214}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[0]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[2]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
-      propertyPath: displayBananas.Array.data[4]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7562123748791680290, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -15960,6 +15860,11 @@ PrefabInstance:
 --- !u!4 &1042812956 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 649561680886051299, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+  m_PrefabInstance: {fileID: 1042812955}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &1042812957 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8561812753874378413, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
   m_PrefabInstance: {fileID: 1042812955}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1060456693
