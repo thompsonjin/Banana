@@ -4,19 +4,24 @@ using UnityEngine;
 
 public class MovingPlatformSurface : MonoBehaviour
 {
+    public MovingPlatform m_Plat;
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy")
         {
             collision.transform.parent = this.transform;
+            if(m_Plat != null)
+            {
+                m_Plat.trigger = true;
+            }
         }
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player" || collision.gameObject.tag == "Enemy")
         {
-            collision.transform.parent = null;
+               collision.transform.parent = null;
         }
     }
 }

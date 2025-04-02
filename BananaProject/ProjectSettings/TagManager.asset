@@ -6,6 +6,21 @@ TagManager:
   tags:
   - Enemy
   - Vines
+  - Sound
+  - Shadow Shard
+  - Banana Coin
+  - Pound Shard
+  - Wall
+  - Throwable
+  - Floor
+  - Gun Shard
+  - Shield Shard
+  - Charge Shard
+  - BFBG
+  - Laser
+  - Elevator
+  - Ground
+  - Score
   layers:
   - Default
   - TransparentFX
@@ -16,8 +31,8 @@ TagManager:
   - Enemy
   - Player
   - Vines
-  - 
-  - 
+  - Throwable
+  - Projectile
   - 
   - 
   - 
