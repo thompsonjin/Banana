@@ -56,6 +56,26 @@ PrefabInstance:
       propertyPath: knockbackForce
       value: 150
       objectReference: {fileID: 0}
+    - target: {fileID: 3697074609619538976, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
+      propertyPath: breakClips.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3697074609619538976, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
+      propertyPath: breakClips.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 9699efb0ec8cf5248a872487033a3ba4, type: 3}
+    - target: {fileID: 3697074609619538976, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
+      propertyPath: breakClips.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3df52220fc076ff41a78de514c7bd374, type: 3}
+    - target: {fileID: 3697074609619538976, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
+      propertyPath: breakClips.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1572617393f8b53459ac6a6a9591772b, type: 3}
+    - target: {fileID: 3697074609619538976, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
+      propertyPath: breakClips.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 55b21f3a7708d9443adb12665b842ba6, type: 3}
     - target: {fileID: 6796415406043212771, guid: b03707deb92956c44a191c6a600fdbc6, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.23114
