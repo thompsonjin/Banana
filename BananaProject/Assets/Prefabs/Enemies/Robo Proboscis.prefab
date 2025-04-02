@@ -153,7 +153,7 @@ Transform:
   m_GameObject: {fileID: 2726323361371012080}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.57, y: -1.45, z: -0.030505084}
+  m_LocalPosition: {x: 1.48, y: -0.31, z: -0.030505084}
   m_LocalScale: {x: 1, y: 0.53856856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -184,7 +184,7 @@ Transform:
   m_GameObject: {fileID: 3074118291228892901}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.512, z: 0}
+  m_LocalPosition: {x: 0, y: -2.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -217,7 +217,7 @@ Transform:
   m_GameObject: {fileID: 3350877891645669673}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5377, y: -1.7717, z: -0.030505084}
+  m_LocalPosition: {x: -6.43, y: -3.73, z: -0.030505084}
   m_LocalScale: {x: 2.7819, y: 1.4982438, z: 2.7819}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -306,7 +306,7 @@ Transform:
   m_GameObject: {fileID: 4410582306327930064}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.57, y: -1.45, z: -0.030505084}
+  m_LocalPosition: {x: 1.65, y: -0.2, z: -0.030505084}
   m_LocalScale: {x: 1, y: 0.53856856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -326,6 +326,7 @@ GameObject:
   - component: {fileID: 954118723051806127}
   - component: {fileID: 6393625457130097754}
   - component: {fileID: 2875228993310728431}
+  - component: {fileID: 8208512838322509903}
   m_Layer: 6
   m_Name: Robo Proboscis
   m_TagString: Enemy
@@ -394,7 +395,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1861640801, guid: 6d4b919612d6e7841bed656567f8e65a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6f72639e7f7afd84380fc33ddd703ab5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -437,18 +438,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.2981491, y: -1.3290424}
+  m_Offset: {x: -0.2981491, y: -0.07094002}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.4, y: 6.4}
+    oldSize: {x: 3.6, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.0207977, y: 3.8400078}
+  m_Size: {x: 2.0207977, y: 3.4113197}
   m_EdgeRadius: 0
 --- !u!50 &954118723051806127
 Rigidbody2D:
@@ -515,3 +516,24 @@ MonoBehaviour:
   type: 2
   health: 0
   maxHealth: 6
+--- !u!95 &8208512838322509903
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5184890065183806211}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 65dcdd1caeb8cf44cb39739fc551bc71, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
