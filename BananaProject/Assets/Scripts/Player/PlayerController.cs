@@ -1250,4 +1250,10 @@ public class PlayerController : MonoBehaviour
         ability.clip = clips[4];
         ability.Play();
     }
+
+    public bool HasShadowKick => hasShadowKick;
+    public bool HasCharge => hasCharge;
+    public bool HasGroundPound => hasGroundPound;
+    public bool HasBananaGun => hasBananaGun;
+    public bool HasBananaShield => hasBananaShield;
 }
