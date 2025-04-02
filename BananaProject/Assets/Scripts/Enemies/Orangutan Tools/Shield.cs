@@ -31,6 +31,10 @@ public class Shield : MonoBehaviour
         {
             anim.SetBool("Attack", false);
             robo.chaseSpeed = 3;
+            
+        }
+        else
+        {
             hitTime -= Time.deltaTime;
         }
     }

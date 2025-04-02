@@ -9,6 +9,7 @@ public class MechaHarambe : MonoBehaviour
     GameObject player;
     [SerializeField] GameObject boss;
     [SerializeField] BFBGManager b_Man;
+    public AudioSource audio;
     
     [Header("Movement")]
     [SerializeField] Transform[] phasePos;
