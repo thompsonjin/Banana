@@ -140,11 +140,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2f497f14255d548b05ab5481e75a6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasShadowKick: 0
-  hasCharge: 0
-  hasGroundPound: 0
-  hasBananaGun: 0
-  hasBananaShield: 0
+  hasShadowKick: 1
+  hasCharge: 1
+  hasGroundPound: 1
+  hasBananaGun: 1
+  hasBananaShield: 1
   rb: {fileID: 307851999158270081}
   groundCheck: {fileID: 5519777832520509073}
   groundLayer:
@@ -157,10 +157,10 @@ MonoBehaviour:
   barsCanvasObject: {fileID: 8561812753874378413}
   maxHealth: 3
   shieldVisual: {fileID: 6176218626836076067}
-  displayHealth:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  displayHearts: []
+  heartUIprefab: {fileID: 810027740011913760, guid: 4b5d7aaf220fe1e42a9c963f52f8ad1e, type: 3}
+  emptyHeartPrefab: {fileID: 810027740011913760, guid: 91f46b7f5a865b6498addd8350c18d08, type: 3}
+  heartUIParent: {fileID: 0}
   displayBananas:
   - {fileID: 0}
   - {fileID: 0}
@@ -192,7 +192,7 @@ MonoBehaviour:
   baseChargeTime: 1
   maxChargeTime: 6
   baseKickSpeed: 60
-  maxKickSpeed: 140
+  maxKickSpeed: 120
   baseKickDistance: 8
   maxKickDistance: 16
   chargeDuration: 3
@@ -218,6 +218,7 @@ MonoBehaviour:
   gunDuration: 10
   gunTimer: 0
   checkpoints:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -497,7 +498,7 @@ AudioSource:
   m_GameObject: {fileID: 3314363353834630026}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4609545150626478317, guid: 2ec53b635d0804e46af85c3f0f7af216, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.6
@@ -714,7 +715,7 @@ AudioSource:
   m_GameObject: {fileID: 5186594149485422568}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4609545150626478317, guid: 2ec53b635d0804e46af85c3f0f7af216, type: 2}
   m_audioClip: {fileID: 8300000, guid: 58729f838365df94daf70ee69feec786, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -873,7 +874,7 @@ AudioSource:
   m_GameObject: {fileID: 5996519147957469874}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4609545150626478317, guid: 2ec53b635d0804e46af85c3f0f7af216, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.8
@@ -1001,7 +1002,7 @@ AudioSource:
   m_GameObject: {fileID: 5997827894107119388}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4609545150626478317, guid: 2ec53b635d0804e46af85c3f0f7af216, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.3
