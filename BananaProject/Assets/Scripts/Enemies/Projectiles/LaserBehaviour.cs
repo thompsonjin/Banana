@@ -15,7 +15,7 @@ public class LaserBehaviour : MonoBehaviour
     {
         if (random)
         {
-            SetRandomTarget();
+            SetBossTarget();
         }
         else
         {
@@ -49,21 +49,13 @@ public class LaserBehaviour : MonoBehaviour
         
     }
 
-    public void SetRandomTarget()
+    public void SetBossTarget()
     {
-        float x = Random.Range(-1, 2);
-        float y = Random.Range(-1, 2);
+        GameObject boss = GameObject.Find("Robot");
 
-        if(x == 0)
-        {
-            x += .5f;
-        }
-        if(y == 0)
-        {
-            y += .5f;
-        }
-
-        target = new Vector3(x,y,0);
+        target = this.transform.position - boss.transform.position;
+        target.Normalize();
+        target = -target;
     }
 
     public void SetTargetPlayer()

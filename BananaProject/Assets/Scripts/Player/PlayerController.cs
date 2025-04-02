@@ -135,12 +135,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isGunPulled = false;
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
-    [SerializeField] private SpriteRenderer weaponSprite;
     [SerializeField] private float gunDuration = 10f;
     [SerializeField] private float gunTimer = 0f;
 
     [Header("Checkpoint")]
     public GameObject[] checkpoints;
+
+    [Header("SFX")]
+    [SerializeField] private AudioClip[] clips;
+    //0 Jump,1 Attack,2 Heal,3 Damage,4 Pickup,5 Charge Up,6 Charge Hum,7 GP Breath,8 GP Impact,9 Gun,10 Shield Activate,11 Shield Break,12 Death,13 walk,14 climb
+
+    [SerializeField] private AudioSource walk;
+    [SerializeField] private AudioSource combat;
+    [SerializeField] private AudioSource ability;
+    [SerializeField] private AudioSource damage;
+
 
     void Awake()
     {
@@ -153,7 +162,6 @@ public class PlayerController : MonoBehaviour
         currentSpeed = normalSpeed;
 
         camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-        weaponSprite.enabled = false;
 
         if (powerBarUI != null) powerBarUI.SetActive(false);
         if (chargeBarUI != null ) chargeBarUI.SetActive(false);
@@ -186,6 +194,12 @@ public class PlayerController : MonoBehaviour
 
         isClimbing = false;
         rb.gravityScale = 7;
+        if (IsGrounded() && !ability.isPlaying)
+        {    
+            ability.clip = clips[0];
+            ability.Play();
+        }
+        
         anim.SetBool("Climbing", false);
       }
       else
@@ -214,7 +228,9 @@ public class PlayerController : MonoBehaviour
           //if the player is allowed to jump apply jump power to the player's velocity
           rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
 
-          jumpBufferCounter = 0f;
+            walk.clip = clips[0];
+            walk.Play();
+            jumpBufferCounter = 0f;
           sakiBoost = false;
           sakiBoostIndicator.SetActive(false);
       }
@@ -247,6 +263,8 @@ public class PlayerController : MonoBehaviour
         if (reload <= 0 && Input.GetKeyDown(KeyCode.J))
         {
             BasicAttack();
+            combat.clip = clips[1];
+            combat.Play();
             anim.SetBool("Punch", true);
             reload = reloadTime;
         }
@@ -256,10 +274,13 @@ public class PlayerController : MonoBehaviour
         }
 
         //Regular Kick
-        if (Input.GetKeyDown(KeyCode.K))
+        if (reload <= 0 && Input.GetKeyDown(KeyCode.K))
         {
             BasicKick();
+            combat.clip = clips[1];
+            combat.Play();
             anim.SetBool("Kick", true);
+            reload = reloadTime;
         }
         else
         {
@@ -322,6 +343,8 @@ public class PlayerController : MonoBehaviour
             if (bananaCount > 0)
             {
                 groundPound = true;
+                ability.clip = clips[7];
+                ability.Play();
                 anim.SetBool("Ground Pound", true);
                 SetAura(true);
                 UseBanana(1);
@@ -334,6 +357,8 @@ public class PlayerController : MonoBehaviour
             {
                 if (bananaCount >= 3)
                 {
+                    ability.clip = clips[6];
+                    ability.Play();
                     UseBanana(3);
                     canCharge = true;
                     SetAura(true);
@@ -368,6 +393,7 @@ public class PlayerController : MonoBehaviour
                         SetAura(false);
                         canCharge = false;
                         anim.SetBool("Charge", false);
+                        ability.Stop();
 
                         if (chargeBarUI != null)
                             chargeBarUI.SetActive(false);
@@ -382,6 +408,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.L))
             {
+                ability.Stop();
                 currentSpeed = normalSpeed;
                 chargeBar.value = 0;
                 SetAura(false);
@@ -411,8 +438,7 @@ public class PlayerController : MonoBehaviour
             if (bananaCount >= 5)
             {
                 isGunPulled = true;
-                anim.SetBool("Gun", true);
-                weaponSprite.enabled = true;
+                anim.SetBool("Gun", true);               
                 UseBanana(5);
                 gunTimer = gunDuration;
             }
@@ -425,10 +451,16 @@ public class PlayerController : MonoBehaviour
             {
                 anim.SetBool("Gun", false);
                 isGunPulled = false;
-                weaponSprite.enabled = false;
             }
             else if (Input.GetKey(KeyCode.J))
             {
+                if (!combat.isPlaying)
+                {
+                    combat.clip = clips[9];
+                    combat.Play();
+                }
+
+                
                 Shoot();
             }
         }
@@ -438,6 +470,8 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = true;
             shieldVisual.SetActive(true);
+            damage.clip = clips[10];
+            damage.Play();
             Debug.Log("Banana Shield ON");
         }
         
@@ -520,6 +554,8 @@ public class PlayerController : MonoBehaviour
                     recoverTime += Time.deltaTime;
                     if (recoverTime > .5f)
                     {
+                        ability.clip = clips[8];
+                        ability.Play();
                         SetAura(false);
                         recoverTime = 0;
                         groundPound = false;
@@ -531,12 +567,38 @@ public class PlayerController : MonoBehaviour
             {
                 //apply the product of horizontal and speed to the players current velocity
                 rb.velocity = new Vector2(horizontal * currentSpeed, vertical * currentSpeed);
+
+                if(horizontal != 0 && vertical != 0 && !walk.isPlaying)
+                {
+                    walk.clip = clips[14];
+                    walk.Play();
+                }
+
+                if (horizontal == 0 && vertical == 0)
+                {
+                    anim.speed = 0;
+                }
+                else
+                {
+                    anim.speed = 1;
+                }
             }
             else
             {
                 Vector2 move = new Vector2(horizontal * currentSpeed, rb.velocity.y);
                 //apply the product of horizontal and speed to the players current velocity
                 rb.velocity = move;
+
+                if (IsGrounded() && horizontal != 0 && !walk.isPlaying)
+                {
+                    walk.clip = clips[13];
+                    walk.Play();
+                }
+                
+                if(!IsGrounded() || horizontal == 0)
+                {
+                    walk.Stop();
+                }
 
                 if (move.x != 0)
                 {
@@ -984,8 +1046,12 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = false;
             shieldVisual.SetActive(false);
-            UseBanana(2);
-            Debug.Log("BLOCKED BY JAMES");
+            if(bananaCount > 1)
+            {
+                UseBanana(2);
+            }
+            damage.clip = clips[11];
+            damage.Play();
             return;
         }
 
@@ -1004,12 +1070,15 @@ public class PlayerController : MonoBehaviour
         if (health > 0)
         {
             Debug.Log("DAMAGE");
-
+            damage.clip = clips[3];
+            damage.Play();
             displayHealth[health].enabled = false;
+
         }
         else if (health == 0)
         {
             Debug.Log("You Are Dead");
+            damage.clip = clips[12];
             displayHealth[health].enabled = false;
             Die();
         }
@@ -1025,6 +1094,8 @@ public class PlayerController : MonoBehaviour
         }
 
         displayHealth[health - 1].enabled = true;
+        damage.clip = clips[2];
+        damage.Play();
     }
 
     //Death management logic
@@ -1032,7 +1103,6 @@ public class PlayerController : MonoBehaviour
     {
         GameManager.Instance.OnPLayerDeath();
         gameObject.SetActive(false);
-
     }
 
    //BANANA MANAGMENT
@@ -1148,5 +1218,11 @@ public class PlayerController : MonoBehaviour
         displayBananas[maxBananas - 1].enabled = false;
 
         GiveBanana(1);
+    }
+
+    public void PlayPickup()
+    {
+        ability.clip = clips[4];
+        ability.Play();
     }
 }
