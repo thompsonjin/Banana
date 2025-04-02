@@ -10,6 +10,7 @@ public class RoboProposcis : BaseEnemy
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
     private GameObject player;
+    public Animator anim;
 
     [Header("Movement")]
     private Vector2 moveDir;
@@ -46,11 +47,21 @@ public class RoboProposcis : BaseEnemy
 
             playerHitTimer -= Time.deltaTime;
 
+            if(playerHitTimer <= 1.5f)
+            {
+                anim.SetBool("Shoot", true);
+            }
+
             if(playerHitTimer <= 0)
             {
                 blast.Play();
                 Instantiate(projectile, projectileSpawn.position, Quaternion.identity);
                 playerHitTimer = PLAYER_HIT_TIME;
+            }
+            
+            if(!blast.isPlaying)
+            {
+                anim.SetBool("Shoot", false);
             }
         }
 

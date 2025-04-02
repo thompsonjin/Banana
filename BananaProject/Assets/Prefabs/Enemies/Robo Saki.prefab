@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 389121026525730192}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.3, z: 0}
+  m_LocalPosition: {x: -0.52, y: -2.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 1747606586019389245}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.15, y: -1.61, z: 0.034703158}
+  m_LocalPosition: {x: 0.33, y: -0.4, z: 0.034703158}
   m_LocalScale: {x: 1, y: 0.53856856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -89,7 +89,7 @@ Transform:
   m_GameObject: {fileID: 2605467399748343917}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.5377, y: -1.7717, z: -0.030505084}
+  m_LocalPosition: {x: -6.07, y: -1.75, z: -0.030505084}
   m_LocalScale: {x: 2.7819, y: 1.4982438, z: 2.7819}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -178,7 +178,7 @@ Transform:
   m_GameObject: {fileID: 4819923181426999977}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.56, y: -3.28, z: 0}
+  m_LocalPosition: {x: 0.97, y: -2.16, z: 0}
   m_LocalScale: {x: 1, y: 0.53856856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 5435910304000538889}
   - component: {fileID: 2866844096244829126}
   - component: {fileID: 8004265786840662948}
+  - component: {fileID: 5711450697960328706}
   m_Layer: 6
   m_Name: Robo Saki
   m_TagString: Enemy
@@ -265,7 +266,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 1737412395, guid: 929b1b26386d21d45a4a921b1fb8db12, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acaf3524e55fcf34f9744a8f1fb334d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -308,18 +309,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.20776367, y: -1.5234833}
+  m_Offset: {x: -0.5338898, y: -0.20402813}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.2, y: 6.4}
+    oldSize: {x: 3.6, y: 4.8}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.609375, y: 3.4375916}
+  m_Size: {x: 2.1613007, y: 3.6273184}
   m_EdgeRadius: 0
 --- !u!50 &5435910304000538889
 Rigidbody2D:
@@ -366,6 +367,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 520
+  anim: {fileID: 5711450697960328706}
   patrolSpeed: 1.5
   chaseSpeed: 3
   attackPoint: {fileID: 5306715940737423308}
@@ -389,3 +391,24 @@ MonoBehaviour:
   type: 5
   health: 0
   maxHealth: 6
+--- !u!95 &5711450697960328706
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5925756607552273175}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2d4f562a1ecbd1b408fc148258fcf200, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -223,7 +223,7 @@ public class PlayerController : MonoBehaviour
          coyoteTimeCounter = 0f;
       }
 
-      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
+      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost && !isClimbing)
       {
           //if the player is allowed to jump apply jump power to the player's velocity
           rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);

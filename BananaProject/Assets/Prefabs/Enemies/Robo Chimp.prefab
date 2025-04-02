@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 2943979032134777344}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.512, z: 0}
+  m_LocalPosition: {x: -0.07, y: -2.09, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 4267614101568940832}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.72, y: -1.72, z: 0.034703158}
+  m_LocalPosition: {x: 1.9, y: -0.12, z: 0.034703158}
   m_LocalScale: {x: 1, y: 0.53856856, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 7195335734353101711}
   - component: {fileID: 8670044596108225329}
   - component: {fileID: 4074120721687976637}
+  - component: {fileID: 4136044686668804747}
   m_Layer: 6
   m_Name: Robo Chimp
   m_TagString: Enemy
@@ -141,7 +142,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -877749671, guid: 3d15d99acd56b8c4faf36853906154b9, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e4ff019e586831a438e8a781eaed2f90, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -184,18 +185,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.12182331, y: -1.4948616}
+  m_Offset: {x: -0.25624084, y: 0.0016593933}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.4, y: 6.4}
+    oldSize: {x: 4.8, y: 4.2}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2246113, y: 3.4334946}
+  m_Size: {x: 3.0274734, y: 3.8815536}
   m_EdgeRadius: 0
 --- !u!50 &7195335734353101711
 Rigidbody2D:
@@ -241,6 +242,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 520
+  anim: {fileID: 4136044686668804747}
   isFacingRight: 0
   projectile: {fileID: 7217605548734823123, guid: 3232076103a074b4593f377d8ae4fc8e, type: 3}
   projectileSpawn: {fileID: 4684989697983887646}
@@ -260,3 +262,24 @@ MonoBehaviour:
   type: 4
   health: 0
   maxHealth: 8
+--- !u!95 &4136044686668804747
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5535526596283333971}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7318d60bd8b0828418dccf5955dd6e0c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

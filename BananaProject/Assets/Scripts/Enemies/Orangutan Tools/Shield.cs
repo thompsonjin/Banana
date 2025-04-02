@@ -7,18 +7,21 @@ public class Shield : MonoBehaviour
 {
     float hitTime;
     float hitTimeMax = 2;
-    public SpriteRenderer sprite;
+    public Animator anim;
+    public RoboOrangutan robo;
 
     private void Start()
     {
-        sprite = this.gameObject.GetComponent<SpriteRenderer>();
+        
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "Player" && hitTime <= 0)
         {
+            anim.SetBool("Attack", true);
             collision.gameObject.GetComponent<PlayerController>().TakeDamage();
             hitTime = hitTimeMax;
+            robo.chaseSpeed = 0;
         }
     }
 
@@ -26,12 +29,9 @@ public class Shield : MonoBehaviour
     {
         if(hitTime < 0)
         {
-            sprite.color = Color.gray;
+            anim.SetBool("Attack", false);
+            robo.chaseSpeed = 3;
             hitTime -= Time.deltaTime;
-        }
-        else
-        {
-            sprite.color = Color.blue;
         }
     }
 }

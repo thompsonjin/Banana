@@ -9,6 +9,7 @@ public class RoboChimp : BaseEnemy
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    public Animator anim;
 
     [Header("Movement")]
     public bool isFacingRight;
@@ -34,6 +35,7 @@ public class RoboChimp : BaseEnemy
 
         if (!spray)
         {
+            anim.SetBool("Shoot", false);
             playerHitTimer -= Time.deltaTime;
 
             if (playerHitTimer <= 0)
@@ -45,6 +47,7 @@ public class RoboChimp : BaseEnemy
         }
         else
         {
+            anim.SetBool("Shoot", true);
             playerHitTimer += Time.deltaTime;
 
             if (playerHitTimer >= PLAYER_HIT_TIME)
