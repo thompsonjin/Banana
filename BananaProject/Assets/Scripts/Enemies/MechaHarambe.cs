@@ -116,7 +116,8 @@ public class MechaHarambe : MonoBehaviour
                     animOne.SetBool("Fire", true);
                     animTwo.SetBool("Fire", true);
                     if (attackType == 0)
-                    {               
+                    {
+                        audio.Play();
                         Instantiate(normalLaser, projectilePointOne.position, Quaternion.identity);
                         Instantiate(normalLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime;
@@ -125,12 +126,14 @@ public class MechaHarambe : MonoBehaviour
                     {
                         if(b_Man.phase == 1)
                         {
+                            audio.Play();
                             Instantiate(normalLaser, projectilePointOne.position, Quaternion.identity);
                             Instantiate(normalLaser, projectilePointTwo.position, Quaternion.identity);
                             reload = reloadTime;
                         }
                         else
                         {
+                            audio.Play();
                             Instantiate(randomLaser, projectilePointOne.position, Quaternion.identity);
                             Instantiate(randomLaser, projectilePointTwo.position, Quaternion.identity);
                             reload = reloadTime / 2.5f;
@@ -139,6 +142,7 @@ public class MechaHarambe : MonoBehaviour
                     }
                     else if (attackType == 2)
                     {
+                        audio.Play();
                         Instantiate(trackingLaser, projectilePointOne.position, Quaternion.identity);
                         Instantiate(trackingLaser, projectilePointTwo.position, Quaternion.identity);
                         reload = reloadTime * 3;
