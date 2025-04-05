@@ -61,5 +61,19 @@ public class PlayerCollectionSystem : MonoBehaviour
             Destroy(collision.gameObject);
             pControl.PlayPickup();
         }
+
+        //Banana shield shard detection
+        if (collision.gameObject.CompareTag("Shield Shard"))
+        {
+            pControl.EnableBananaShield();
+            Destroy(collision.gameObject);
+        }
+
+        //Banana shield shard detection
+        if (collision.gameObject.CompareTag("Charge Shard"))
+        {
+            pControl.EnableCharge();
+            Destroy(collision.gameObject);
+        }
     }
 }

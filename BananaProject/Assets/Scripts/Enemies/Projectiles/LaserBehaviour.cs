@@ -13,14 +13,9 @@ public class LaserBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (random)
-        {
-            SetBossTarget();
-        }
-        else
-        {
-            SetTargetPlayer();
-        }         
+        player = GameObject.Find("Player");
+        target = this.transform.position - player.transform.position;
+        target.Normalize();
     }
 
     // Update is called once per frame
@@ -47,25 +42,5 @@ public class LaserBehaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
         
-    }
-
-    public void SetBossTarget()
-    {
-        GameObject boss = GameObject.Find("Robot");
-
-        target = this.transform.position - boss.transform.position;
-        target.Normalize();
-        target = -target;
-    }
-
-    public void SetTargetPlayer()
-    {
-        GameObject player = GameObject.Find("Player");
-
-        if (player != null)
-        {
-            target = this.transform.position - player.transform.position;
-            target.Normalize();
-        }
     }
 }

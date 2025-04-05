@@ -12,8 +12,6 @@ public class RoboOrangutan : BaseEnemy
     [SerializeField] private LayerMask groundLayer;
     private GameObject player;
     private PlayerController p_Con;
-    private ScoreTracker score;
-    
 
     [Header("Movement")]
     [SerializeField] private float patrolSpeed;
