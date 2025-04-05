@@ -19,6 +19,7 @@ public class PlayerCollectionSystem : MonoBehaviour
             Debug.Log("Collected banana coin");
             pControl.IncreaseMaxBananas();
             Destroy(collision.gameObject);
+            pControl.PlayPickup();
         }
 
         //Shadow kick shard detection
@@ -26,6 +27,7 @@ public class PlayerCollectionSystem : MonoBehaviour
         {
             pControl.EnableShadowKick();
             Destroy(collision.gameObject);
+            pControl.PlayPickup();
         }
 
         //Ground Pound shard detection
@@ -33,6 +35,7 @@ public class PlayerCollectionSystem : MonoBehaviour
         {
             pControl.EnableGroundPound();
             Destroy(collision.gameObject);
+            pControl.PlayPickup();
         }
 
         //Banana Gun shard detection
@@ -40,6 +43,23 @@ public class PlayerCollectionSystem : MonoBehaviour
         {
             pControl.EnableBananaGun();
             Destroy(collision.gameObject);
+            pControl.PlayPickup();
+        }
+
+        //Banana shield shard detection
+        if (collision.gameObject.CompareTag("Shield Shard"))
+        {
+            pControl.EnableBananaShield();
+            Destroy(collision.gameObject);
+            pControl.PlayPickup();
+        }
+
+        //Banana shield shard detection
+        if (collision.gameObject.CompareTag("Charge Shard"))
+        {
+            pControl.EnableCharge();
+            Destroy(collision.gameObject);
+            pControl.PlayPickup();
         }
 
         //Banana shield shard detection

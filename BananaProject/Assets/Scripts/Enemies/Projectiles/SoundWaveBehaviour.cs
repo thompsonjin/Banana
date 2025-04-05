@@ -16,7 +16,7 @@ public class SoundWaveBehaviour : MonoBehaviour
             Vector3 relativePos = this.transform.parent.position - player;
             relativePos.Normalize();
 
-            Vector2 boopForce = new Vector3(relativePos.x * 5, -4);
+            Vector2 boopForce = new Vector3(relativePos.x * 20, -4);
 
             p_Con.boop = true;
             rb.AddForce(-boopForce, ForceMode2D.Impulse);

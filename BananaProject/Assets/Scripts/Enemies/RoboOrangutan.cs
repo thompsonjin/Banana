@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class RoboOrangutan : BaseEnemy
@@ -11,11 +12,10 @@ public class RoboOrangutan : BaseEnemy
     [SerializeField] private LayerMask groundLayer;
     private GameObject player;
     private PlayerController p_Con;
-    private ScoreTracker score;
 
     [Header("Movement")]
     [SerializeField] private float patrolSpeed;
-    [SerializeField] private float chaseSpeed;
+    public float chaseSpeed;
     private Vector2 moveDir;
     private bool isFacingRight;
     private bool turn;
@@ -40,16 +40,7 @@ public class RoboOrangutan : BaseEnemy
         {
             if (ShouldTurn())
             {
-                turn = !turn;
-
-                if (turn)
-                {
-                    moveDir = new Vector2(1, 0);
-                }
-                else
-                {
-                    moveDir = new Vector2(-1, 0);
-                }
+                Turn();
             }
         }
         else
@@ -98,6 +89,19 @@ public class RoboOrangutan : BaseEnemy
         }
     }
 
+    private void Turn()
+    {
+        turn = !turn;
+
+        if (turn)
+        {
+            moveDir = new Vector2(1, 0);
+        }
+        else
+        {
+            moveDir = new Vector2(-1, 0);
+        }
+    }
 
 
     //COMBAT FUNCTIONS

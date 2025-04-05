@@ -13,14 +13,9 @@ public class LaserBehaviour : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (random)
-        {
-            SetRandomTarget();
-        }
-        else
-        {
-            SetTargetPlayer();
-        }         
+        player = GameObject.Find("Player");
+        target = this.transform.position - player.transform.position;
+        target.Normalize();
     }
 
     // Update is called once per frame
@@ -47,33 +42,5 @@ public class LaserBehaviour : MonoBehaviour
             Destroy(this.gameObject);
         }
         
-    }
-
-    public void SetRandomTarget()
-    {
-        float x = Random.Range(-1, 2);
-        float y = Random.Range(-1, 2);
-
-        if(x == 0)
-        {
-            x += .5f;
-        }
-        if(y == 0)
-        {
-            y += .5f;
-        }
-
-        target = new Vector3(x,y,0);
-    }
-
-    public void SetTargetPlayer()
-    {
-        GameObject player = GameObject.Find("Player");
-
-        if (player != null)
-        {
-            target = this.transform.position - player.transform.position;
-            target.Normalize();
-        }
     }
 }

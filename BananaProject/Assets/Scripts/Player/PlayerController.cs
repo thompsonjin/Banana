@@ -22,7 +22,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private GameObject cameraFollowTarget;
     private CameraFollowTarget camFT;
-    [SerializeField]private Animator anim;
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -31,7 +30,10 @@ public class PlayerController : MonoBehaviour
     private bool banananaShieldActive = false;
     [SerializeField] private GameObject shieldVisual;
     //HEALTH UI
-    [SerializeField] private Image[] displayHealth = new Image[3];
+    [SerializeField] private List<Image> displayHearts = new List<Image>();
+    [SerializeField] private GameObject heartUIprefab;
+    [SerializeField] private GameObject emptyHeartPrefab;
+    [SerializeField] private Transform heartUIParent;
 
     [Header("Resources")]
     //BANANA UI
@@ -132,38 +134,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool isGunPulled = false;
     [SerializeField] private float fireRate = 0.5f;
     private float nextFireTime = 0f;
-    [SerializeField] private SpriteRenderer weaponSprite;
     [SerializeField] private float gunDuration = 10f;
     [SerializeField] private float gunTimer = 0f;
 
-    [Header("Checkpoint")]
-    public GameObject[] checkpoints;
-
     void Awake()
-    {
-        maxBananas = BananaManager.MaxBananas;
-        bananaCount = maxBananas;
-        InitializeBananaUI();
+   {
+    health = maxHealth;
+    bananaCount = maxBananas;
+    currentSpeed = normalSpeed;
 
-        health = maxHealth;
-        bananaCount = maxBananas;
-        currentSpeed = normalSpeed;
-        if (cameraFollowTarget!=null)
-        {
-            camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-        }
-     
-        weaponSprite.enabled = false;
-    }
-
-    private void Start()
-    {
-        if (CheckpointManager.checkpointNum<checkpoints.Length)
-        {
-            Debug.Log(checkpoints.Length);
-            transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
-        }
-    }
+    chargePowerTimer = 0;
+    camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+    weaponSprite.enabled = false;
+   } 
 
     void Update()
     {
@@ -187,7 +170,6 @@ public class PlayerController : MonoBehaviour
 
         isClimbing = false;
         rb.gravityScale = 7;
-        anim.SetBool("Climbing", false);
       }
       else
       {
@@ -210,12 +192,14 @@ public class PlayerController : MonoBehaviour
          coyoteTimeCounter = 0f;
       }
 
-      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost)
+      if(!IsGrounded() && Input.GetKeyDown(KeyCode.Space) && sakiBoost && !isClimbing)
       {
           //if the player is allowed to jump apply jump power to the player's velocity
           rb.velocity = new Vector2(rb.velocity.x, jumpPower * 2);
 
-          jumpBufferCounter = 0f;
+            walk.clip = clips[0];
+            walk.Play();
+            jumpBufferCounter = 0f;
           sakiBoost = false;
           sakiBoostIndicator.SetActive(false);
       }
@@ -238,33 +222,16 @@ public class PlayerController : MonoBehaviour
         }
 
 
-        //Punch
-        reload -= Time.deltaTime;
-        if(reload <= 0)
-        {
-            reload = 0;
-        }
-
-        if (reload <= 0 && Input.GetKeyDown(KeyCode.J))
-        {
-            BasicAttack();
-            anim.SetBool("Punch", true);
-            reload = reloadTime;
-        }
-        else
-        {
-            anim.SetBool("Punch", false);
-        }
+      //Punch
+      if(Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.J))
+      {
+         BasicAttack();
+      }
 
         //Regular Kick
-        if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K) && IsGrounded())
         {
             BasicKick();
-            anim.SetBool("Kick", true);
-        }
-        else
-        {
-            anim.SetBool("Kick", false);
         }
 
         //Shadow kick charging
@@ -272,6 +239,9 @@ public class PlayerController : MonoBehaviour
         {
             if (bananaCount > 0)
             {
+                if (powerBarUI != null && !powerBarUI.activeSelf)
+                    powerBarUI.SetActive(true);
+
                 isChargingShadowKick = true;
                 shadowKickPower += .01f + Time.deltaTime;
 
@@ -291,14 +261,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
+        if (Input.GetMouseButtonUp(1) && isChargingShadowKick || Input.GetKeyUp(KeyCode.K) && isChargingShadowKick)
         {
-
             ShadowKick();
             UseBanana(1);
             isChargingShadowKick = false;
             shadowKickPower = 0;
             powerSlider.value = 0;
+        }
+        
+        else if (powerBarUI != null && powerBarUI.activeSelf && !isShadowKicking && !isChargingShadowKick)
+        {
+            powerBarUI.SetActive(false);
         }
 
         //Ground Pound
@@ -307,76 +281,34 @@ public class PlayerController : MonoBehaviour
             if (bananaCount > 0)
             {
                 groundPound = true;
-                anim.SetBool("Ground Pound", true);
                 SetAura(true);
                 UseBanana(1);
             }
         }
-        //Charge
-        if (hasCharge)
+
+      //Charge
+        if (Input.GetKeyDown(KeyCode.L))
         {
-            if (Input.GetKeyDown(KeyCode.L))
+            if(bananaCount >= 3)
             {
-                if (bananaCount >= 3)
-                {
-                    UseBanana(3);
-                    canCharge = true;
-                    SetAura(true);
-                    currentSpeed = boostSpeed;
-                    chargeTimer = chargeDuration;
-                    chargeBar.value = 1f;
-                }
+                UseBanana(3);
+                canCharge = true;
             }
+        }
 
-            if (Input.GetKey(KeyCode.L) && canCharge)
-            {
-                anim.SetBool("Charge", true);
-                focus += .1f;
+        if (Input.GetKey(KeyCode.L) && canCharge)
+        {
+            ChargeAttack();      
+        }
 
-                if(focus >= 28)
-                {
-                    focus = 28;
-                }
-                chargeTimer -= Time.deltaTime;
-                chargeBar.value = chargeTimer / chargeDuration;
-                v_Cam.m_Lens.OrthographicSize = focus;
-;
-                if (chargeTimer <= 0)
-                {
-                    if (bananaCount == 0)
-                    {
-                        currentSpeed = normalSpeed;
-                        chargeBar.value = 0;
-                        SetAura(false);
-                        canCharge = false;
-                        anim.SetBool("Charge", false);
-                    }
-                    else
-                    {
-                        UseBanana(1);
-                        chargeTimer = chargeDuration;
-                    }
-                }
-            }
-
-            if (Input.GetKeyUp(KeyCode.L))
-            {
-                currentSpeed = normalSpeed;
-                chargeBar.value = 0;
-                SetAura(false);
-                canCharge = false;
-                anim.SetBool("Charge", false);
-            }
-
-            if (!canCharge)
-            {
-                focus -= .1f;
-                if (focus <= 15)
-                {
-                    focus = 15;
-                }
-                v_Cam.m_Lens.OrthographicSize = focus;
-            }
+        if(Input.GetKeyUp(KeyCode.L))
+        {
+            chargePower = 0;
+            chargePowerTimer = 0;
+            currentSpeed = normalSpeed;
+            chargeBar.value = 0;
+            SetAura(false);
+            canCharge = false;
         }
         
 
@@ -387,9 +319,8 @@ public class PlayerController : MonoBehaviour
             if (bananaCount >= 5)
             {
                 isGunPulled = true;
-                anim.SetBool("Gun", true);
                 weaponSprite.enabled = true;
-                UseBanana(5);
+                UseBanana(3);
                 gunTimer = gunDuration;
             }
         }
@@ -401,22 +332,19 @@ public class PlayerController : MonoBehaviour
             {
                 anim.SetBool("Gun", false);
                 isGunPulled = false;
-                weaponSprite.enabled = false;
             }
             else if (Input.GetKey(KeyCode.J))
             {
+                if (!combat.isPlaying)
+                {
+                    combat.clip = clips[9];
+                    combat.Play();
+                }
+
+                
                 Shoot();
             }
         }
-
-        //Banana shield handling
-        if (hasBananaShield && bananaCount >= maxBananas && !banananaShieldActive)
-        {
-            banananaShieldActive = true;
-            shieldVisual.SetActive(true);
-            Debug.Log("Banana Shield ON");
-        }
-        
 
         //METHOD TO CHECK FOR THROWABLE OBJECTS
         CheckPickupAndThrow();
@@ -455,32 +383,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Flip();
-
-        //Height check in map to kill the player if it goes below a specified height
-        if (transform.position.y <= -500)
-
-        {
-            for (int i = health - 1; i >= 0; i--)
-            {
-                displayHealth[i].enabled = false;
-            }
-
-            health = 0;
-            Debug.Log("You Are Dead");
-            Die();
-        }
-
-        //DEV TOOL GOD MODE
-        if (Input.GetKeyDown(KeyCode.Alpha0))
-        {
-            if (SettingsManager.Instance != null)
-            {
-                SettingsManager.Instance.ToggleGodMode();
-                Debug.Log("God Mode: " + (SettingsManager.Instance.GodModeEnabled ? "Enabled" : "Disabled"));
-            }
-        }
-    }
+      Flip();
+   }
 
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
@@ -496,6 +400,8 @@ public class PlayerController : MonoBehaviour
                     recoverTime += Time.deltaTime;
                     if (recoverTime > .5f)
                     {
+                        ability.clip = clips[8];
+                        ability.Play();
                         SetAura(false);
                         recoverTime = 0;
                         groundPound = false;
@@ -510,18 +416,8 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Vector2 move = new Vector2(horizontal * currentSpeed, rb.velocity.y);
                 //apply the product of horizontal and speed to the players current velocity
-                rb.velocity = move;
-
-                if (move.x != 0)
-                {
-                    anim.SetBool("Walking", true);
-                }
-                else
-                {
-                    anim.SetBool("Walking", false);
-                }
+                rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
             }
         }
     }
@@ -539,6 +435,12 @@ public class PlayerController : MonoBehaviour
         {
             isFacingRight = !isFacingRight;
             transform.Rotate(0f, 180f, 0f);
+
+            //Keeps UI bars from rotating
+            if (barsCanvasObject != null)
+            {
+                barsCanvasObject.Rotate(0f, 180f, 0f);
+            }
 
             if (camFT!=null)
             {
@@ -769,9 +671,6 @@ public class PlayerController : MonoBehaviour
         }
 
         rb.velocity = Vector2.zero;
-
-        isShadowKicking = false;
-        anim.SetBool("Shadow Lunge", false);
     }
 
     //Method to enable and disable Shadow Kick
@@ -813,6 +712,31 @@ public class PlayerController : MonoBehaviour
     public void EnableBananaGun()
     {
         hasBananaGun = true;
+    }
+
+    public void DisableShadowKick()
+    {
+        hasShadowKick = false;
+    }
+
+    public void DisableCharge()
+    {
+        hasCharge = false;
+    }
+
+    public void DisableGroundPound()
+    {
+        hasGroundPound = false;
+    }
+
+    public void DisableBananaGun()
+    {
+        hasBananaGun = false;
+    }
+
+    public void DisableBananaShield()
+    {
+        hasBananaShield = false;
     }
 
     //Throw Object Mechanic
@@ -942,6 +866,45 @@ public class PlayerController : MonoBehaviour
 
 
     //HEALTH MANAGMENT
+
+    //Handle heart UI
+    private void InitializeHeartUI()
+    {
+        if (heartUIprefab == null || emptyHeartPrefab == null || heartUIParent == null)
+        {
+            Debug.LogWarning("Missing heart UI references in PlayerController");
+            return;
+        }
+
+        foreach (Image img in displayHearts)
+        {
+            if (img != null)
+                Destroy(img.gameObject);
+        }
+        displayHearts.Clear();
+
+        float spacing = 80f;
+
+        for (int i = 0; i < maxHealth; i++)
+        {
+            //Empty heart slots
+            GameObject emptySlot = Instantiate(emptyHeartPrefab, heartUIParent);
+            RectTransform emptyRect = emptySlot.GetComponent<RectTransform>();
+            emptyRect.anchoredPosition = new Vector2(i * spacing, 0);
+            emptySlot.GetComponent<Image>().raycastTarget = false;
+
+            //Filled hearts
+            GameObject filledHeart = Instantiate(heartUIprefab, heartUIParent);
+            RectTransform filledRect = filledHeart.GetComponent<RectTransform>();
+            filledRect.anchoredPosition = new Vector2(i * spacing, 0);
+            Image heartImage = filledHeart.GetComponent<Image>();
+            heartImage.raycastTarget = false;
+
+            displayHearts.Add(heartImage);
+            heartImage.enabled = true;
+        }
+    }
+
     public void TakeDamage()
     {
         if (SettingsManager.Instance != null && SettingsManager.Instance.GodModeEnabled)
@@ -953,34 +916,25 @@ public class PlayerController : MonoBehaviour
         //Check if banana shield is active and able to use
         if (hasBananaShield && banananaShieldActive)
         {
-            banananaShieldActive = false;
-            shieldVisual.SetActive(false);
-            UseBanana(2);
-            Debug.Log("BLOCKED BY JAMES");
-            return;
-        }
+            health--;
 
-        if (isShadowKicking)
-        {
-            isShadowKicking = false;
-            anim.SetBool("Shadow Lunge", false);
-            rb.velocity = Vector2.zero;
-        }
+            if (health > 0)
+            {
+                Debug.Log("DAMAGE");
 
-        health--;
+                displayHealth[health].enabled = false;
+            }
+            else if (health == 0)
+            {
+                Debug.Log("You Are Dead");
 
-        if (health > 0)
-        {
-            Debug.Log("DAMAGE");
-
-            displayHealth[health].enabled = false;
-        }
-        else if (health == 0)
-        {
-            Debug.Log("You Are Dead");
-            displayHealth[health].enabled = false;
-            Die();
-        }
+                displayHealth[health].enabled = false;
+            }
+            else
+            {
+                Debug.Log("You Are Dead");
+            }
+        }       
     }
 
     public void GainHealth(int h)
@@ -992,8 +946,8 @@ public class PlayerController : MonoBehaviour
             health = maxHealth;
         }
 
-        displayHealth[health - 1].enabled = true;
-    }
+      displayHealth[health - 1].enabled = true;
+   }
 
     //Death management logic
     public void Die()
@@ -1031,90 +985,13 @@ public class PlayerController : MonoBehaviour
     {
         bananaCount += b;
 
-        if (bananaCount > maxBananas)
-        {
-            bananaCount = maxBananas;
-        }
-        else
-        {
-            displayBananas[bananaCount - 1].enabled = true;
-        }
-    }
-
-    //DEV TOOL used to refill bananas
-    private IEnumerator RefillBananaUI(int count)
-    {
-        yield return new WaitForSeconds(0.5f);
-
-        for (int i = 0; i < count; i++)
-        {
-            if (bananaCount - 1 - i >= 0 && bananaCount - 1 - i < displayBananas.Count)
-                displayBananas[bananaCount - 1 - i].enabled = true;
-        }
-    }
-
-    //Method to manage bananas
-    private void InitializeBananaUI()
-    {
-        if (bananacoinUIprefab == null || emptyBananacoinPrefab == null || bananaUIParent == null)
-        {
-            Debug.LogWarning("Missing UI references in PlayerController");
-            return;
-        }
-
-        foreach (Image img in displayBananas)
-        {
-            if (img != null)
-                Destroy(img.gameObject);
-        }
-        displayBananas.Clear();
-
-        float spacing = 40f;
-
-        //Create UI elements for current max bananas
-        for (int i = 0; i < maxBananas; i++)
-        {
-            //Empty banana slots
-            GameObject emptySlot = Instantiate(emptyBananacoinPrefab, bananaUIParent);
-            RectTransform emptyRect = emptySlot.GetComponent<RectTransform>();
-            emptyRect.anchoredPosition = new Vector2(i * spacing, 0);
-            emptySlot.GetComponent<Image>().raycastTarget = false;
-
-            //Banana coins
-            GameObject filledCoin = Instantiate(bananacoinUIprefab, bananaUIParent);
-            RectTransform filledRect = filledCoin.GetComponent<RectTransform>();
-            filledRect.anchoredPosition = new Vector2(i * spacing, 0);
-            Image coinImage = filledCoin.GetComponent<Image>();
-            coinImage.raycastTarget = false;
-
-            displayBananas.Add(coinImage);
-
-            coinImage.enabled = true;
-        }
-    }
-
-    //Increase banana capacity when picking up the coin
-    public void IncreaseMaxBananas()
-    {
-        BananaManager.IncreaseMaxBananas();
-        maxBananas = BananaManager.MaxBananas;
-
-        float spacing = 40f;
-
-        GameObject emptySlot = Instantiate(emptyBananacoinPrefab, bananaUIParent);
-        RectTransform emptyRect = emptySlot.GetComponent<RectTransform>();
-        emptyRect.anchoredPosition = new Vector2((maxBananas - 1) * spacing, 0);
-        emptySlot.GetComponent<Image>().raycastTarget = false;
-
-        GameObject filledCoin = Instantiate(bananacoinUIprefab, bananaUIParent);
-        RectTransform filledRect = filledCoin.GetComponent<RectTransform>();
-        filledRect.anchoredPosition = new Vector2((maxBananas - 1) * spacing, 0);
-        Image coinImage = filledCoin.GetComponent<Image>();
-        coinImage.raycastTarget = false;
-
-        displayBananas.Add(coinImage);
-        displayBananas[maxBananas - 1].enabled = false;
-
-        GiveBanana(1);
-    }
+      if(bananaCount > maxBananas)
+      {
+         bananaCount = maxBananas;
+      }
+      else
+      {
+         displayBananas[bananaCount -  1].enabled = true;
+      }    
+   }
 }
