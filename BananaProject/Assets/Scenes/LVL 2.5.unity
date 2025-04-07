@@ -14586,6 +14586,85 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &395445710
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 395445711}
+  - component: {fileID: 395445713}
+  - component: {fileID: 395445712}
+  m_Layer: 5
+  m_Name: Instruciton (3)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &395445711
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395445710}
+  m_LocalRotation: {x: -0, y: -0, z: -0.00070987805, w: 0.9999998}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1978407992}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.081}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 18.58, y: 3.94}
+  m_SizeDelta: {x: 11.4932, y: 4.8071}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &395445712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395445710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.12968199, g: 0.7283019, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_FontSize: 1
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 4
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Harness the power of sound to jump twice
+--- !u!222 &395445713
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395445710}
+  m_CullTransparentMesh: 1
 --- !u!1001 &396926296
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14655,6 +14734,63 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd1f979b4ebc1f34587d1f265a2e647f, type: 3}
+--- !u!1001 &468278553
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5925756607552273175, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_Name
+      value: Robo Saki
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -12.776703
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.911807
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6942577984381119795, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1ae4bf943c1b40e409cc50124f37047a, type: 3}
 --- !u!1 &488480520
 GameObject:
   m_ObjectHideFlags: 0
@@ -15793,8 +15929,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.081}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.00000051409006, y: 5.2295}
-  m_SizeDelta: {x: 8.9097, y: 3.8638}
+  m_AnchoredPosition: {x: -0.00000023842, y: 4.7653}
+  m_SizeDelta: {x: 11.4312, y: 4.7923}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &827628189
 MonoBehaviour:
@@ -15829,7 +15965,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hold L to charge
+  m_Text: Hold L while moving to charge
 --- !u!222 &827628190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -35468,11 +35604,12 @@ RectTransform:
   - {fileID: 827628188}
   - {fileID: 740141703}
   - {fileID: 546426615}
+  - {fileID: 395445711}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -31.31, y: 5.21}
+  m_AnchoredPosition: {x: -31.38, y: 5.28}
   m_SizeDelta: {x: 15.6063, y: 14.3228}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2077233315
@@ -35534,3 +35671,4 @@ SceneRoots:
   - {fileID: 2077233316}
   - {fileID: 1552489264}
   - {fileID: 624254678}
+  - {fileID: 468278553}
