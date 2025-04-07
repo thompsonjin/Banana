@@ -199,8 +199,8 @@ MonoBehaviour:
   boostSpeed: 35
   sprite: {fileID: 2127180801005447105}
   v_Cam: {fileID: 0}
-  punchKnockback: 5
-  uppercutKnockback: 10
+  punchKnockback: 15
+  uppercutKnockback: 20
   kickKnockback: 25
   chargeKnockback: 10
   maxBananas: 5
