@@ -265,8 +265,8 @@ Transform:
   m_GameObject: {fileID: 6465536714672063970}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2938, y: 2.399, z: 0}
-  m_LocalScale: {x: 1.3860174, y: 0.37886915, z: 0.22493812}
+  m_LocalPosition: {x: -0.2938, y: 2.3058, z: 0}
+  m_LocalScale: {x: 1.3860174, y: 0.56527275, z: 0.22493812}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2506261495545767138}
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 3203702937111889816}
   m_Layer: 3
   m_Name: Shield
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -531,8 +531,8 @@ Transform:
   m_GameObject: {fileID: 7816594458025317698}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.3476, y: -0.3802, z: 0}
-  m_LocalScale: {x: 0.6296918, y: 3.9214742, z: 0.22493812}
+  m_LocalPosition: {x: 1.2515, y: -0.3802, z: 0}
+  m_LocalScale: {x: 0.82193667, y: 3.9214742, z: 0.22493812}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2506261495545767138}
@@ -604,7 +604,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2

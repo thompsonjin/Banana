@@ -15,11 +15,18 @@ public class SpawnManager : MonoBehaviour
     private float spawnTimer;
     public float spawnTimeMax;
 
+    float waveWaitTime;
+    float maxWaitTime = 3;
+
     public GameObject door;
 
     public Text count;
+    public Text waveTitle;
     private int enemiesLeft;
     public LayerMask enemyLayer;
+    float textVis;
+    float textTime;
+    float maxTextTime = 5;
 
     public AudioSource first;
     public AudioSource second;
@@ -29,7 +36,11 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        first.clip.LoadAudioData();
+        second.clip.LoadAudioData();
+        third.clip.LoadAudioData();
         spawnTimer = spawnTimeMax;
+        waveWaitTime = maxWaitTime;
     }
 
     // Update is called once per frame
@@ -40,6 +51,11 @@ public class SpawnManager : MonoBehaviour
         {
             if (!first.isPlaying && waveNum == 1)
             {
+                textTime = maxTextTime;
+                textVis = 1;
+                waveTitle.color = new Color(1,1,1,textVis);
+                waveTitle.text = "";
+                waveTitle.text = waveTitle.text + "Wave One";
                 first.Play();
             }
 
@@ -48,15 +64,31 @@ public class SpawnManager : MonoBehaviour
                 Wave();
             }
 
-            if (GameObject.FindWithTag("Enemy") == null)
-            {
-                waveNum++;
-                canSpawn = true;
+            if (GameObject.FindWithTag("Enemy") == null && waveNum > 0)
+            {               
+                waveWaitTime -= Time.deltaTime;
+                if(waveWaitTime <= 0)
+                {
+                    waveNum++;
+                    canSpawn = true;
+                }
             }
             else
             {
-                canSpawn = false;
+                waveWaitTime = maxWaitTime;
+                canSpawn = false;         
             }
+        }
+
+        if(textVis > 0)
+        {
+            textTime -= Time.deltaTime;
+
+            if(textTime <= 0)
+            {
+                textVis -= .01f;
+                waveTitle.color = new Color(1, 1, 1, textVis);
+            }      
         }
 
         Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(transform.position, 100, enemyLayer);
@@ -67,18 +99,36 @@ public class SpawnManager : MonoBehaviour
         switch (waveNum)
         {
             case 2:
-                if (!second.isPlaying)
+
+                if(waveWaitTime <= 0)
                 {
-                    first.Stop();
-                    second.Play();
-                }         
+                    if (!second.isPlaying)
+                    {
+                        textTime = maxTextTime;
+                        textVis = 1;
+                        waveTitle.color = new Color(1, 1, 1, textVis);
+                        waveTitle.text = "";
+                        waveTitle.text = "Wave Two";
+                        first.Stop();
+                        second.Play();
+                    }
+                }                   
                 break;
             case 3:
-                if (!third.isPlaying)
+
+                if (waveWaitTime <= 0)
                 {
-                    second.Stop();
-                    third.Play();
-                }                    
+                    if (!third.isPlaying)
+                    {
+                        textTime = maxTextTime;
+                        textVis = 1;
+                        waveTitle.color = new Color(1, 1, 1, textVis);
+                        waveTitle.text = "";
+                        waveTitle.text = "Wave Three";
+                        second.Stop();
+                        third.Play();
+                    }
+                }                         
                 break;
             case 4:
                 if (!first.isPlaying)
