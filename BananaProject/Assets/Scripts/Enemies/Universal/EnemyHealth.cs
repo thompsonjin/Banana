@@ -6,7 +6,7 @@ public class EnemyHealth : MonoBehaviour
 {
     private PlayerController p_Con;
     private BaseEnemy b_En;
-    private ScoreTracker score;
+    private ScoreDisplay score;
 
     public int type;
     //1 Baboon
@@ -23,7 +23,7 @@ public class EnemyHealth : MonoBehaviour
     {
         p_Con = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         b_En = this.gameObject.GetComponent<BaseEnemy>();
-        score = GameObject.FindWithTag("Score").GetComponent<ScoreTracker>();
+        score = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
         health = maxHealth;
     }
 
@@ -37,25 +37,25 @@ public class EnemyHealth : MonoBehaviour
             {
                 case 1:
                     //Baboon
-                    score.IncreaceScore(100);
+                    score.IncreaceCurrentScore(100);
                     break;
                 case 2:
                     //Proboscis
-                    score.IncreaceScore(150);
+                    score.IncreaceCurrentScore(150);
                     break;
                 case 3:
-                    score.IncreaceScore(50);
+                    score.IncreaceCurrentScore(50);
                     //Tiny monkey
                     break;
                 case 4:
-                    score.IncreaceScore(200);
+                    score.IncreaceCurrentScore(200);
                     //Chimp
                     break;
                 case 5:
                     //Saki
                     p_Con.sakiBoost = true;
                     p_Con.sakiBoostIndicator.SetActive(true);
-                    score.IncreaceScore(200);
+                    score.IncreaceCurrentScore(200);
                     break;
             }
             p_Con.GiveBanana(1);
