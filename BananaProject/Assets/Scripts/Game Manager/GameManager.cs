@@ -27,7 +27,11 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         BananaCoinCheck();
-        s_Dis = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
+        
+        if(GameObject.FindWithTag("Score"))
+        {
+            s_Dis = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
+        }
     }
 
     public void OnPLayerDeath()

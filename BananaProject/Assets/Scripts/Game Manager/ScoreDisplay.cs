@@ -36,7 +36,7 @@ public class ScoreDisplay : MonoBehaviour
 
         if (scoreboard)
         {
-            CheckGameWin();
+            HandleScoreboard();
         }
     }
 
@@ -84,7 +84,7 @@ public class ScoreDisplay : MonoBehaviour
 
     //SCOREBOARD MANAGEMENT
 
-    void CheckGameWin()
+    void HandleScoreboard()
     {
         if (win)
         {
@@ -94,10 +94,13 @@ public class ScoreDisplay : MonoBehaviour
         {
             gameWinText.SetActive(false);
         }
+
+        scoreText.text = ScoreTracker.totalScore.ToString();
+        timeText.text = Mathf.RoundToInt(ScoreTracker.totalTime).ToString(); ;
     }
 
     public void NextElevator()
     {
-        SceneManager.LoadScene(ScoreTracker.lastScene);
+        SceneManager.LoadScene(ScoreTracker.lastScene + 1);
     }
 }

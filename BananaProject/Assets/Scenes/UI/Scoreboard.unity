@@ -615,9 +615,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: LevelCompleteScreen, Assembly-CSharp
-        m_MethodName: Elevator
+      - m_Target: {fileID: 884645304}
+        m_TargetAssemblyTypeName: ScoreDisplay, Assembly-CSharp
+        m_MethodName: NextElevator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
