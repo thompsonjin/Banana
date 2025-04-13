@@ -174,6 +174,7 @@ public class PlayerController : MonoBehaviour
     {
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         if (CheckpointManager.checkpointNum<checkpoints.Length)
         {
             Debug.Log(checkpoints.Length);
@@ -182,12 +183,17 @@ public class PlayerController : MonoBehaviour
 =======
 =======
 >>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
         if (checkpoints.Length>0)
         {
             transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
         }
        
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
@@ -216,8 +222,11 @@ public class PlayerController : MonoBehaviour
         isClimbing = false;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         rb.gravityScale = 7;
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
         rb.gravityScale = gravityScale;
@@ -465,8 +474,11 @@ public class PlayerController : MonoBehaviour
             banananaShieldActive = true;
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             shieldVisual.SetActive(true);
 =======
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
             if (shieldVisual!=null)
@@ -617,6 +629,9 @@ public class PlayerController : MonoBehaviour
             }
            
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes

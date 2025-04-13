@@ -20589,7 +20589,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_LocalPosition: {x: -89.09999, y: -131.93001, z: -10}
+=======
+  m_LocalPosition: {x: -39.166668, y: -115.700005, z: -10}
+>>>>>>> Stashed changes
 =======
   m_LocalPosition: {x: -39.166668, y: -115.700005, z: -10}
 >>>>>>> Stashed changes
@@ -29500,7 +29504,11 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   m_LocalPosition: {x: -89.09999, y: -131.93001, z: -10}
+=======
+  m_LocalPosition: {x: -39.166668, y: -115.700005, z: -10}
+>>>>>>> Stashed changes
 =======
   m_LocalPosition: {x: -39.166668, y: -115.700005, z: -10}
 >>>>>>> Stashed changes
