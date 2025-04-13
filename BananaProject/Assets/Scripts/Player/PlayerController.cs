@@ -173,17 +173,23 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         if (CheckpointManager.checkpointNum<checkpoints.Length)
         {
             Debug.Log(checkpoints.Length);
             transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
         }
 =======
+=======
+>>>>>>> Stashed changes
         if (checkpoints.Length>0)
         {
             transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
         }
        
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 
@@ -209,8 +215,11 @@ public class PlayerController : MonoBehaviour
 
         isClimbing = false;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
         rb.gravityScale = 7;
 =======
+=======
+>>>>>>> Stashed changes
         rb.gravityScale = gravityScale;
         if (IsGrounded() && !ability.isPlaying)
         {    
@@ -455,8 +464,11 @@ public class PlayerController : MonoBehaviour
         {
             banananaShieldActive = true;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
             shieldVisual.SetActive(true);
 =======
+=======
+>>>>>>> Stashed changes
             if (shieldVisual!=null)
             {
                 shieldVisual.SetActive(true);
@@ -604,6 +616,9 @@ public class PlayerController : MonoBehaviour
                 camFT.CallTurn();
             }
            
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
         }
     }

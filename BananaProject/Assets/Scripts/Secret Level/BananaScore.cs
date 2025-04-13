@@ -27,6 +27,9 @@ public class BananaScore : MonoBehaviour
 =======
 
  
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     // Update is called once per frame
     void Update()
