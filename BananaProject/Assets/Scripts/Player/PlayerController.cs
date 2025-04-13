@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool hasGroundPound = false;
     [SerializeField] private bool hasBananaGun = false;
     [SerializeField] private bool hasBananaShield = false;
-
+    public float gravityScale = 7;
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
@@ -148,21 +148,43 @@ public class PlayerController : MonoBehaviour
         health = maxHealth;
         bananaCount = maxBananas;
         currentSpeed = normalSpeed;
+<<<<<<< Updated upstream
         if (cameraFollowTarget!=null)
         {
             camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
         }
      
         weaponSprite.enabled = false;
+=======
+
+        if (camFT != null)
+        {
+            camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+            
+        }
+        
+     
+
+        if (powerBarUI != null) powerBarUI.SetActive(false);
+        if (chargeBarUI != null ) chargeBarUI.SetActive(false);
+>>>>>>> Stashed changes
     }
 
     private void Start()
     {
+<<<<<<< Updated upstream
         if (CheckpointManager.checkpointNum<checkpoints.Length)
         {
             Debug.Log(checkpoints.Length);
             transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
         }
+=======
+        if (checkpoints.Length>0)
+        {
+            transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
+        }
+       
+>>>>>>> Stashed changes
     }
 
     void Update()
@@ -186,7 +208,17 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter = jumpBufferTime;
 
         isClimbing = false;
+<<<<<<< Updated upstream
         rb.gravityScale = 7;
+=======
+        rb.gravityScale = gravityScale;
+        if (IsGrounded() && !ability.isPlaying)
+        {    
+            ability.clip = clips[0];
+            ability.Play();
+        }
+        
+>>>>>>> Stashed changes
         anim.SetBool("Climbing", false);
       }
       else
@@ -339,7 +371,11 @@ public class PlayerController : MonoBehaviour
                 }
                 chargeTimer -= Time.deltaTime;
                 chargeBar.value = chargeTimer / chargeDuration;
-                v_Cam.m_Lens.OrthographicSize = focus;
+                if (v_Cam!=null)
+                {
+                    v_Cam.m_Lens.OrthographicSize = focus;
+                }
+            
 ;
                 if (chargeTimer <= 0)
                 {
@@ -375,7 +411,12 @@ public class PlayerController : MonoBehaviour
                 {
                     focus = 15;
                 }
-                v_Cam.m_Lens.OrthographicSize = focus;
+
+                if (v_Cam!=null)
+                {
+                    v_Cam.m_Lens.OrthographicSize = focus;
+                }
+            
             }
         }
         
@@ -413,7 +454,17 @@ public class PlayerController : MonoBehaviour
         if (hasBananaShield && bananaCount >= maxBananas && !banananaShieldActive)
         {
             banananaShieldActive = true;
+<<<<<<< Updated upstream
             shieldVisual.SetActive(true);
+=======
+            if (shieldVisual!=null)
+            {
+                shieldVisual.SetActive(true);
+            }
+           
+            damage.clip = clips[10];
+            damage.Play();
+>>>>>>> Stashed changes
             Debug.Log("Banana Shield ON");
         }
         
@@ -544,7 +595,16 @@ public class PlayerController : MonoBehaviour
             {
                 camFT.CallTurn();
             }
+<<<<<<< Updated upstream
        
+=======
+
+            if (camFT!=null)
+            {
+                camFT.CallTurn();
+            }
+           
+>>>>>>> Stashed changes
         }
     }
 
@@ -555,13 +615,14 @@ public class PlayerController : MonoBehaviour
         {
             vines = true;
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Vines")
         {
-            rb.gravityScale = 7;
+            rb.gravityScale = gravityScale;
             vines = false;
 
             isClimbing = false;

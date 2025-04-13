@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 public class BananaScore : MonoBehaviour
@@ -9,6 +11,8 @@ public class BananaScore : MonoBehaviour
     public float duringTime = 50f;
     public GameObject sucessPannel;
     public GameObject FailutrePannel;
+
+    public CinemachineVirtualCamera camera;
     // Start is called before the first frame update
     void Awake()
     {
@@ -18,7 +22,12 @@ public class BananaScore : MonoBehaviour
         }
     
     }
+<<<<<<< Updated upstream
     
+=======
+
+ 
+>>>>>>> Stashed changes
     // Update is called once per frame
     void Update()
     {
