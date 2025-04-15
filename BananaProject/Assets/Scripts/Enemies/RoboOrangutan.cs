@@ -28,7 +28,10 @@ public class RoboOrangutan : BaseEnemy
     // Start is called before the first frame update
     void Awake()
     {
-        score = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
+        if (GameObject.FindWithTag("Score"))
+        {
+            score = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
+        }
         player = GameObject.Find("Player");
         p_Con = player.GetComponent<PlayerController>();
         patrol = true;
@@ -117,7 +120,10 @@ public class RoboOrangutan : BaseEnemy
 
     public void Die()
     {
-        score.IncreaceCurrentScore(300);
+        if(score != null)
+        {
+            score.IncreaceCurrentScore(300);
+        }
         Destroy(this.gameObject);
     }
 }
