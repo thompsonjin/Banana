@@ -23,7 +23,10 @@ public class EnemyHealth : MonoBehaviour
     {
         p_Con = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         b_En = this.gameObject.GetComponent<BaseEnemy>();
-        score = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
+        if (GameObject.FindWithTag("Score"))
+        {
+            score = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
+        }
         health = maxHealth;
     }
 
@@ -37,25 +40,41 @@ public class EnemyHealth : MonoBehaviour
             {
                 case 1:
                     //Baboon
-                    score.IncreaceCurrentScore(100);
+                    if (score != null)
+                    {
+                        score.IncreaceCurrentScore(100);
+                    }
                     break;
                 case 2:
                     //Proboscis
-                    score.IncreaceCurrentScore(150);
+                    if (score != null)
+                    {
+                        score.IncreaceCurrentScore(150);
+                    }
+
                     break;
                 case 3:
-                    score.IncreaceCurrentScore(50);
+                    if (score != null)
+                    {
+                        score.IncreaceCurrentScore(50);
+                    }
                     //Tiny monkey
                     break;
                 case 4:
-                    score.IncreaceCurrentScore(200);
+                    if (score != null)
+                    {
+                        score.IncreaceCurrentScore(200);
+                    }
                     //Chimp
                     break;
                 case 5:
                     //Saki
                     p_Con.sakiBoost = true;
                     p_Con.sakiBoostIndicator.SetActive(true);
-                    score.IncreaceCurrentScore(200);
+                    if (score != null)
+                    {
+                        score.IncreaceCurrentScore(200);
+                    }
                     break;
             }
             p_Con.GiveBanana(1);

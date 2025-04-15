@@ -21,9 +21,6 @@ public class ScoreDisplay : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ResetCurrentScore();
-        ResetCurrentTime();
-
         if(SceneManager.GetActiveScene().buildIndex == 5)
         {
             ResetTotals();
@@ -69,8 +66,8 @@ public class ScoreDisplay : MonoBehaviour
 
     public void Cache()
     {
-        ScoreTracker.totalScore = ScoreTracker.currentScore;
-        ScoreTracker.totalTime = ScoreTracker.currentTime;
+        ScoreTracker.totalScore += ScoreTracker.currentScore;
+        ScoreTracker.totalTime += ScoreTracker.currentTime;
 
         ScoreTracker.currentScore = 0;
         ScoreTracker.currentTime = 0;

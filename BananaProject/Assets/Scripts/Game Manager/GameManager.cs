@@ -175,9 +175,19 @@ public class GameManager : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             CheckpointManager.CheckpointReset();
-            SceneManager.LoadScene(17);
-            ScoreTracker.lastScene = GetScene();
-            s_Dis.Cache();
+
+            if(GetScene() == 5 || GetScene() == 7 || GetScene() == 9 || GetScene() == 11 || GetScene() == 13 || GetScene() == 15)
+            {
+                SceneManager.LoadScene(17);
+                ScoreTracker.lastScene = GetScene();
+                s_Dis.Cache();
+            }
+            else
+            {
+                SceneManager.LoadScene(GetScene() + 1);
+                s_Dis.ResetCurrentScore();
+                s_Dis.ResetCurrentTime();
+            }
         }
     }
 

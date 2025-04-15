@@ -71,8 +71,11 @@ public class Elevator : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            buttonPrompt.SetActive(false);
-            canSkip = false;
+            if(buttonPrompt != null)
+            {
+                buttonPrompt.SetActive(false);
+                canSkip = false;
+            }           
         }
     }
 }
