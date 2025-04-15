@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool hasGroundPound = false;
     [SerializeField] private bool hasBananaGun = false;
     [SerializeField] private bool hasBananaShield = false;
-
+    public float gravityScale = 7;
 
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
@@ -167,7 +167,13 @@ public class PlayerController : MonoBehaviour
         bananaCount = maxBananas;
         currentSpeed = normalSpeed;
 
-        camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+        if (camFT != null)
+        {
+            camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+            
+        }
+        
+     
 
         if (powerBarUI != null) powerBarUI.SetActive(false);
         if (chargeBarUI != null ) chargeBarUI.SetActive(false);
@@ -175,7 +181,11 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
+        if (checkpoints.Length>0)
+        {
+            transform.position = checkpoints[CheckpointManager.checkpointNum].transform.position;
+        }
+       
     }
 
     void Update()
@@ -199,7 +209,7 @@ public class PlayerController : MonoBehaviour
         jumpBufferCounter = jumpBufferTime;
 
         isClimbing = false;
-        rb.gravityScale = 7;
+        rb.gravityScale = gravityScale;
         if (IsGrounded() && !ability.isPlaying)
         {    
             ability.clip = clips[0];
@@ -388,7 +398,11 @@ public class PlayerController : MonoBehaviour
                 }
                 chargeTimer -= Time.deltaTime;
                 chargeBar.value = chargeTimer / chargeDuration;
-                v_Cam.m_Lens.OrthographicSize = focus;
+                if (v_Cam!=null)
+                {
+                    v_Cam.m_Lens.OrthographicSize = focus;
+                }
+            
 ;
                 if (chargeTimer <= 0)
                 {
@@ -432,7 +446,12 @@ public class PlayerController : MonoBehaviour
                 {
                     focus = 15;
                 }
-                v_Cam.m_Lens.OrthographicSize = focus;
+
+                if (v_Cam!=null)
+                {
+                    v_Cam.m_Lens.OrthographicSize = focus;
+                }
+            
             }
         }
         
@@ -475,7 +494,11 @@ public class PlayerController : MonoBehaviour
         if (hasBananaShield && bananaCount >= maxBananas && !banananaShieldActive)
         {
             banananaShieldActive = true;
-            shieldVisual.SetActive(true);
+            if (shieldVisual!=null)
+            {
+                shieldVisual.SetActive(true);
+            }
+           
             damage.clip = clips[10];
             damage.Play();
             Debug.Log("Banana Shield ON");
@@ -638,7 +661,11 @@ public class PlayerController : MonoBehaviour
                 barsCanvasObject.Rotate(0f, 180f, 0f);
             }
 
-            camFT.CallTurn();
+            if (camFT!=null)
+            {
+                camFT.CallTurn();
+            }
+           
         }
     }
 
@@ -649,13 +676,14 @@ public class PlayerController : MonoBehaviour
         {
             vines = true;
         }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Vines")
         {
-            rb.gravityScale = 7;
+            rb.gravityScale = gravityScale;
             vines = false;
 
             isClimbing = false;

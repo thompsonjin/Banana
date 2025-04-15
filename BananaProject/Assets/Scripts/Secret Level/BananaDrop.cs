@@ -5,24 +5,15 @@ using UnityEngine;
 
 public class BananaDrop : MonoBehaviour
 {
+    public AudioSource pickBananaAudio;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             BananaScore.instance.bananaScore++;
+            pickBananaAudio.Play();
             Destroy(gameObject);
+            
         }
-
-        if (other.CompareTag("Ground"))
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-        transform.Translate(Vector3.down*5f*Time.deltaTime);
     }
 }
