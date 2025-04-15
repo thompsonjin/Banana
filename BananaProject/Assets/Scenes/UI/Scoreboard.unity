@@ -321,7 +321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 884645303}
-  - component: {fileID: 884645302}
+  - component: {fileID: 884645304}
   m_Layer: 0
   m_Name: Win Screen Manager
   m_TagString: Untagged
@@ -329,25 +329,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &884645302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 884645301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f66dbb3f77a62f5428bb07028750954b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  score: 0
-  time: 0
-  boss: 0
-  displayScore: {fileID: 1832081785}
-  displayTime: {fileID: 1152086260}
-  winner: {fileID: 701310818}
-  level: {fileID: 1184588071}
 --- !u!4 &884645303
 Transform:
   m_ObjectHideFlags: 0
@@ -363,6 +344,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &884645304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 884645301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d84af2eb2cfcdb44b010db678466774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreText: {fileID: 1832081785}
+  timeText: {fileID: 1152086260}
+  scoreboard: 1
+  gameWinText: {fileID: 701310818}
+  lvlCompleteText: {fileID: 1184588071}
 --- !u!1 &959339963
 GameObject:
   m_ObjectHideFlags: 0
@@ -395,10 +393,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1828506904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.3921028, y: 0.358}
+  m_AnchorMin: {x: 0.28775, y: 0.358}
   m_AnchorMax: {x: 0.49538532, y: 0.43600002}
-  m_AnchoredPosition: {x: -0.042404175, y: 0.5}
-  m_SizeDelta: {x: -0.7786007, y: -1.293}
+  m_AnchoredPosition: {x: -0.6040039, y: 0.5}
+  m_SizeDelta: {x: 0.34400177, y: -1.293}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &959339965
 MonoBehaviour:
@@ -433,7 +431,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Time:'
+  m_Text: 'Total Time:'
 --- !u!222 &959339966
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -617,9 +615,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 884645302}
-        m_TargetAssemblyTypeName: LevelCompleteScreen, Assembly-CSharp
-        m_MethodName: Elevator
+      - m_Target: {fileID: 884645304}
+        m_TargetAssemblyTypeName: ScoreDisplay, Assembly-CSharp
+        m_MethodName: NextElevator
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -701,7 +699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.50125, y: 0.358}
   m_AnchorMax: {x: 0.6168464, y: 0.43600002}
-  m_AnchoredPosition: {x: 3.3000002, y: 0.5}
+  m_AnchoredPosition: {x: 3.300003, y: 0.5}
   m_SizeDelta: {x: 5.8633003, y: -1.2929993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1152086260
@@ -901,7 +899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.50125, y: 0.43600002}
   m_AnchorMax: {x: 0.6168464, y: 0.51000005}
-  m_AnchoredPosition: {x: 3.299984, y: 0.20700073}
+  m_AnchoredPosition: {x: 3.2999878, y: 0.20700073}
   m_SizeDelta: {x: 5.8633003, y: 0.70700073}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1832081785
@@ -980,10 +978,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1828506904}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.36653897, y: 0.43600002}
+  m_AnchorMin: {x: 0.28775, y: 0.43600002}
   m_AnchorMax: {x: 0.49538532, y: 0.51000005}
-  m_AnchoredPosition: {x: -0.39004517, y: 0.20700073}
-  m_SizeDelta: {x: -0.08319855, y: 0.70700073}
+  m_AnchoredPosition: {x: -0.36257935, y: 0.20700073}
+  m_SizeDelta: {x: -0.13809967, y: 0.707}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1924312857
 MonoBehaviour:
@@ -1018,7 +1016,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score:
+  m_Text: 'Total Score:
 
 '
 --- !u!222 &1924312858

@@ -11,8 +11,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public bool transition;
-    ScoreTracker s_Track;
     private PlayerController player;
+    private ScoreDisplay s_Dis;
 
     private void Awake()
     {
@@ -26,10 +26,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
-        s_Track = GameObject.FindWithTag("Score").GetComponent<ScoreTracker>();
-
         BananaCoinCheck();
+        
+        if(GameObject.FindWithTag("Score"))
+        {
+            s_Dis = GameObject.FindWithTag("Score").GetComponent<ScoreDisplay>();
+        }
     }
 
     public void OnPLayerDeath()
@@ -41,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
 
+        s_Dis.ResetCurrentScore();
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
@@ -172,22 +175,19 @@ public class GameManager : MonoBehaviour
         if(collision.gameObject.tag == "Player")
         {
             CheckpointManager.CheckpointReset();
-            Scene currentScene = SceneManager.GetActiveScene();
-            if(currentScene.buildIndex == 5 || currentScene.buildIndex == 7|| currentScene.buildIndex == 9|| currentScene.buildIndex == 11|| currentScene.buildIndex == 13 || currentScene.buildIndex == 15)
+
+            if(GetScene() == 5 || GetScene() == 7 || GetScene() == 9 || GetScene() == 11 || GetScene() == 13 || GetScene() == 15)
             {
                 SceneManager.LoadScene(17);
-
-                if (currentScene.buildIndex == 15)
-                {
-                    s_Track.SetBossWin();
-                }
+                ScoreTracker.lastScene = GetScene();
+                s_Dis.Cache();
             }
             else
             {
-                SceneManager.LoadScene(currentScene.buildIndex + 1);
-                s_Track.ResetScore();
+                SceneManager.LoadScene(GetScene() + 1);
+                s_Dis.ResetCurrentScore();
+                s_Dis.ResetCurrentTime();
             }
-                
         }
     }
 
