@@ -581,8 +581,8 @@ MonoBehaviour:
   minAlpha: 0.1
   maxAlpha: 0.8
   enableScalePulsate: 1
-  minScale: 0.9
-  maxScale: 1.05
+  minScale: 0.98
+  maxScale: 1
 --- !u!1 &1174660647
 GameObject:
   m_ObjectHideFlags: 0
