@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class LaserBehaviour : MonoBehaviour
 {
@@ -8,7 +9,15 @@ public class LaserBehaviour : MonoBehaviour
     [SerializeField] float speed;
     private Vector3 target;
     public bool tracking;
+    public bool playerBullet;
     public bool random;
+
+    float decay;
+    public float maxDecayTime;
+
+    public LayerMask enemyLayer;
+    float closestDist;
+    GameObject closest;
 
     // Start is called before the first frame update
     void Start()
@@ -26,19 +35,38 @@ public class LaserBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+          
+    }
+
+    private void FixedUpdate()
+    {
         if (tracking)
         {
-            SetTargetPlayer();
+            if (!playerBullet)
+            {
+                SetTargetPlayer();
+                rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
+            }
+            else
+            {
+                SetTargetNearestEnemy();
+
+            }
         }
-   
-        rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
+        
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if(collision.gameObject.tag == "Player" && !playerBullet)
         {
             collision.gameObject.GetComponent<PlayerController>().TakeDamage();
+            Destroy(this.gameObject);
+        }
+        
+        if(collision.gameObject.tag == "Enemy" && playerBullet)
+        {
+            collision.gameObject.GetComponent<EnemyHealth>().Damage(4);
             Destroy(this.gameObject);
         }
 
@@ -67,5 +95,43 @@ public class LaserBehaviour : MonoBehaviour
             target = this.transform.position - player.transform.position;
             target.Normalize();
         }
+    }
+
+    public void SetTargetNearestEnemy()
+    {
+        if(HitRange().Length > 0)
+        {
+            foreach (Collider2D e in HitRange())
+            {
+                float dist = Vector3.Distance(e.gameObject.transform.position, transform.position);
+
+                if (dist < closestDist || closestDist == 0)
+                {
+                    closestDist = dist;
+                }
+
+                if (closestDist == dist)
+                {
+                    target = this.transform.position - e.gameObject.transform.position;
+                    target.Normalize();
+                }
+                rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
+            }
+        }
+        else
+        {
+            GameObject player = GameObject.Find("Player");
+            target = -(this.transform.position - player.transform.position);
+            target.Normalize();
+            rb.velocity = new Vector3(-target.x * speed, 0, 0);
+        }
+        
+    }
+
+    private Collider2D[] HitRange()
+    {
+        Collider2D[] enemiesHit = Physics2D.OverlapCircleAll(transform.position, 10, enemyLayer);
+
+        return enemiesHit;
     }
 }
