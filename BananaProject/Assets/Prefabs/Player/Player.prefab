@@ -215,7 +215,7 @@ MonoBehaviour:
   firePoint: {fileID: 3001912954819293346}
   bulletprefab: {fileID: 6919797778990794045, guid: fd2cdb0a8fe547341ac6fe81f66242eb, type: 3}
   isGunPulled: 0
-  fireRate: 0.1
+  fireRate: 0.3
   gunDuration: 10
   gunTimer: 0
   checkpoints:
