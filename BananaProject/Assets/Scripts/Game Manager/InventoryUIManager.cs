@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,8 @@ public class InventoryUIManager : MonoBehaviour
     {
         public Image bananaSprite;
         public string powerUpName;
+        [TextArea(3, 5)]
+        public string description;
     }
 
     [Header("Power Up UI Elements")]
@@ -26,6 +29,25 @@ public class InventoryUIManager : MonoBehaviour
         if(groundPoundUI.bananaSprite != null) groundPoundUI.bananaSprite.enabled = false;
         if(bananaGunUI.bananaSprite != null) bananaGunUI.bananaSprite.enabled = false;
         if(shieldUI.bananaSprite != null) shieldUI.bananaSprite.enabled = false;
+
+        SetupTooltip(shadowKickUI);
+        SetupTooltip(chargeUI);
+        SetupTooltip(groundPoundUI);
+        SetupTooltip(bananaGunUI);
+        SetupTooltip(shieldUI);
+    }
+
+    private void SetupTooltip(PowerUpUI powerUp)
+    {
+        if (powerUp.bananaSprite != null)
+        {
+            ToolTipTrigger tooltipTrigger = powerUp.bananaSprite.gameObject.GetComponent<ToolTipTrigger>();
+            if (tooltipTrigger == null)
+                tooltipTrigger = powerUp.bananaSprite.gameObject.AddComponent<ToolTipTrigger>();
+
+            //Set tooltip content from description
+            tooltipTrigger.tooltipContent = $"<b>{powerUp.powerUpName}</b>\n{powerUp.description}";
+        }
     }
 
     private void OnEnable()
