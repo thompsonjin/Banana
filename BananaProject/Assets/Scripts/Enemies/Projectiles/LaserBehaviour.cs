@@ -66,9 +66,19 @@ public class LaserBehaviour : MonoBehaviour
         
         if(collision.gameObject.tag == "Enemy" && playerBullet)
         {
-            collision.gameObject.GetComponent<EnemyHealth>().Damage(4);
-            Destroy(this.gameObject);
+
+            if (collision.gameObject.name == "Robo Orangutan (Clone)")
+            {
+                Destroy(this.gameObject);
+            }
+
+            if (collision.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth component))
+            {
+                collision.gameObject.GetComponent<EnemyHealth>().Damage(4);
+                Destroy(this.gameObject);
+            }      
         }
+
 
         if(collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Throwable")
         {
@@ -121,8 +131,12 @@ public class LaserBehaviour : MonoBehaviour
         else
         {
             GameObject player = GameObject.Find("Player");
-            target = -(this.transform.position - player.transform.position);
-            target.Normalize();
+
+            if(player != null)
+            {
+                target = -(this.transform.position - player.transform.position);
+                target.Normalize();
+            }   
             rb.velocity = new Vector3(-target.x * speed, 0, 0);
         }
         
