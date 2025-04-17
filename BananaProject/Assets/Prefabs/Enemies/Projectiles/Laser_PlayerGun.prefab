@@ -105,7 +105,7 @@ MonoBehaviour:
   tracking: 1
   playerBullet: 1
   random: 0
-  maxDecayTime: 0
+  maxDecayTime: 2
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64

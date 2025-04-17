@@ -29,7 +29,9 @@ public class LaserBehaviour : MonoBehaviour
         else
         {
             SetTargetPlayer();
-        }         
+        }
+
+        decay = maxDecayTime;
     }
 
     // Update is called once per frame
@@ -46,14 +48,27 @@ public class LaserBehaviour : MonoBehaviour
             {
                 SetTargetPlayer();
                 rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
+                decay -= Time.deltaTime;
+                if(decay <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
             }
             else
             {
                 SetTargetNearestEnemy();
-
+                decay -= Time.deltaTime;
+                if (decay <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
+                Debug.Log(target);
             }
         }
-        
+        else
+        {
+            rb.velocity = new Vector3(-target.normalized.x * speed, -target.normalized.y * speed, 0);
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -66,12 +81,6 @@ public class LaserBehaviour : MonoBehaviour
         
         if(collision.gameObject.tag == "Enemy" && playerBullet)
         {
-
-            if (collision.gameObject.name == "Robo Orangutan (Clone)")
-            {
-                Destroy(this.gameObject);
-            }
-
             if (collision.gameObject.TryGetComponent<EnemyHealth>(out EnemyHealth component))
             {
                 collision.gameObject.GetComponent<EnemyHealth>().Damage(4);
@@ -79,8 +88,7 @@ public class LaserBehaviour : MonoBehaviour
             }      
         }
 
-
-        if(collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Throwable")
+        if (collision.gameObject.tag == "Floor" || collision.gameObject.tag == "Wall" || collision.gameObject.tag == "Throwable")
         {
             Destroy(this.gameObject);
         }
@@ -92,7 +100,7 @@ public class LaserBehaviour : MonoBehaviour
         GameObject boss = GameObject.Find("Robot");
 
         target = this.transform.position - boss.transform.position;
-        target.Normalize();
+        target = target.normalized;
         target = -target;
     }
 
@@ -103,7 +111,6 @@ public class LaserBehaviour : MonoBehaviour
         if (player != null)
         {
             target = this.transform.position - player.transform.position;
-            target.Normalize();
         }
     }
 
@@ -123,9 +130,9 @@ public class LaserBehaviour : MonoBehaviour
                 if (closestDist == dist)
                 {
                     target = this.transform.position - e.gameObject.transform.position;
-                    target.Normalize();
+                    target = target.normalized;
                 }
-                rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
+                rb.velocity = new Vector3(-target.normalized.x * speed, -target.normalized.y * speed, 0);
             }
         }
         else
@@ -135,11 +142,10 @@ public class LaserBehaviour : MonoBehaviour
             if(player != null)
             {
                 target = -(this.transform.position - player.transform.position);
-                target.Normalize();
+                target = target.normalized;
             }   
-            rb.velocity = new Vector3(-target.x * speed, 0, 0);
-        }
-        
+            rb.velocity = new Vector3(-target.normalized.x * speed, 0, 0);
+        }      
     }
 
     private Collider2D[] HitRange()

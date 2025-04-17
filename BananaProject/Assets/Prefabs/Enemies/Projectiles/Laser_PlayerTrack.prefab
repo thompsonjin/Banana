@@ -103,7 +103,12 @@ MonoBehaviour:
   rb: {fileID: -5318919499442901377}
   speed: 10
   tracking: 1
+  playerBullet: 0
   random: 0
+  maxDecayTime: 5
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!50 &-5318919499442901377
 Rigidbody2D:
   serializedVersion: 4
