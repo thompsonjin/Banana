@@ -312,7 +312,7 @@ public class PlayerController : MonoBehaviour
                     powerBarUI.SetActive(true);
 
                 isChargingShadowKick = true;
-                shadowKickPower += .01f + Time.deltaTime;
+                shadowKickPower += Time.deltaTime * 6.5f;
 
                 if (shadowKickPower >= maxChargeTime)
                 {
