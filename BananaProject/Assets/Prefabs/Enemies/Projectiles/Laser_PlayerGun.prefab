@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: -5318919499442901377}
-  speed: 30
+  speed: 40
   tracking: 1
   playerBullet: 1
   random: 0
