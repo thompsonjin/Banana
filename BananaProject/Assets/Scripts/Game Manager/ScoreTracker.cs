@@ -11,6 +11,8 @@ public static class ScoreTracker
     public static int totalScore;
     public static float totalTime;
 
+    public static int deaths;
+
     //SCOREBOARD
     public static int lastScene;
 }

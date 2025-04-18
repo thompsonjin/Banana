@@ -9,6 +9,7 @@ public class ScoreDisplay : MonoBehaviour
     [Header("Display")]
     [SerializeField] Text scoreText;
     [SerializeField] Text timeText;
+    [SerializeField] Text deathText;
 
     [Header("Scoreboard Menu")]
     [SerializeField] bool scoreboard;
@@ -24,6 +25,11 @@ public class ScoreDisplay : MonoBehaviour
         if(SceneManager.GetActiveScene().buildIndex == 5)
         {
             ResetTotals();
+        }
+
+        if(SceneManager.GetActiveScene().buildIndex == 15)
+        {
+            deathText.text = ScoreTracker.deaths.ToString();
         }
 
         if(ScoreTracker.lastScene == 15)
@@ -52,6 +58,11 @@ public class ScoreDisplay : MonoBehaviour
     {
         ScoreTracker.currentScore += s;
         scoreText.text = ScoreTracker.currentScore.ToString();
+    }
+
+    public void IncreaceDeaths(int d)
+    {
+        ScoreTracker.deaths += d;
     }
 
     public void ResetCurrentScore()

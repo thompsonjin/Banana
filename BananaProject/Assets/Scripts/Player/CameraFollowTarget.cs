@@ -26,7 +26,10 @@ public class CameraFollowTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = playerTransform.position;
+        if(player != null)
+        {
+            transform.position = playerTransform.position;
+        }   
     }
 
     public void CallTurn()

@@ -50,9 +50,12 @@ public class RoboBaboon : BaseEnemy
         }
         else
         {
-            //otherwise track the players location
-            moveDir = this.transform.position - player.transform.position;
-            moveDir.Normalize();
+            if(player != null)
+            {
+                //otherwise track the players location
+                moveDir = this.transform.position - player.transform.position;
+                moveDir.Normalize();
+            }       
 
             //check if the player is in range to hit
             if (HitRange())
