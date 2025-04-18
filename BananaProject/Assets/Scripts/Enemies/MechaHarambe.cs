@@ -68,11 +68,14 @@ public class MechaHarambe : MonoBehaviour
     {
         if (start)
         {
-            distance = Vector3.Distance(player.transform.position, boss.transform.position);
-
-            if (distance > 45)
+            if(player != null)
             {
-                if(b_Man.phase == 0 || b_Man.phase == 2)
+                distance = Vector3.Distance(player.transform.position, boss.transform.position);
+            }
+
+            if (distance > 50)
+            {
+                if(b_Man.phase == 0 || b_Man.phase == 1 || b_Man.phase == 4)
                 {
                     boss.transform.Translate(new Vector2(-1, 0) * (Time.deltaTime * speed));
                 }
@@ -83,7 +86,7 @@ public class MechaHarambe : MonoBehaviour
             }
             else if(distance < 25)
             {
-                if (b_Man.phase == 0 || b_Man.phase == 2)
+                if (b_Man.phase == 0 || b_Man.phase == 1 || b_Man.phase == 4)
                 {
                     boss.transform.Translate(new Vector2(1, 0) * (Time.deltaTime * speed));
                 }
@@ -171,7 +174,7 @@ public class MechaHarambe : MonoBehaviour
     {
         boss.transform.position = phasePos[p].position;
 
-        if (p == 0 || p == 2)
+        if (p == 0 || p == 1 || p == 4)
         {
             boss.transform.localScale = new Vector3(-1, 1, 1);
         }
@@ -180,7 +183,7 @@ public class MechaHarambe : MonoBehaviour
             boss.transform.localScale = new Vector3(1, 1, 1);
         }
 
-        if(p == 2)
+        if(p == 4)
         {
             risingLava.SetActive(true);
             risingLava.GetComponent<HarmingLiquid>().Restart();

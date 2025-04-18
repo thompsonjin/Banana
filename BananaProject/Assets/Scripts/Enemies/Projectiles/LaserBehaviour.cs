@@ -62,7 +62,6 @@ public class LaserBehaviour : MonoBehaviour
                 {
                     Destroy(this.gameObject);
                 }
-                Debug.Log(target);
             }
         }
         else
