@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         s_Dis.ResetCurrentScore();
+        s_Dis.IncreaceDeaths(1);
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
