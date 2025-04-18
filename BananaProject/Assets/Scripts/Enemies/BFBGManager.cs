@@ -49,12 +49,17 @@ public class BFBGManager : MonoBehaviour
         if(CheckpointManager.checkpointNum != 0)
         {
             phase = CheckpointManager.checkpointNum - 1;
+        }
 
-            for(int i = 0; i == phase - 2; i++)
-            {
-                Destroy(Generators[i]);
-            }
-        }       
+        switch (phase)
+        {
+            case 2:
+                Destroy(Generators[0]);
+                break;
+            case 4:
+                Destroy(Generators[1]);
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -185,6 +190,9 @@ public class BFBGManager : MonoBehaviour
     public void NextPhase()
     {
         phase++;
-        m_Ham.NextPhase(phase);
+        if(phase <= 4)
+        {
+            m_Ham.NextPhase(phase);
+        }
     }
 }
