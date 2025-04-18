@@ -11918,9 +11918,9 @@ Tilemap:
   - first: {x: -16, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 2
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -11928,9 +11928,9 @@ Tilemap:
   - first: {x: -4, y: -2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 1
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -11938,9 +11938,9 @@ Tilemap:
   - first: {x: -16, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 2
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -11948,49 +11948,57 @@ Tilemap:
   - first: {x: -4, y: -1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 0
-      m_TileMatrixIndex: 1
+      m_TileIndex: 1
+      m_TileSpriteIndex: 1
+      m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 4
-    m_Data: {fileID: 11400000, guid: 535ab9a8974286c44a8a75765a330304, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: 9a8ef4b2a1627c8429b6936fa2e00a69, type: 2}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: 4fe928defc193ba46b5cfad850b1b119, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 4
-    m_Data: {fileID: -312042645, guid: 7bd59195a06aa3845b2c503f3a2821c3, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: 1212107874, guid: 9837e64621764c249808ca4224a0268d, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: -1727259004, guid: 9837e64621764c249808ca4224a0268d, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: 5.4078123e+28
+      e00: 3.7123507e-34
       e01: NaN
-      e02: 2.123079e+23
+      e02: 5.662132e+11
       e03: 0
-      e10: 4.3e-44
+      e10: 2.58e-43
       e11: NaN
       e12: 4.5904e-41
       e13: 0
-      e20: NaN
+      e20: 8.222e-41
       e21: 0
-      e22: 5.4078048e+28
+      e22: 3.712347e-34
       e23: 0
       e30: 0
       e31: 7.34684e-40
-      e32: 4.3e-44
+      e32: 2.58e-43
       e33: 1
   - m_RefCount: 2
     m_Data:
       e00: 1
       e01: 0
       e02: 0
-      e03: 1.3645611
+      e03: -0.7095909
       e10: 0
       e11: 1
       e12: 0
-      e13: -0.9097073
+      e13: -0.8717859
       e20: 0
       e21: 0
       e22: 1
@@ -12004,11 +12012,11 @@ Tilemap:
       e00: 1
       e01: 0
       e02: 0
-      e03: -0.8374748
+      e03: 1.4175024
       e10: 0
       e11: 1
       e12: 0
-      e13: -0.92471194
+      e13: -0.8338249
       e20: 0
       e21: 0
       e22: 1
@@ -13724,9 +13732,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 3
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
@@ -13736,7 +13744,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Have all banana charges to harness its power
+  m_Text: HAVE ALL BANANA CHARGES TO HARNESS ITS POWER
 --- !u!222 &1174179256
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13938,9 +13946,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 3
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
@@ -13950,7 +13958,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Shields are no longer for losers.
+  m_Text: SHIELDS ARE NO LONGER FOR LOSERS
 --- !u!222 &1326835667
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14126,7 +14134,7 @@ Transform:
   m_GameObject: {fileID: 1380401739}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -43.070164, y: 6.7999997, z: -10}
+  m_LocalPosition: {x: -44.965637, y: 6.7999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14197,7 +14205,7 @@ Transform:
   m_GameObject: {fileID: 1448859282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43.070164, y: 6.7999997, z: -10}
+  m_LocalPosition: {x: -44.965637, y: 6.7999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

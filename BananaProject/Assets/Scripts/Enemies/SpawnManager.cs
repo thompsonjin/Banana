@@ -147,12 +147,14 @@ public class SpawnManager : MonoBehaviour
 
         if (spawnTimer <= 0)
         {
-            for (int v = 0; v <= spawnPoints.Length - 1; v++)
+            for(int i = 0; i <= 1; i++)
             {
-                spawn = spawnPoints[v].GetComponent<Spawn>();
-                spawn.SpawnImmediate(waveNum, Random.Range(0, 3));
-            }
-
+                for (int v = 0; v <= spawnPoints.Length - 1; v++)
+                {
+                    spawn = spawnPoints[v].GetComponent<Spawn>();
+                    spawn.SpawnImmediate(waveNum, Random.Range(0, 3));
+                }
+            }  
             spawnTimer = spawnTimeMax;
         }
        
