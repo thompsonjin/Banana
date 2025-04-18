@@ -460,11 +460,11 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.I) && hasBananaGun && !isGunPulled) 
         {
-            if (bananaCount >= 5)
+            if (bananaCount >= 3)
             {
                 isGunPulled = true;
                 anim.SetBool("Gun", true);               
-                UseBanana(5);
+                UseBanana(3);
                 gunTimer = gunDuration;
             }
         }

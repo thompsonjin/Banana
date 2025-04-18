@@ -13394,9 +13394,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 1
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -13406,7 +13406,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Have one last gift before the end...
+  m_Text: HANE ONE LAST GIFT BEFORE THE END...
 --- !u!222 &48524717
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13473,9 +13473,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 1
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -13485,7 +13485,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: You'll need it...
+  m_Text: YOU'LL NEED IT...
 --- !u!222 &76884993
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14871,7 +14871,7 @@ GameObject:
   - component: {fileID: 699030054}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15185,7 +15185,7 @@ Transform:
   m_GameObject: {fileID: 746020000}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -43.070164, y: 6.7999997, z: -10}
+  m_LocalPosition: {x: -44.967697, y: 6.7999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -16000,7 +16000,7 @@ Transform:
   m_GameObject: {fileID: 1082908377}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -43.070164, y: 6.7999997, z: -10}
+  m_LocalPosition: {x: -44.967697, y: 6.7999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16505,7 +16505,7 @@ GameObject:
   - component: {fileID: 1467760580}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17217,9 +17217,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 1
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -17229,7 +17229,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'I''ve been waiting...
+  m_Text: 'I''VE BEEN WAITING...
 
 '
 --- !u!222 &1892467519

@@ -145,6 +145,7 @@ MonoBehaviour:
   hasGroundPound: 1
   hasBananaGun: 1
   hasBananaShield: 1
+  gravityScale: 7
   rb: {fileID: 307851999158270081}
   groundCheck: {fileID: 5519777832520509073}
   groundLayer:
@@ -212,9 +213,9 @@ MonoBehaviour:
     m_Bits: 512
   check: {fileID: 6038423125309872780}
   firePoint: {fileID: 3001912954819293346}
-  bulletprefab: {fileID: 2792605518736310862, guid: b54b55b3165d69b46848a17ecefb40b9, type: 3}
+  bulletprefab: {fileID: 6919797778990794045, guid: fd2cdb0a8fe547341ac6fe81f66242eb, type: 3}
   isGunPulled: 0
-  fireRate: 0.1
+  fireRate: 0.2
   gunDuration: 10
   gunTimer: 0
   checkpoints:

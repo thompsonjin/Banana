@@ -93,16 +93,24 @@ public class RoboBaboon : BaseEnemy
 
       //track how long the enemy is stunned by the hit 
       if (hit)
-        {
+      {
+            SpriteRenderer sprite = this.gameObject.GetComponent<SpriteRenderer>();
+            sprite.color = Color.red;
+
             hitTimer -= Time.deltaTime;
 
             if (hitTimer <= 0)
             {
                 hit = false;
             }
-        }
+      }
+      else
+      {
+            SpriteRenderer sprite = this.gameObject.GetComponent<SpriteRenderer>();
+            sprite.color = Color.white;
+      }
 
-      Flip();
+            Flip();
     }
 
 
