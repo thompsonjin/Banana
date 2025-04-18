@@ -47,7 +47,7 @@ public class LaserBehaviour : MonoBehaviour
             if (!playerBullet)
             {
                 SetTargetPlayer();
-                rb.velocity = new Vector3(-target.x * speed, -target.y * speed, 0);
+                rb.velocity = new Vector3(-target.normalized.x * speed, -target.normalized.y * speed, 0);
                 decay -= Time.deltaTime;
                 if(decay <= 0)
                 {

@@ -38,7 +38,10 @@ public class RoboProposcis : BaseEnemy
     // Update is called once per frame
     void Update()
     {
-        dist = Vector3.Distance(transform.position, player.transform.position);
+        if(player != null)
+        {
+            dist = Vector3.Distance(transform.position, player.transform.position);
+        }
 
         if (!patrol)
         {

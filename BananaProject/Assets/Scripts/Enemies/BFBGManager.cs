@@ -50,7 +50,7 @@ public class BFBGManager : MonoBehaviour
         {
             phase = CheckpointManager.checkpointNum - 1;
 
-            for(int i = 0; i == phase - 1; i++)
+            for(int i = 0; i == phase - 2; i++)
             {
                 Destroy(Generators[i]);
             }
@@ -67,6 +67,9 @@ public class BFBGManager : MonoBehaviour
                 this.transform.position = cannonLocations[0].position;
                 break;
             case 1:
+
+                break;
+            case 2:
                 this.transform.position = cannonLocations[1].position;
                 warning.SetActive(false);
                 if (!flipped)
@@ -79,7 +82,10 @@ public class BFBGManager : MonoBehaviour
                     flipped = true;
                 }
                 break;
-            case 2:
+            case 3:
+
+                break;
+            case 4:
                 this.transform.position = cannonLocations[2].position;
                 if (flipped)
                 {
@@ -87,10 +93,6 @@ public class BFBGManager : MonoBehaviour
                     flipped = false;
                 }
                 break;
-            case 3:
-                GameObject.Find("Game Manager").GetComponent<GameManager>().NextScene();
-                break;
-             
         }
 
             //Banana Cycle
@@ -108,7 +110,7 @@ public class BFBGManager : MonoBehaviour
     private void FixedUpdate()
     {
         //Laser Cycle
-        if (phase == 0)
+        if (phase <= 1)
         {
             if (!spawned)
             {
