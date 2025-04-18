@@ -70,11 +70,13 @@ public class BFBGManager : MonoBehaviour
         {
             case 0:
                 this.transform.position = cannonLocations[0].position;
+                Debug.Log("One");
                 break;
             case 1:
-
+                Debug.Log("Two");
                 break;
             case 2:
+                Debug.Log("Three");
                 this.transform.position = cannonLocations[1].position;
                 warning.SetActive(false);
                 if (!flipped)
@@ -88,9 +90,10 @@ public class BFBGManager : MonoBehaviour
                 }
                 break;
             case 3:
-
+                Debug.Log("Four");
                 break;
             case 4:
+                Debug.Log("Five");
                 this.transform.position = cannonLocations[2].position;
                 if (flipped)
                 {
