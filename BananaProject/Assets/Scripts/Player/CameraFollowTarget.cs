@@ -15,6 +15,8 @@ public class CameraFollowTarget : MonoBehaviour
     private PlayerController player;
 
     private bool isFacingRight;
+    //Used for death sequence
+    private bool shouldFollow = true;
 
     private void Awake()
     {
@@ -26,7 +28,7 @@ public class CameraFollowTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player != null)
+        if(player != null && shouldFollow)
         {
             transform.position = playerTransform.position;
         }   
@@ -35,6 +37,16 @@ public class CameraFollowTarget : MonoBehaviour
     public void CallTurn()
     {
         turnCoroutine = StartCoroutine(FlipYLerp());
+    }
+
+    public void StopFollowing()
+    {
+        shouldFollow = false;
+    }
+
+    public void ResumeFollowing()
+    {
+        shouldFollow = true;
     }
 
     private IEnumerator FlipYLerp()

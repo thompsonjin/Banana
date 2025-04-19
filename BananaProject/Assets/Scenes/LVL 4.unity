@@ -1773,6 +1773,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1534070728}
   timeText: {fileID: 1534070727}
+  deathText: {fileID: 0}
   scoreboard: 0
   gameWinText: {fileID: 0}
   lvlCompleteText: {fileID: 0}
@@ -5262,7 +5263,7 @@ Transform:
   m_GameObject: {fileID: 438503218}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -124.16598, y: 5.8279333, z: -10}
+  m_LocalPosition: {x: -124.16288, y: 5.8279333, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5858,6 +5859,10 @@ PrefabInstance:
       propertyPath: bananaUIParent
       value: 
       objectReference: {fileID: 1534070726}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: deathJumpForce
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasGroundPound
       value: 1
@@ -25385,7 +25390,7 @@ Transform:
   m_GameObject: {fileID: 1404115166}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -124.16598, y: 5.8279333, z: -10}
+  m_LocalPosition: {x: -124.16288, y: 5.8279333, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
