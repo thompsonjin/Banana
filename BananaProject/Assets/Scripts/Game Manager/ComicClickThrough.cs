@@ -19,7 +19,39 @@ public class ComicClickThrough : MonoBehaviour
 
     [SerializeField] int clicks;
 
-
+    private void Update()
+    {
+        //Check for any key press or mouse click
+        if ((Input.anyKeyDown || Input.GetMouseButtonDown(0)))
+        {
+            switch (clicks)
+            {
+                case 0:
+                    change = false;
+                    alphaOne = 1;
+                    panelOne.color = new Color(1, 1, 1, alphaOne);
+                    clicks++;
+                    change = true;
+                    break;
+                case 1:
+                    change = false;
+                    alphaTwo = 1;
+                    panelTwo.color = new Color(1, 1, 1, alphaTwo);
+                    clicks++;
+                    change = true;
+                    break;
+                case 2:
+                    change = false;
+                    alphaThree = 1;
+                    panelThree.color = new Color(1, 1, 1, alphaThree);
+                    clicks++;
+                    break;
+                case 3:
+                    LoadNextScene();
+                    break;
+            }
+        }
+    }
     private void FixedUpdate()
     {
         if (change)
@@ -28,7 +60,6 @@ public class ComicClickThrough : MonoBehaviour
             {
                 alphaOne += Time.fixedDeltaTime;
                 panelOne.color = new Color(1, 1, 1, alphaOne);
-
             }
             else
             {
@@ -37,7 +68,6 @@ public class ComicClickThrough : MonoBehaviour
                 {
                     alphaTwo += Time.fixedDeltaTime;
                     panelTwo.color = new Color(1, 1, 1, alphaTwo);
-
                 }
                 else
                 {
@@ -46,46 +76,12 @@ public class ComicClickThrough : MonoBehaviour
                     {
                         alphaThree += Time.fixedDeltaTime;
                         panelThree.color = new Color(1, 1, 1, alphaThree);
-
                     }
                     else
                     {
                         clicks = 3;
                     }
                 }
-            }
-        }
-       
-
-        //Check for any key press or mouse click
-        if ((Input.anyKeyDown || Input.GetMouseButtonDown(0)))
-        {        
-            if (clicks == 0)
-            {
-                change = false;
-                alphaOne = 1;
-                panelOne.color = new Color(1, 1, 1, alphaOne);
-                clicks++;
-                change = true;
-            }
-            else if(clicks == 1)
-            {
-                change = false;
-                alphaTwo = 1;
-                panelTwo.color = new Color(1, 1, 1, alphaTwo);
-                clicks++;
-                change = true;
-            }
-            else if(clicks == 2)
-            {
-                change = false;
-                alphaThree = 1;
-                panelThree.color = new Color(1, 1, 1, alphaThree);
-                clicks++;
-            }
-            else if(clicks == 3)
-            {
-                LoadNextScene();
             }
         }
     }
