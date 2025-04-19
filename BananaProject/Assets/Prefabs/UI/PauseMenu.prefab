@@ -2848,9 +2848,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
-  m_MinWidth: 150
+  m_MinWidth: 250
   m_MinHeight: -1
-  m_PreferredWidth: 250
+  m_PreferredWidth: 400
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
@@ -3579,7 +3579,7 @@ MonoBehaviour:
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
   m_enableExtraPadding: 0
-  checkPaddingRequired: 0
+  checkPaddingRequired: 1
   m_isRichText: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 1
@@ -3592,7 +3592,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -50, y: 0, z: -150, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3956,6 +3956,11 @@ MonoBehaviour:
     description: A safe gorilla is a happy gorilla. No need to do much, once you
       have full banana coins a shield automatically generates for you, protecting
       you until you take damage!
+  fUI:
+    bananaSprite: {fileID: 7921423210465123299}
+    powerUpName: Regenerate
+    description: GORILLAS NEVER DIEEEEE! If you are ever low on health just press
+      "F" to make sure to regenerate 1 heart, but it will cost you 4 precious bananas.
 --- !u!1 &5469196744032422669
 GameObject:
   m_ObjectHideFlags: 0
@@ -5195,13 +5200,14 @@ GameObject:
   - component: {fileID: 7229207345072576518}
   - component: {fileID: 5310677319662032551}
   - component: {fileID: 7921423210465123299}
+  - component: {fileID: 6109192139231772881}
   m_Layer: 0
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &7229207345072576518
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5259,6 +5265,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &6109192139231772881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448262156800822200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8895e494a8f1394b933971949d7d87e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tooltipContent: 
 --- !u!1 &7465655209174617694
 GameObject:
   m_ObjectHideFlags: 0
