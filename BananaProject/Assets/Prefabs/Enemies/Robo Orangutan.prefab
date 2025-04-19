@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4663954302397911971}
   - component: {fileID: 426683819660192408}
   - component: {fileID: 3319122570333776231}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Robo Orangutan
   m_TagString: Enemy
   m_Icon: {fileID: 0}

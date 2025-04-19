@@ -14626,9 +14626,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 1
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -14638,7 +14638,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Harness the power of sound to jump twice
+  m_Text: HARNESS THE POWER OF SOUND TO DOUBLE JUMP
 --- !u!222 &395445713
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14883,7 +14883,7 @@ Transform:
   m_GameObject: {fileID: 509168822}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -45.33671, y: 6.7999997, z: -10}
+  m_LocalPosition: {x: -44.965637, y: 6.7999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -15112,8 +15112,8 @@ Tilemap:
   - first: {x: -14, y: 0, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
       m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -15122,8 +15122,8 @@ Tilemap:
   - first: {x: -14, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -15132,9 +15132,9 @@ Tilemap:
   - first: {x: -7, y: 1, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 3
+      m_TileIndex: 0
+      m_TileSpriteIndex: 0
+      m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -15142,8 +15142,8 @@ Tilemap:
   - first: {x: -14, y: 2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
       m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -15152,9 +15152,9 @@ Tilemap:
   - first: {x: -7, y: 2, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 3
+      m_TileIndex: 4
+      m_TileSpriteIndex: 4
+      m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
@@ -15162,8 +15162,8 @@ Tilemap:
   - first: {x: -14, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
       m_TileMatrixIndex: 2
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -15172,32 +15172,36 @@ Tilemap:
   - first: {x: -7, y: 3, z: 0}
     second:
       serializedVersion: 2
-      m_TileIndex: 3
-      m_TileSpriteIndex: 3
-      m_TileMatrixIndex: 3
+      m_TileIndex: 2
+      m_TileSpriteIndex: 2
+      m_TileMatrixIndex: 1
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: 4fe928defc193ba46b5cfad850b1b119, type: 2}
   - m_RefCount: 4
     m_Data: {fileID: 11400000, guid: 6892fccdacff0d742916b26cd4547aaf, type: 2}
+  - m_RefCount: 2
+    m_Data: {fileID: 11400000, guid: 9a8ef4b2a1627c8429b6936fa2e00a69, type: 2}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 7
-    m_Data: {fileID: 11400000, guid: 535ab9a8974286c44a8a75765a330304, type: 2}
+  - m_RefCount: 3
+    m_Data: {fileID: 11400000, guid: fdf78d70789058244b0ca0fc6fcb1c0a, type: 2}
   m_TileSpriteArray:
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 2
+    m_Data: {fileID: -1727259004, guid: 9837e64621764c249808ca4224a0268d, type: 3}
   - m_RefCount: 4
     m_Data: {fileID: 21300000, guid: 23eb5c4de0806db42b65769a860f64cc, type: 3}
+  - m_RefCount: 2
+    m_Data: {fileID: 1212107874, guid: 9837e64621764c249808ca4224a0268d, type: 3}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 7
-    m_Data: {fileID: -312042645, guid: 7bd59195a06aa3845b2c503f3a2821c3, type: 3}
+  - m_RefCount: 3
+    m_Data: {fileID: -162068243, guid: 9837e64621764c249808ca4224a0268d, type: 3}
   m_TileMatrixArray:
   - m_RefCount: 4
     m_Data:
@@ -15217,30 +15221,30 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
-  - m_RefCount: 0
+  - m_RefCount: 3
     m_Data:
-      e00: 0.17357683
-      e01: NaN
-      e02: -2.3776187e-35
-      e03: 0
-      e10: 3.05e-43
-      e11: 4e-45
-      e12: 4.5905e-41
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: -0.23358536
+      e10: 0
+      e11: 1
+      e12: 0
       e13: 0
-      e20: 4.4172e-41
+      e20: 0
       e21: 0
-      e22: 0.1735766
+      e22: 1
       e23: 0
       e30: 0
-      e31: 7.34684e-40
-      e32: 3.05e-43
+      e31: 0
+      e32: 0
       e33: 1
   - m_RefCount: 4
     m_Data:
       e00: 1
       e01: 0
       e02: 0
-      e03: 1.4730873
+      e03: 1.564415
       e10: 0
       e11: 1
       e12: 0
@@ -15253,23 +15257,23 @@ Tilemap:
       e31: 0
       e32: 0
       e33: 1
-  - m_RefCount: 3
+  - m_RefCount: 0
     m_Data:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: -0.27869606
-      e10: 0
-      e11: 1
-      e12: 0
+      e00: 3.7123507e-34
+      e01: NaN
+      e02: 5.662132e+11
+      e03: 0
+      e10: 2.58e-43
+      e11: 4e-45
+      e12: 4.5904e-41
       e13: 0
-      e20: 0
+      e20: 7.2963e-41
       e21: 0
-      e22: 1
+      e22: 3.712347e-34
       e23: 0
       e30: 0
-      e31: 0
-      e32: 0
+      e31: 7.34684e-40
+      e32: 2.58e-43
       e33: 1
   m_TileColorArray:
   - m_RefCount: 11
@@ -15356,9 +15360,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 1
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -15368,7 +15372,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Is a living gorilla.
+  m_Text: IS A LIVING GORILLA.
 --- !u!222 &546426617
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15625,9 +15629,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 1
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
@@ -15637,7 +15641,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: A fast gorilla...
+  m_Text: A FAST GORILLA...
 --- !u!222 &740141705
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -15889,9 +15893,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
     m_FontSize: 3
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
@@ -15901,7 +15905,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hold L while moving to charge
+  m_Text: HOLD L WHILE MOVING TO CHARGE
 --- !u!222 &827628190
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16099,7 +16103,7 @@ Transform:
   m_GameObject: {fileID: 1141651984}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -45.33671, y: 6.7999997, z: -10}
+  m_LocalPosition: {x: -44.965637, y: 6.7999997, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

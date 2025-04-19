@@ -38,7 +38,10 @@ public class RoboProposcis : BaseEnemy
     // Update is called once per frame
     void Update()
     {
-        dist = Vector3.Distance(transform.position, player.transform.position);
+        if(player != null)
+        {
+            dist = Vector3.Distance(transform.position, player.transform.position);
+        }
 
         if (!patrol)
         {
@@ -68,12 +71,20 @@ public class RoboProposcis : BaseEnemy
         //track how long the enemy is stunned by the hit 
         if (hit)
         {
+            SpriteRenderer sprite = this.gameObject.GetComponent<SpriteRenderer>();
+            sprite.color = Color.red;
+
             hitTimer -= Time.deltaTime;
 
             if (hitTimer <= 0)
             {
                 hit = false;
             }
+        }
+        else
+        {
+            SpriteRenderer sprite = this.gameObject.GetComponent<SpriteRenderer>();
+            sprite.color = Color.white;
         }
 
         if (IsGrounded() && !hit)

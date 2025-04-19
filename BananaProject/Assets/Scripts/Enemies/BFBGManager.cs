@@ -49,12 +49,17 @@ public class BFBGManager : MonoBehaviour
         if(CheckpointManager.checkpointNum != 0)
         {
             phase = CheckpointManager.checkpointNum - 1;
+        }
 
-            for(int i = 0; i == phase - 1; i++)
-            {
-                Destroy(Generators[i]);
-            }
-        }       
+        switch (phase)
+        {
+            case 2:
+                Destroy(Generators[0]);
+                break;
+            case 4:
+                Destroy(Generators[1]);
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -65,8 +70,13 @@ public class BFBGManager : MonoBehaviour
         {
             case 0:
                 this.transform.position = cannonLocations[0].position;
+                Debug.Log("One");
                 break;
             case 1:
+                Debug.Log("Two");
+                break;
+            case 2:
+                Debug.Log("Three");
                 this.transform.position = cannonLocations[1].position;
                 warning.SetActive(false);
                 if (!flipped)
@@ -79,7 +89,11 @@ public class BFBGManager : MonoBehaviour
                     flipped = true;
                 }
                 break;
-            case 2:
+            case 3:
+                Debug.Log("Four");
+                break;
+            case 4:
+                Debug.Log("Five");
                 this.transform.position = cannonLocations[2].position;
                 if (flipped)
                 {
@@ -87,10 +101,6 @@ public class BFBGManager : MonoBehaviour
                     flipped = false;
                 }
                 break;
-            case 3:
-                GameObject.Find("Game Manager").GetComponent<GameManager>().NextScene();
-                break;
-             
         }
 
             //Banana Cycle
@@ -108,7 +118,7 @@ public class BFBGManager : MonoBehaviour
     private void FixedUpdate()
     {
         //Laser Cycle
-        if (phase == 0)
+        if (phase <= 1)
         {
             if (!spawned)
             {
@@ -183,6 +193,9 @@ public class BFBGManager : MonoBehaviour
     public void NextPhase()
     {
         phase++;
-        m_Ham.NextPhase(phase);
+        if(phase <= 4)
+        {
+            m_Ham.NextPhase(phase);
+        }
     }
 }
