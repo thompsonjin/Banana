@@ -62,13 +62,27 @@ public class ToolTipSystem : MonoBehaviour
             mousePosition = localPoint;
         }
 
-        float pivotX = mousePosition.x / canvas.GetComponent<RectTransform>().sizeDelta.x;
-        float pivotY = mousePosition.y / canvas.GetComponent<RectTransform>().sizeDelta.y;
+        Vector2 tooltipPosition = mousePosition + new Vector2(padding.x, padding.y);
 
-        pivotX = Mathf.Clamp(pivotX, 0.1f, 0.9f);
-        pivotY = Mathf.Clamp(pivotY, 0.1f, 0.9f);
+        tooltipPosition.y += rectTransform.rect.height / 2;
 
-        rectTransform.pivot = new Vector2(pivotX, pivotY);
-        rectTransform.position = mousePosition + new Vector2(padding.x, padding.y);
+        rectTransform.pivot = new Vector2(0, 1);
+
+        rectTransform.position = tooltipPosition;
+
+        Vector2 screenBounds = new Vector2(Screen.width, Screen.height);
+        Vector2 tooltipSize = rectTransform.rect.size;
+
+        if (tooltipPosition.x + tooltipSize.x > screenBounds.x)
+        {
+            tooltipPosition.x = mousePosition.x - tooltipSize.x - padding.x;
+        }
+
+        if (tooltipPosition.y + tooltipSize.y > screenBounds.y)
+        {
+            tooltipPosition.y = mousePosition.y - tooltipSize.y - padding.y;
+        }
+
+        rectTransform.position = tooltipPosition;
     }
 }
