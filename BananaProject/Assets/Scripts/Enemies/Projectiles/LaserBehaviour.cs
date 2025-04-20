@@ -18,6 +18,7 @@ public class LaserBehaviour : MonoBehaviour
     public LayerMask enemyLayer;
     float closestDist;
     GameObject closest;
+    bool posTaken;
 
     // Start is called before the first frame update
     void Start()
@@ -138,12 +139,13 @@ public class LaserBehaviour : MonoBehaviour
         {
             GameObject player = GameObject.Find("Player");
 
-            if(player != null)
+            if(player != null && posTaken)
             {
                 target = -(this.transform.position - player.transform.position);
                 target = target.normalized;
+                posTaken = true;
             }   
-            rb.velocity = new Vector3(-target.normalized.x * speed, 0, 0);
+            rb.velocity = new Vector3(target.normalized.x * speed, 0, 0);
         }      
     }
 
