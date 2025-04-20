@@ -358,6 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 1832081785}
   timeText: {fileID: 1152086260}
+  deathText: {fileID: 0}
   scoreboard: 1
   gameWinText: {fileID: 701310818}
   lvlCompleteText: {fileID: 1184588071}
@@ -395,7 +396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.28775, y: 0.358}
   m_AnchorMax: {x: 0.49538532, y: 0.43600002}
-  m_AnchoredPosition: {x: -0.6040039, y: 0.5}
+  m_AnchoredPosition: {x: 44.496017, y: 0.5}
   m_SizeDelta: {x: 0.34400177, y: -1.293}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &959339965
@@ -699,7 +700,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.50125, y: 0.358}
   m_AnchorMax: {x: 0.6168464, y: 0.43600002}
-  m_AnchoredPosition: {x: 3.300003, y: 0.5}
+  m_AnchoredPosition: {x: 48.400024, y: 0.5}
   m_SizeDelta: {x: 5.8633003, y: -1.2929993}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1152086260
@@ -899,7 +900,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.50125, y: 0.43600002}
   m_AnchorMax: {x: 0.6168464, y: 0.51000005}
-  m_AnchoredPosition: {x: 3.2999878, y: 0.20700073}
+  m_AnchoredPosition: {x: 48.4, y: 0.20700073}
   m_SizeDelta: {x: 5.8633003, y: 0.70700073}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1832081785
@@ -980,7 +981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.28775, y: 0.43600002}
   m_AnchorMax: {x: 0.49538532, y: 0.51000005}
-  m_AnchoredPosition: {x: -0.36257935, y: 0.20700073}
+  m_AnchoredPosition: {x: 44.737442, y: 0.20700073}
   m_SizeDelta: {x: -0.13809967, y: 0.707}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1924312857
@@ -1085,9 +1086,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: c03cd088541676247a73048312640c1f, type: 3}
-    m_FontSize: 24
-    m_FontStyle: 1
+    m_Font: {fileID: 12800000, guid: 6a871198c8efbff4aa9f7c78d478050b, type: 3}
+    m_FontSize: 32
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
     m_MaxSize: 56
@@ -1097,9 +1098,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Next Level
-
-'
+  m_Text: NEXT LEVEL
 --- !u!222 &2056881888
 CanvasRenderer:
   m_ObjectHideFlags: 0

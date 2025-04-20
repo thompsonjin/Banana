@@ -6,6 +6,7 @@ public static class CheckpointManager
 {
     public static int checkpointNum;
     public static int lastLevel = 6;
+    public static int wave = 1;
 
     public static void NextCheckpoint()
     {
