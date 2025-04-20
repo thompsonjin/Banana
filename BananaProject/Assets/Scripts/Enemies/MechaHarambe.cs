@@ -84,7 +84,7 @@ public class MechaHarambe : MonoBehaviour
                     boss.transform.Translate(new Vector2(1, 0) * (Time.deltaTime * speed));
                 }                      
             }
-            else if(distance < 25)
+            else if(distance < 30)
             {
                 if (b_Man.phase == 0 || b_Man.phase == 1 || b_Man.phase == 4)
                 {
