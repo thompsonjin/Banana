@@ -19,6 +19,7 @@ public class InventoryUIManager : MonoBehaviour
     [SerializeField] private PowerUpUI groundPoundUI;
     [SerializeField] private PowerUpUI bananaGunUI;
     [SerializeField] private PowerUpUI shieldUI;
+    [SerializeField] private PowerUpUI fUI;
 
     private PlayerController playerController;
 
@@ -35,6 +36,7 @@ public class InventoryUIManager : MonoBehaviour
         SetupTooltip(groundPoundUI);
         SetupTooltip(bananaGunUI);
         SetupTooltip(shieldUI);
+        SetupTooltip(fUI);
     }
 
     private void SetupTooltip(PowerUpUI powerUp)

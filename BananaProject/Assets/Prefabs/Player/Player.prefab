@@ -89,7 +89,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_Sprite: {fileID: 638386161, guid: ee4733a0d98fbda45aa7290feea34619, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -162,6 +162,7 @@ MonoBehaviour:
   heartUIprefab: {fileID: 810027740011913760, guid: 4b5d7aaf220fe1e42a9c963f52f8ad1e, type: 3}
   emptyHeartPrefab: {fileID: 810027740011913760, guid: 91f46b7f5a865b6498addd8350c18d08, type: 3}
   heartUIParent: {fileID: 0}
+  deathJumpForce: 15
   displayBananas:
   - {fileID: 0}
   - {fileID: 0}
@@ -239,6 +240,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: e2a91c1267608bb43afef80a41f8bfb0, type: 3}
   - {fileID: 8300000, guid: 58729f838365df94daf70ee69feec786, type: 3}
   - {fileID: 8300000, guid: 87863055be2949e448d1257af588ca17, type: 3}
+  - {fileID: 8300000, guid: ce844493522779646a399a9863ad02b9, type: 3}
   walk: {fileID: 4241415329260402065}
   combat: {fileID: 7930854942731086764}
   ability: {fileID: 1775052288955516611}
