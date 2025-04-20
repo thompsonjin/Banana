@@ -41,6 +41,17 @@ public class SpawnManager : MonoBehaviour
         third.clip.LoadAudioData();
         spawnTimer = spawnTimeMax;
         waveWaitTime = maxWaitTime;
+
+        waveNum = CheckpointManager.wave;
+
+        if(waveNum == 2)
+        {
+            second.Play();
+        }
+        else if(waveNum == 3)
+        {
+            third.Play();
+        }
     }
 
     // Update is called once per frame
@@ -70,6 +81,7 @@ public class SpawnManager : MonoBehaviour
                 if(waveWaitTime <= 0)
                 {
                     waveNum++;
+                    CheckpointManager.wave++;
                     canSpawn = true;
                 }
             }

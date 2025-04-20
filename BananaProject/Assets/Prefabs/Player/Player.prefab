@@ -163,6 +163,10 @@ MonoBehaviour:
   emptyHeartPrefab: {fileID: 810027740011913760, guid: 91f46b7f5a865b6498addd8350c18d08, type: 3}
   heartUIParent: {fileID: 0}
   deathJumpForce: 15
+  fImage: {fileID: 0}
+  pulsateSpeed: 1.5
+  minScale: 0.95
+  maxScale: 1.05
   displayBananas:
   - {fileID: 0}
   - {fileID: 0}
@@ -504,7 +508,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 4609545150626478317, guid: 2ec53b635d0804e46af85c3f0f7af216, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.6
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
