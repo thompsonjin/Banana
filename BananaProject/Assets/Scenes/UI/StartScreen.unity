@@ -490,8 +490,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: '- PRESS ANY KEY TO CONTINUE -'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: c961e0290bd31c849a62e5abe5ffccd8, type: 2}
-  m_sharedMaterial: {fileID: -16351077661701087, guid: c961e0290bd31c849a62e5abe5ffccd8, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f63349d3b90803442b3716e389e57ac2, type: 2}
+  m_sharedMaterial: {fileID: 5990605847185329421, guid: f63349d3b90803442b3716e389e57ac2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -515,8 +515,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
-  m_fontSizeBase: 18
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

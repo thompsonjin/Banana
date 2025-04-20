@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
@@ -40,6 +41,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform heartUIParent;
     private bool isDying = false;
     [SerializeField] private float deathJumpForce = 30f;
+
+    [Header("Low Health Prompts")]
+    [SerializeField] private GameObject fImage;
+    [SerializeField] private float pulsateSpeed = 1.5f;
+    [SerializeField] private float minScale = 0.95f;
+    [SerializeField] private float maxScale = 1.05f;
+    private float lowHealthSoundTimer = 0f;
+    private const float LOW_HEALTH_SOUND_INTERVAL = 10f;
+    private bool isAtLowHealth = false;
 
     [Header("Resources")]
     //BANANA UI
@@ -148,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip[] clips;
-    //0 Jump,1 Attack,2 Heal,3 Damage,4 Pickup,5 Charge Up,6 Charge Hum,7 GP Breath,8 GP Impact,9 Gun,10 Shield Activate,11 Shield Break,12 Death,13 walk,14 climb
+    //0 Jump,1 Attack,2 Heal,3 Damage,4 Pickup,5 Charge Up,6 Charge Hum,7 GP Breath,8 GP Impact,9 Gun,10 Shield Activate,11 Shield Break,12 Death,13 walk,14 climb, 15 charge Release
 
     [SerializeField] private AudioSource walk;
     [SerializeField] private AudioSource combat;
@@ -561,6 +571,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log("You Are Dead");
             Die();
         }
+
+        UpdateLowHealthPrompt();
 
         //DEV TOOL GOD MODE
         if (Input.GetKeyDown(KeyCode.Alpha0))
@@ -1180,6 +1192,11 @@ public class PlayerController : MonoBehaviour
             damage.Play();
             displayHearts[health].enabled = false;
 
+            if (health == 1)
+            {
+                isAtLowHealth = false;
+            }
+
         }
         else if (health <= 0)
         {
@@ -1205,6 +1222,16 @@ public class PlayerController : MonoBehaviour
             if (heartIndex >= 0 && heartIndex < displayHearts.Count)
                 displayHearts[heartIndex].enabled = true;
         }
+
+        if (health > 1 && isAtLowHealth)
+        {
+            isAtLowHealth = false;
+            if (fImage != null)
+            {
+                fImage.SetActive(false);
+            }
+        }
+
         damage.clip = clips[2];
         damage.Play();
     }
@@ -1231,6 +1258,54 @@ public class PlayerController : MonoBehaviour
         displayHearts.Add(heartImage);
 
         health++;
+    }
+
+    //Low health management
+    private void UpdateLowHealthPrompt()
+    {
+        bool shouldBeAtlowhealth = (health == 1);
+
+        if (shouldBeAtlowhealth != isAtLowHealth)
+        {
+            isAtLowHealth = shouldBeAtlowhealth;
+
+            if (isAtLowHealth)
+            {
+                if (fImage != null)
+                {
+                    fImage.SetActive(true);
+                    ability.clip = clips[15];
+                    ability.Play();
+                    lowHealthSoundTimer = 0f;
+                }
+            }
+            else
+            {
+                if (fImage != null)
+                {
+                    fImage.SetActive(false);
+                }
+            }
+        }
+
+        if (isAtLowHealth)
+        {
+            
+            if (fImage != null && fImage.activeSelf)
+            {
+                float pulse = Mathf.Lerp(minScale, maxScale, (Mathf.Sin(Time.time * pulsateSpeed) + 1f) / 2f);
+                fImage.transform.localScale = new Vector3(pulse, pulse, 1f);
+            }
+
+            lowHealthSoundTimer += Time.deltaTime;
+            if (lowHealthSoundTimer >= LOW_HEALTH_SOUND_INTERVAL)
+            {
+                lowHealthSoundTimer = 0f;
+                ability.clip = clips[15];
+                ability.Play();
+            }
+        }
+
     }
 
     //Death management logic
@@ -1274,12 +1349,18 @@ public class PlayerController : MonoBehaviour
                 chargeBarUI.SetActive(false);
         }
 
+        if (fImage != null)
+        {
+            fImage.SetActive(false);
+        }
+        isAtLowHealth = false;
+
         rb.velocity = Vector2.zero;
         rb.gravityScale = gravityScale * 1.5f;
 
         rb.AddForce(new Vector2(0, deathJumpForce), ForceMode2D.Impulse);
 
-        anim.SetBool("Jump", true);
+        anim.SetBool("Front", true);
 
         if (cameraFollowTarget != null)
         {

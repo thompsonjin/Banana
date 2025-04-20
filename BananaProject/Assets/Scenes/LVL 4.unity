@@ -5840,6 +5840,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 438503219}
     - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
+      propertyPath: fImage
+      value: 
+      objectReference: {fileID: 1534070730}
+    - target: {fileID: 3069054259231414762, guid: afd0e544e431f4b46942e04213910ba4, type: 3}
       propertyPath: hasCharge
       value: 1
       objectReference: {fileID: 0}
@@ -27002,6 +27006,11 @@ MonoBehaviour:
 --- !u!224 &1534070729 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7965611729664649575, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
+  m_PrefabInstance: {fileID: 1534070725}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1534070730 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3976163199252647560, guid: 85c3bf421e81e2946abda4bb20ae4203, type: 3}
   m_PrefabInstance: {fileID: 1534070725}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1545594952
