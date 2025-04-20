@@ -8,6 +8,9 @@ public class ToolTipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (eventData.pointerEnter.GetComponentInParent<ToolTipSystem>() != null)
+            return;
+
         if (!string.IsNullOrEmpty(tooltipContent))
             ToolTipSystem.Instance.ShowTooltip(tooltipContent);
     }
