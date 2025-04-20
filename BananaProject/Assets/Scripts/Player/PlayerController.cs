@@ -2,6 +2,7 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
@@ -38,6 +39,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject heartUIprefab;
     [SerializeField] private GameObject emptyHeartPrefab;
     [SerializeField] private Transform heartUIParent;
+    private bool isDying = false;
+    [SerializeField] private float deathJumpForce = 30f;
+
+    [Header("Low Health Prompts")]
+    [SerializeField] private GameObject fImage;
+    [SerializeField] private float pulsateSpeed = 1.5f;
+    [SerializeField] private float minScale = 0.95f;
+    [SerializeField] private float maxScale = 1.05f;
+    private float lowHealthSoundTimer = 0f;
+    private const float LOW_HEALTH_SOUND_INTERVAL = 10f;
+    private bool isAtLowHealth = false;
 
     [Header("Resources")]
     //BANANA UI
@@ -146,7 +158,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip[] clips;
-    //0 Jump,1 Attack,2 Heal,3 Damage,4 Pickup,5 Charge Up,6 Charge Hum,7 GP Breath,8 GP Impact,9 Gun,10 Shield Activate,11 Shield Break,12 Death,13 walk,14 climb
+    //0 Jump,1 Attack,2 Heal,3 Damage,4 Pickup,5 Charge Up,6 Charge Hum,7 GP Breath,8 GP Impact,9 Gun,10 Shield Activate,11 Shield Break,12 Death,13 walk,14 climb, 15 charge Release
 
     [SerializeField] private AudioSource walk;
     [SerializeField] private AudioSource combat;
@@ -190,6 +202,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+      if (isDying) return;
+        
       //Get the players left and right input to calculate the force that needs to be applied
       horizontal = Input.GetAxisRaw("Horizontal");
       vertical = Input.GetAxisRaw("Vertical");
@@ -558,6 +572,8 @@ public class PlayerController : MonoBehaviour
             Die();
         }
 
+        UpdateLowHealthPrompt();
+
         //DEV TOOL GOD MODE
         if (Input.GetKeyDown(KeyCode.Alpha0))
         {
@@ -572,6 +588,8 @@ public class PlayerController : MonoBehaviour
    //MOVEMENT FUNCTIONS
    private void FixedUpdate()
    {
+        if (isDying) return;
+        
         if (!boop && !isShadowKicking)
         {
             if (groundPound)
@@ -1139,6 +1157,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
+        if (isDying) return;
+
         //Check if banana shield is active and able to use
         if (hasBananaShield && banananaShieldActive)
         {
@@ -1172,11 +1192,16 @@ public class PlayerController : MonoBehaviour
             damage.Play();
             displayHearts[health].enabled = false;
 
+            if (health == 1)
+            {
+                isAtLowHealth = false;
+            }
+
         }
-        else if (health == 0)
+        else if (health <= 0)
         {
             Debug.Log("You Are Dead");
-            damage.clip = clips[12];
+            health = 0;
             displayHearts[health].enabled = false;
             Die();
         }
@@ -1197,6 +1222,16 @@ public class PlayerController : MonoBehaviour
             if (heartIndex >= 0 && heartIndex < displayHearts.Count)
                 displayHearts[heartIndex].enabled = true;
         }
+
+        if (health > 1 && isAtLowHealth)
+        {
+            isAtLowHealth = false;
+            if (fImage != null)
+            {
+                fImage.SetActive(false);
+            }
+        }
+
         damage.clip = clips[2];
         damage.Play();
     }
@@ -1225,11 +1260,161 @@ public class PlayerController : MonoBehaviour
         health++;
     }
 
+    //Low health management
+    private void UpdateLowHealthPrompt()
+    {
+        bool shouldBeAtlowhealth = (health == 1);
+
+        if (shouldBeAtlowhealth != isAtLowHealth)
+        {
+            isAtLowHealth = shouldBeAtlowhealth;
+
+            if (isAtLowHealth)
+            {
+                if (fImage != null)
+                {
+                    fImage.SetActive(true);
+                    ability.clip = clips[15];
+                    ability.Play();
+                    lowHealthSoundTimer = 0f;
+                }
+            }
+            else
+            {
+                if (fImage != null)
+                {
+                    fImage.SetActive(false);
+                }
+            }
+        }
+
+        if (isAtLowHealth)
+        {
+            
+            if (fImage != null && fImage.activeSelf)
+            {
+                float pulse = Mathf.Lerp(minScale, maxScale, (Mathf.Sin(Time.time * pulsateSpeed) + 1f) / 2f);
+                fImage.transform.localScale = new Vector3(pulse, pulse, 1f);
+            }
+
+            lowHealthSoundTimer += Time.deltaTime;
+            if (lowHealthSoundTimer >= LOW_HEALTH_SOUND_INTERVAL)
+            {
+                lowHealthSoundTimer = 0f;
+                ability.clip = clips[15];
+                ability.Play();
+            }
+        }
+
+    }
+
     //Death management logic
     public void Die()
     {
-        GameManager.Instance.OnPLayerDeath();
+        if (isDying) return;
+
+        StartCoroutine(DeathSequence());
+    }
+
+    private IEnumerator DeathSequence()
+    {
+        isDying = true;
+        Debug.Log("Death Sequence begins");
+
+        damage.clip = clips[12];
+        damage.Play();
+
+        Collider2D[] colliders = GetComponents<Collider2D>();
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = false;
+        }
+
+        if (isShadowKicking)
+        {
+            isShadowKicking = false;
+            anim.SetBool("Shadow Lunge", false);
+        }
+
+        if (canCharge)
+        {
+            ability.Stop();
+            currentSpeed = normalSpeed;
+            chargeBar.value = 0;
+            SetAura(false);
+            canCharge = false;
+            anim.SetBool("Charge", false);
+
+            if (chargeBarUI != null)
+                chargeBarUI.SetActive(false);
+        }
+
+        if (fImage != null)
+        {
+            fImage.SetActive(false);
+        }
+        isAtLowHealth = false;
+
+        rb.velocity = Vector2.zero;
+        rb.gravityScale = gravityScale * 1.5f;
+
+        rb.AddForce(new Vector2(0, deathJumpForce), ForceMode2D.Impulse);
+
+        anim.SetBool("Front", true);
+
+        if (cameraFollowTarget != null)
+        {
+            CameraFollowTarget camFollow = cameraFollowTarget.GetComponent<CameraFollowTarget>();
+            if (camFollow != null)
+            {
+                camFollow.StopFollowing();
+            }
+            cameraFollowTarget.SetActive(false);
+        }
+
+        if (v_Cam != null)
+        {
+            v_Cam.Follow = null;
+        }
+        else
+        {
+            var vcams = FindObjectsOfType<CinemachineVirtualCamera>();
+            foreach (var vcam in vcams)
+            {
+                Debug.Log("Found and disabling virtual camera: " + vcam.name);
+                vcam.Follow = null;
+            }
+        }
+
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+        float alpha = 1.0f;
+
+        yield return new WaitForSeconds(0.5f);
+
+        float bottomOffScreen = Camera.main.transform.position.y - Camera.main.orthographicSize - 5f;
+
+        float fallTimer = 0f;
+        while (transform.position.y > bottomOffScreen && fallTimer < 2f)
+        {
+            fallTimer += Time.deltaTime;
+
+            if (fallTimer > 1.0f)
+            {
+                alpha = Mathf.Max(0, alpha - Time.deltaTime * 2);
+                Color color = sprite.color;
+                color.a = alpha;
+                sprite.color = color;
+            }
+
+            yield return null;
+        }
+
         gameObject.SetActive(false);
+
+        GameManager.Instance.OnPLayerDeath();
+
+        Debug.Log("DEATH SEQUENCE FINISHED");
+
     }
 
    //BANANA MANAGMENT

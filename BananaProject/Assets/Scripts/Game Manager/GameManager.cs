@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator HandlePlayerDeath()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
 
         s_Dis.ResetCurrentScore();
         s_Dis.IncreaceDeaths(1);
