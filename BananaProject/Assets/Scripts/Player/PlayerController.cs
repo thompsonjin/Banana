@@ -1362,7 +1362,6 @@ public class PlayerController : MonoBehaviour
 
         anim.SetBool("Front", true);
 
-
         if (cameraFollowTarget != null)
         {
             CameraFollowTarget camFollow = cameraFollowTarget.GetComponent<CameraFollowTarget>();
@@ -1389,8 +1388,6 @@ public class PlayerController : MonoBehaviour
 
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         float alpha = 1.0f;
-
-        sprite.sortingOrder = 10;
 
         yield return new WaitForSeconds(0.5f);
 
