@@ -16,6 +16,6 @@ public class ScrectLVLPannel : MonoBehaviour
     void Update()
     {
         bananaText.text = BananaScore.instance.bananaScore.ToString();
-        timer.text = BananaScore.instance.duringTime.ToString("0");
+        timer.text = BananaScore.instance.timer.ToString("0");
     }
 }

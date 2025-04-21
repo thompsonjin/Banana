@@ -7,6 +7,7 @@ public class EnemyHealth : MonoBehaviour
     private PlayerController p_Con;
     private BaseEnemy b_En;
     private ScoreDisplay score;
+    [SerializeField] ParticleSystem spark;
 
     public int type;
     //1 Baboon
@@ -33,6 +34,8 @@ public class EnemyHealth : MonoBehaviour
     public void Damage(int d)
     {
         health -= d;
+
+        spark.Play();
 
         if(health <= 0)
         {
