@@ -11,6 +11,7 @@ public class BananaDrop : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             BananaScore.instance.bananaScore++;
+            other.gameObject.GetComponent<PlayerController>().GiveBanana(1);
             pickBananaAudio.Play();
             Destroy(gameObject);
             
