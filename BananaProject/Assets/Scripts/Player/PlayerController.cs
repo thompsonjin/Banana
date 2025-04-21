@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
 using static Unity.Burst.Intrinsics.X86.Avx;
@@ -30,8 +31,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject powerBarUI;
     [SerializeField] private GameObject chargeBarUI;
     [SerializeField] private Transform barsCanvasObject;
-    [SerializeField] private VolumeProfile gameVolume;
-    [SerializeField] private ChromaticAberration chromAb;
+    [SerializeField] TrailRenderer trail;
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -173,6 +173,10 @@ public class PlayerController : MonoBehaviour
 
     void Awake()
     {
+        foreach(AudioClip clip in clips)
+        {
+            clip.LoadAudioData();
+        }
         maxBananas = BananaManager.MaxBananas;
         bananaCount = maxBananas;
         InitializeBananaUI();
@@ -186,12 +190,9 @@ public class PlayerController : MonoBehaviour
 
         if (camFT != null)
         {
-            camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
-            
+            camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();        
         }
 
-        chromAb = gameVolume.GetComponent<ChromaticAberration>();
-       
         if (powerBarUI != null) powerBarUI.SetActive(false);
         if (chargeBarUI != null ) chargeBarUI.SetActive(false);
     }
@@ -400,6 +401,7 @@ public class PlayerController : MonoBehaviour
                     currentSpeed = boostSpeed;
                     chargeTimer = chargeDuration;
                     chargeBar.value = 1f;
+                    trail.time = 2;
 
                     if (chargeBarUI != null)
                         chargeBarUI.SetActive(true);
@@ -408,7 +410,6 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.L) && canCharge)
             {
-                chromAb.intensity.Override(.1f);
                 anim.SetBool("Charge", true);
                 focus += .1f;
 
@@ -434,6 +435,7 @@ public class PlayerController : MonoBehaviour
                         canCharge = false;
                         anim.SetBool("Charge", false);
                         ability.Stop();
+                        trail.time = 0;
 
                         if (chargeBarUI != null)
                             chargeBarUI.SetActive(false);
@@ -454,6 +456,7 @@ public class PlayerController : MonoBehaviour
                 SetAura(false);
                 canCharge = false;
                 anim.SetBool("Charge", false);
+                trail.time = 0;
 
                 if (chargeBarUI != null)
                     chargeBarUI.SetActive(false);
@@ -471,7 +474,7 @@ public class PlayerController : MonoBehaviour
                 {
                     v_Cam.m_Lens.OrthographicSize = focus;
                 }
-            
+
             }
         }
         
