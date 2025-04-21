@@ -102,7 +102,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float shadowKickKnockback;
     private float shadowKickPower;
     private bool isChargingShadowKick;
-    private bool isShadowKicking = false;
+    public bool isShadowKicking = false;
     [SerializeField] private float baseChargeTime = 1f;
     [SerializeField] private float maxChargeTime = 3f;
     [SerializeField] private float baseKickSpeed = 40f;
@@ -927,6 +927,19 @@ public class PlayerController : MonoBehaviour
     public void EnableGroundPound()
     {
         hasGroundPound = true;
+    }
+
+    public void CancelShadowKick()
+    {
+        if (isShadowKicking)
+        {
+            isShadowKicking = false;
+            anim.SetBool("Shadow Lunge", false);
+            rb.velocity = Vector2.zero;
+
+            if (powerBarUI != null)
+                powerBarUI.SetActive(false);
+        }
     }
 
     //Method to enable and disable Banana Shield
