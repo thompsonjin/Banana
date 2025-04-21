@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.Timeline;
 using UnityEngine.UI;
+using static Unity.Burst.Intrinsics.X86.Avx;
 
 public class PlayerController : MonoBehaviour
 {
@@ -27,6 +30,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject powerBarUI;
     [SerializeField] private GameObject chargeBarUI;
     [SerializeField] private Transform barsCanvasObject;
+    [SerializeField] private VolumeProfile gameVolume;
+    [SerializeField] private ChromaticAberration chromAb;
 
     [Header("Health")]
     [SerializeField] private int maxHealth;
@@ -184,9 +189,9 @@ public class PlayerController : MonoBehaviour
             camFT = cameraFollowTarget.GetComponent<CameraFollowTarget>();
             
         }
-        
-     
 
+        chromAb = gameVolume.GetComponent<ChromaticAberration>();
+       
         if (powerBarUI != null) powerBarUI.SetActive(false);
         if (chargeBarUI != null ) chargeBarUI.SetActive(false);
     }
@@ -403,6 +408,7 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKey(KeyCode.L) && canCharge)
             {
+                chromAb.intensity.Override(.1f);
                 anim.SetBool("Charge", true);
                 focus += .1f;
 
