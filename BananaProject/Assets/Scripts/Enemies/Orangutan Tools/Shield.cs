@@ -16,12 +16,22 @@ public class Shield : MonoBehaviour
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player" && hitTime <= 0)
+        if (collision.gameObject.tag == "Player")
         {
-            anim.SetBool("Attack", true);
-            collision.gameObject.GetComponent<PlayerController>().TakeDamage();
-            hitTime = hitTimeMax;
-            robo.chaseSpeed = 0;
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
+
+            if (playerController.isShadowKicking)
+            {
+                playerController.CancelShadowKick();
+            }
+
+            if (hitTime <= 0)
+            {
+                anim.SetBool("Attack", true);
+                playerController.TakeDamage();
+                hitTime = hitTimeMax;
+                robo.chaseSpeed = 0;
+            }
         }
     }
 

@@ -61,6 +61,13 @@ public class SettingsPanelController : MonoBehaviour
             fullscreenToggle.onValueChanged.AddListener(OnFullscreenToggleChanged);
             windowedToggle.onValueChanged.AddListener(OnWindowedToggleChanged);
 
+        
+            bool devToolsUnlocked = PlayerPrefs.GetInt("DevToolsUnlocked", 0) == 1;
+            if (devToolsContainer != null)
+            {
+                devToolsContainer.SetActive(devToolsUnlocked);
+            }
+
             UpdateUI();
         }
 
