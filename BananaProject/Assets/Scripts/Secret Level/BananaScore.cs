@@ -8,7 +8,7 @@ public class BananaScore : MonoBehaviour
 {
     public int bananaScore=0;
     public  static BananaScore instance;
-    public float duringTime = 50f;
+    public float timer = 50f;
     public GameObject sucessPannel;
     public GameObject FailutrePannel;
 
@@ -27,11 +27,11 @@ public class BananaScore : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        duringTime -= Time.deltaTime;
+        timer -= Time.deltaTime;
 
 
       
-        if (duringTime<0f)
+        if (timer < 0f)
         {
             if (bananaScore>=120)
             {

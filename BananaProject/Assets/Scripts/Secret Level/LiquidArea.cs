@@ -10,12 +10,9 @@ public class LiquidArea : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.gameObject.tag == "Player"  )
-        {
-            
-            Invoke("GameFail",2f);
-            other.gameObject.  GetComponent<PlayerController>().enabled = false;
-       
-          
+        {         
+            Invoke("GameFail",1f);
+            other.gameObject.GetComponent<PlayerController>().enabled = false;     
         }
     }
 
@@ -23,15 +20,5 @@ public class LiquidArea : MonoBehaviour
     {
         FailutrePannel.SetActive(true);
         Time.timeScale = 0;
-    }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
