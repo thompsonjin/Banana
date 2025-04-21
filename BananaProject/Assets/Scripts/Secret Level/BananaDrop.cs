@@ -12,6 +12,7 @@ public class BananaDrop : MonoBehaviour
         {
             BananaScore.instance.bananaScore++;
             other.gameObject.GetComponent<PlayerController>().GiveBanana(1);
+            GameObject.Find("ScrectLVL Manager").GetComponent<BananaScore>().AddToTimer(2);
             pickBananaAudio.Play();
             Destroy(gameObject);
             

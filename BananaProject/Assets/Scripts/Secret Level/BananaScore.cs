@@ -12,7 +12,6 @@ public class BananaScore : MonoBehaviour
     public GameObject sucessPannel;
     public GameObject FailutrePannel;
 
-    public CinemachineVirtualCamera camera;
     // Start is called before the first frame update
     void Awake()
     {
@@ -20,17 +19,13 @@ public class BananaScore : MonoBehaviour
         {
             instance = this;
         }
-    
     }
 
- 
     // Update is called once per frame
     void Update()
     {
         timer -= Time.deltaTime;
-
-
-      
+     
         if (timer < 0f)
         {
             if (bananaScore>=120)
@@ -46,14 +41,19 @@ public class BananaScore : MonoBehaviour
                 //fail
             }
         }
-        else
+    }
+
+    public void AddToTimer(int i)
+    {
+        timer += i;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
         {
-            if (bananaScore>=120)
-            {
-                //success
-                Time.timeScale = 0;
-                sucessPannel.SetActive(true);
-            }
-        }
+            Time.timeScale = 0;
+            sucessPannel.SetActive(true);
+        }     
     }
 }
