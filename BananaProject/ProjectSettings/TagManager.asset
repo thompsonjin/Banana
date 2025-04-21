@@ -21,6 +21,8 @@ TagManager:
   - Elevator
   - Ground
   - Score
+  - liquid
+  - Post Processing
   layers:
   - Default
   - TransparentFX
