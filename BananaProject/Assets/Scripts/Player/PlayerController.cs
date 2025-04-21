@@ -1335,6 +1335,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isDying) return;
 
+        Debug.Log("Die() method called - starting death sequence");
         StartCoroutine(DeathSequence());
     }
 
@@ -1343,29 +1344,41 @@ public class PlayerController : MonoBehaviour
         isDying = true;
         Debug.Log("Death Sequence begins");
 
-        damage.clip = clips[12];
-        damage.Play();
+        if (damage != null && clips.Length > 12 && clips[12] != null)
+        {
+            damage.clip = clips[12];
+            damage.Play();
+        }
 
         Collider2D[] colliders = GetComponents<Collider2D>();
         foreach (Collider2D col in colliders)
         {
-            col.enabled = false;
+            if (col != null)
+                col.enabled = false;
         }
 
         if (isShadowKicking)
         {
             isShadowKicking = false;
-            anim.SetBool("Shadow Lunge", false);
+            if (anim != null)
+                anim.SetBool("Shadow Lunge", false);
         }
 
         if (canCharge)
         {
-            ability.Stop();
+            if (ability != null)
+                ability.Stop();
+
             currentSpeed = normalSpeed;
-            chargeBar.value = 0;
+
+            if (chargeBar != null)
+                chargeBar.value = 0;
+
             SetAura(false);
             canCharge = false;
-            anim.SetBool("Charge", false);
+
+            if (anim != null)
+                anim.SetBool("Charge", false);
 
             if (chargeBarUI != null)
                 chargeBarUI.SetActive(false);
@@ -1377,12 +1390,17 @@ public class PlayerController : MonoBehaviour
         }
         isAtLowHealth = false;
 
-        rb.velocity = Vector2.zero;
-        rb.gravityScale = gravityScale * 1.5f;
+        if (rb != null)
+        {
+            rb.velocity = Vector2.zero;
+            rb.gravityScale = gravityScale * 1.5f;
+            rb.AddForce(new Vector2(0, deathJumpForce), ForceMode2D.Impulse);
+        }
 
-        rb.AddForce(new Vector2(0, deathJumpForce), ForceMode2D.Impulse);
+        if (anim != null)
+            anim.SetBool("Front", true);
 
-        anim.SetBool("Front", true);
+
 
         if (cameraFollowTarget != null)
         {
@@ -1403,24 +1421,29 @@ public class PlayerController : MonoBehaviour
             var vcams = FindObjectsOfType<CinemachineVirtualCamera>();
             foreach (var vcam in vcams)
             {
-                Debug.Log("Found and disabling virtual camera: " + vcam.name);
-                vcam.Follow = null;
+                if (vcam != null)
+                {
+                    Debug.Log("Found and disabling virtual camera: " + vcam.name);
+                    vcam.Follow = null;
+                }
             }
         }
 
         SpriteRenderer sprite = GetComponent<SpriteRenderer>();
         float alpha = 1.0f;
 
+        sprite.sortingOrder = 10;
+
         yield return new WaitForSeconds(0.5f);
 
-        float bottomOffScreen = Camera.main.transform.position.y - Camera.main.orthographicSize - 5f;
+        float bottomOffScreen = Camera.main ? Camera.main.transform.position.y - Camera.main.orthographicSize - 5f : -100f;
 
         float fallTimer = 0f;
         while (transform.position.y > bottomOffScreen && fallTimer < 2f)
         {
             fallTimer += Time.deltaTime;
 
-            if (fallTimer > 1.0f)
+            if (fallTimer > 1.0f && sprite != null)
             {
                 alpha = Mathf.Max(0, alpha - Time.deltaTime * 2);
                 Color color = sprite.color;
@@ -1433,7 +1456,23 @@ public class PlayerController : MonoBehaviour
 
         gameObject.SetActive(false);
 
-        GameManager.Instance.OnPLayerDeath();
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnPLayerDeath();
+        }
+        else
+        {
+            Debug.LogError("GameManager.Instance is null! Cannot call OnPlayerDeath()");
+            try
+            {
+                UnityEngine.SceneManagement.Scene currentScene = UnityEngine.SceneManagement.SceneManager.GetActiveScene();
+                UnityEngine.SceneManagement.SceneManager.LoadScene(currentScene.buildIndex);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError("Failed to reload scene: " + e.Message);
+            }
+        }
 
         Debug.Log("DEATH SEQUENCE FINISHED");
 

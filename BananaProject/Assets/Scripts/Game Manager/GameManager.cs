@@ -43,8 +43,19 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
 
-        s_Dis.ResetCurrentScore();
-        s_Dis.IncreaceDeaths(1);
+        if (s_Dis != null)
+        {
+            s_Dis.ResetCurrentScore();
+            s_Dis.IncreaceDeaths(1);
+        }
+        else
+        {
+            Debug.LogWarning("ScoreDisplay reference is null in GameManager");
+            ScoreTracker.deaths++;
+        }
+
+        Time.timeScale = 1f;
+
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }
