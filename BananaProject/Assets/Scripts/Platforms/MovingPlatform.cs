@@ -21,12 +21,13 @@ public class MovingPlatform : MonoBehaviour
     {
         target = points[targetNum];
     }
-    private void Update()
+
+    private void FixedUpdate()
     {
         if (trigger)
         {
             MovePlatform();
-        }       
+        }
     }
 
     public void AddPoints()
