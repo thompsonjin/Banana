@@ -10,6 +10,8 @@ public class LevelActivate : MonoBehaviour
 
     private void Start()
     {
+        music.clip.LoadAudioData();
+
         //Create BossMusicManager if it doesn't exist
         if (BossMusicManager.Instance == null)
         {
