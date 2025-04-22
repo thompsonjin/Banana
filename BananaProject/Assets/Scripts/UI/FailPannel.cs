@@ -6,10 +6,18 @@ using UnityEngine.UI;
 
 public class FailPannel : MonoBehaviour
 {
-   public void GoToBoss()
+   public void GoToBossLose()
    {
         Time.timeScale = 1;
         CheckpointManager.CheckpointReset();
         SceneManager.LoadScene("Boss Fight");
    }
+
+    public void GoToBossWin()
+    {
+        GameObject.Find("Player").GetComponent<PlayerController>().IncreaseMaxHealth();
+        Time.timeScale = 1;
+        CheckpointManager.CheckpointReset();
+        SceneManager.LoadScene("Boss Fight");
+    }
 }

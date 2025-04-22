@@ -13,6 +13,7 @@ public class BossMusicManager : MonoBehaviour
 
     private void Awake()
     {
+        
         //Singleton
         if (Instance == null)
         {
