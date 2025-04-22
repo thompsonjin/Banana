@@ -210,22 +210,22 @@ public class GameManager : MonoBehaviour
             Destroy(GameObject.FindWithTag("Banana Coin"));
         }
 
-        if (GetScene() == 6 && BananaManager.two)
+        if (GetScene() == 7 && BananaManager.two)
         {
             Destroy(GameObject.FindWithTag("Banana Coin"));
         }
 
-        if (GetScene() == 7 && BananaManager.three)
+        if (GetScene() == 9 && BananaManager.three)
         {
             Destroy(GameObject.FindWithTag("Banana Coin"));
         }
 
-        if (GetScene() == 8 && BananaManager.four)
+        if (GetScene() == 11 && BananaManager.four)
         {
             Destroy(GameObject.FindWithTag("Banana Coin"));
         }
 
-        if (GetScene() == 9 && BananaManager.five)
+        if (GetScene() == 13 && BananaManager.five)
         {
             Destroy(GameObject.FindWithTag("Banana Coin"));
         }
