@@ -23,16 +23,16 @@ public static class BananaManager
             case 5:
                 one = true;
                 break;
-            case 6:
+            case 7:
                 two = true;
                 break;
-            case 7:
+            case 9:
                 three = true;
                 break;
-            case 8:
+            case 11:
                 four = true;
                 break;
-            case 9:
+            case 13:
                 five = true;
                 break;
         }

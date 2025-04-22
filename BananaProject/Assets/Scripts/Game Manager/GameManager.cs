@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
         BananaCoinCheck();
         
         if(GameObject.FindWithTag("Score"))
